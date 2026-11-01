@@ -15,7 +15,6 @@
     padding: 16px; user-select: none; overflow: hidden;
   }
 
-  /* ===== Верхняя строка ===== */
   .topbar {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: nowrap;
@@ -25,10 +24,24 @@
     gap: 6px;
   }
   .topbar > span { white-space: nowrap; }
-  .topbar .rank { color: #ffd93d; font-weight: 700; overflow: hidden; text-overflow: ellipsis; }
+  .topbar .rank {
+    color: #ffd93d;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.3s, transform 0.3s;
+    display: inline-block;
+  }
+  .topbar .rank.pulse {
+    animation: rankPulse 0.5s ease-out;
+  }
+  @keyframes rankPulse {
+    0%   { transform: scale(1);   color: #ffd93d; text-shadow: none; }
+    50%  { transform: scale(1.2); color: #fff;    text-shadow: 0 0 12px #ffd93d; }
+    100% { transform: scale(1);   color: #ffd93d; text-shadow: none; }
+  }
   .hearts { font-size: 1.1rem; letter-spacing: 2px; }
 
-  /* ===== Пример ===== */
   .task {
     font-size: 3.4rem; font-weight: 800; letter-spacing: 1px;
     margin: 6px 0 28px; text-align: center;
@@ -38,7 +51,6 @@
   }
   .task.hit { color: #2ecc71; transform: scale(1.06); }
 
-  /* ===== Ответы ===== */
   .answers {
     display: grid; grid-template-columns: 1fr 1fr;
     gap: 14px; width: 100%; max-width: 420px;
@@ -59,7 +71,6 @@
     100% { transform: scale(1); }
   }
 
-  /* ===== Сообщение ===== */
   .msg {
     height: 1.6rem; margin-top: 14px;
     font-size: 1.1rem; font-weight: 700; text-align: center;
@@ -67,7 +78,6 @@
   }
   .msg.show { opacity: 1; }
 
-  /* ===== Кнопки ===== */
   .actions { margin-top: 16px; text-align: center; }
   .btn-main {
     padding: 13px 28px; font-size: 1rem; font-weight: 700;
@@ -92,7 +102,6 @@
     margin-top: 6px;
   }
 
-  /* ===== Меню ===== */
   #menu {
     display: flex; flex-direction: column; align-items: center;
     width: 100%; max-width: 420px;
@@ -156,7 +165,6 @@
   #mode-muldiv { background: #2bb3a8; }
   #mode-all    { background: #e8890c; }
 
-  /* ===== Подпись автора ===== */
   #menu .author {
     margin: 12px 0 0;
     font-size: 0.75rem;
@@ -175,77 +183,6 @@
   #menu.hidden { display: none; }
   #game.visible { display: flex; }
 
-  /* ===== ТОСТ ===== */
-  #toast {
-    position: fixed; top: 12px; left: 50%;
-    width: min(92vw, 420px);
-    display: flex; justify-content: center;
-    pointer-events: none; z-index: 20;
-    opacity: 0;
-    transform: translateX(-50%) translateY(-16px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-  #toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  .toast-box {
-    position: relative;
-    width: 100%;
-    min-height: 88px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 14px 18px; border-radius: 16px;
-    text-align: center;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-    pointer-events: none;
-    background: rgba(255,255,255,0.14);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.18);
-  }
-  .toast-box.rank-up {
-    background: rgba(20, 30, 70, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: none;
-    color: #fff;
-    padding: 20px 22px 18px;
-    box-shadow: 0 10px 28px -6px rgba(0,0,0,0.6);
-  }
-  .toast-box.rank-up::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    border-radius: 16px 16px 0 0;
-    background: linear-gradient(90deg, #ffd93d, #ffb800);
-    animation: goldPulse 1.6s ease-in-out infinite;
-  }
-  @keyframes goldPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.55; }
-  }
-  .toast-emoji { font-size: 1.8rem; line-height: 1; }
-  .toast-box.rank-up .toast-emoji {
-    font-size: 2.6rem;
-    filter: drop-shadow(0 0 4px rgba(255, 215, 61, 0.35));
-  }
-  .toast-title { font-size: 1.05rem; font-weight: 800; margin-top: 4px; }
-  .toast-box.rank-up .toast-title {
-    font-size: 1.35rem;
-    margin-top: 8px;
-    color: #fff;
-  }
-  .toast-sub { font-size: 0.85rem; margin-top: 2px; opacity: 0.8; }
-  .toast-box.rank-up .toast-sub {
-    font-size: 0.95rem;
-    margin-top: 6px;
-    color: rgba(255,255,255,0.7);
-    opacity: 1;
-  }
-
   .confetti {
     position: fixed; top: -20px; width: 10px; height: 10px;
     border-radius: 2px; z-index: 15; pointer-events: none;
@@ -255,7 +192,6 @@
     to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
   }
 
-  /* ===== Узкие экраны ===== */
   @media (max-width: 360px) {
     .topbar { font-size: 0.8rem; }
     .hearts { font-size: 0.95rem; letter-spacing: 1px; }
@@ -318,12 +254,6 @@
     </div>
   </div>
 
-  <div id="toast"><div class="toast-box" id="toast-box">
-    <div class="toast-emoji" id="toast-emoji"></div>
-    <div class="toast-title" id="toast-title"></div>
-    <div class="toast-sub" id="toast-sub"></div>
-  </div></div>
-
 <script>
   const MAX_LIVES = 5;
   let score = 0, lives = MAX_LIVES, answer = 0, locked = false;
@@ -358,21 +288,6 @@
     let r = RANKS[0];
     for (const item of RANKS) if (s >= item.at) r = item;
     return r;
-  }
-
-  let toastTimer = null;
-  function showToast(kind, emoji, title, sub) {
-    const toast = $('toast');
-    const box = $('toast-box');
-    $('toast-emoji').textContent = emoji;
-    $('toast-title').textContent = title;
-    $('toast-sub').textContent = sub || '';
-    box.className = 'toast-box' + (kind === 'rank' ? ' rank-up' : '');
-    toast.classList.remove('show');
-    void toast.offsetWidth;
-    toast.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 1600);
   }
 
   function confetti(n) {
@@ -488,17 +403,14 @@
       $('msg').classList.add('show');
 
       const newRank = rankFor(score);
-      $('rank').textContent = `${newRank.emoji} ${newRank.name}`;
 
       if (newRank.at > prevRank.at) {
-        showToast('rank', newRank.emoji, `Новое звание: ${newRank.name}!`, `Правильных: ${score}`);
+        // Новое звание: салют + пульс звания в строке
+        $('rank').textContent = `${newRank.emoji} ${newRank.name}`;
+        $('rank').classList.remove('pulse');
+        void $('rank').offsetWidth;
+        $('rank').classList.add('pulse');
         confetti(40);
-      } else if (score > 0 && score % 25 === 0) {
-        showToast('praise', '🔥', `Уже ${score} правильных!`, 'Так держать!');
-        confetti(30);
-      } else if (score > 0 && score % 5 === 0) {
-        showToast('praise', '🎉', `Молодец! ${score} правильных!`, '');
-        confetti(20);
       }
       setTimeout(makeTask, 650);
     } else {
@@ -535,6 +447,7 @@
     $('score').textContent = 0;
     updateHearts();
     $('rank').textContent = `${RANKS[0].emoji} ${RANKS[0].name}`;
+    $('rank').classList.remove('pulse');
     $('continue').classList.remove('visible');
     $('menu').classList.add('hidden');
     $('game').classList.add('visible');
@@ -557,6 +470,7 @@
     recentTasks = []; wrongQueue = [];
     $('score').textContent = 0; updateHearts();
     $('rank').textContent = `${RANKS[0].emoji} ${RANKS[0].name}`;
+    $('rank').classList.remove('pulse');
     $('continue').classList.remove('visible');
     $('msg').classList.remove('show');
     makeTask();
