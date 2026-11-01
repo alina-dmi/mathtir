@@ -12,21 +12,26 @@
     background: linear-gradient(160deg, #1e3c72, #2a5298);
     color: #fff; display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    padding: 16px; user-select: none; overflow: hidden;
+    padding: 24px 16px;
+    user-select: none; overflow: hidden;
   }
 
+  /* ===== Верхняя строка ===== */
   .topbar {
     display: flex; align-items: center; justify-content: space-between;
     flex-wrap: nowrap;
     width: 100%; max-width: 420px;
-    font-size: 0.9rem; opacity: 0.9; margin-bottom: 10px;
-    min-height: 1.6rem;
-    gap: 6px;
+    font-size: 0.9rem; opacity: 0.9;
+    margin-bottom: 22px;
+    padding-top: 8px;
+    min-height: 2rem;
+    gap: 10px;
   }
   .topbar > span { white-space: nowrap; }
   .topbar .rank {
     color: #ffd93d;
     font-weight: 700;
+    letter-spacing: 0.3px;
     overflow: hidden;
     text-overflow: ellipsis;
     transition: color 0.3s, transform 0.3s;
@@ -42,18 +47,20 @@
   }
   .hearts { font-size: 1.1rem; letter-spacing: 2px; }
 
+  /* ===== Пример ===== */
   .task {
     font-size: 3.4rem; font-weight: 800; letter-spacing: 1px;
-    margin: 6px 0 28px; text-align: center;
+    margin: 10px 0 30px; text-align: center;
     text-shadow: 0 4px 14px rgba(0,0,0,0.35);
     transition: color 0.15s, transform 0.15s;
     min-height: 4.2rem;
   }
   .task.hit { color: #2ecc71; transform: scale(1.06); }
 
+  /* ===== Ответы ===== */
   .answers {
     display: grid; grid-template-columns: 1fr 1fr;
-    gap: 14px; width: 100%; max-width: 420px;
+    gap: 16px; width: 100%; max-width: 420px;
   }
   .ball {
     padding: 26px 0; font-size: 1.9rem; font-weight: 600;
@@ -71,14 +78,16 @@
     100% { transform: scale(1); }
   }
 
+  /* ===== Сообщение ===== */
   .msg {
-    height: 1.6rem; margin-top: 14px;
+    height: 1.6rem; margin-top: 16px;
     font-size: 1.1rem; font-weight: 700; text-align: center;
     opacity: 0; transition: opacity 0.15s;
   }
   .msg.show { opacity: 1; }
 
-  .actions { margin-top: 16px; text-align: center; }
+  /* ===== Кнопки ===== */
+  .actions { margin-top: 18px; text-align: center; }
   .btn-main {
     padding: 13px 28px; font-size: 1rem; font-weight: 700;
     border: none; border-radius: 14px; cursor: pointer;
@@ -102,9 +111,11 @@
     margin-top: 6px;
   }
 
+  /* ===== Меню ===== */
   #menu {
     display: flex; flex-direction: column; align-items: center;
     width: 100%; max-width: 420px;
+    padding-top: 12px;
   }
   #menu h1 {
     font-size: 1.5rem;
@@ -118,7 +129,7 @@
     font-size: 0.95rem;
     font-weight: 400;
     opacity: 0.65;
-    margin: 0 0 24px;
+    margin: 0 0 26px;
     text-align: center;
   }
 
@@ -166,7 +177,7 @@
   #mode-all    { background: #e8890c; }
 
   #menu .author {
-    margin: 12px 0 0;
+    margin: 14px 0 0;
     font-size: 0.75rem;
     font-weight: 400;
     color: rgba(255,255,255,0.45);
@@ -192,10 +203,12 @@
     to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
   }
 
+  /* ===== Узкие экраны ===== */
   @media (max-width: 360px) {
-    .topbar { font-size: 0.8rem; }
+    body { padding: 18px 12px; }
+    .topbar { font-size: 0.8rem; gap: 6px; margin-bottom: 16px; }
     .hearts { font-size: 0.95rem; letter-spacing: 1px; }
-    .task { font-size: 2.9rem; }
+    .task { font-size: 2.9rem; margin: 8px 0 24px; }
     .ball { font-size: 1.6rem; padding: 22px 0; }
     .mode-btn { font-size: 1rem; padding: 16px 16px; }
     #menu .author { font-size: 0.7rem; }
@@ -405,7 +418,6 @@
       const newRank = rankFor(score);
 
       if (newRank.at > prevRank.at) {
-        // Новое звание: салют + пульс звания в строке
         $('rank').textContent = `${newRank.emoji} ${newRank.name}`;
         $('rank').classList.remove('pulse');
         void $('rank').offsetWidth;
