@@ -22,7 +22,7 @@
     --pink: #ffb3d1;
     --pink-d: #ff6fa5;
     --text: #2d3a5a;
-    --text-soft: #3b4a6b; /* Мягкий цвет для кнопок */
+    --text-soft: #3b4a6b;
   }
 
   body {
@@ -342,9 +342,20 @@
   .duel-setup-box input:focus { border-color: var(--pink-d); }
   .duel-setup-box .start-btn { width: 100%; padding: 16px; font-size: 1.1rem; font-weight: 800; border: none; border-radius: 14px; background: linear-gradient(180deg, #ff9bbd 0%, var(--pink-d) 100%); color: #fff; box-shadow: 0 5px 0 #d04a7f; cursor: pointer; font-family: inherit; }
   .duel-setup-box .start-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #d04a7f; }
-  .duel-setup-box .skip-btn { background: none; border: none; color: rgba(45,58,90,0.4); font-size: 0.85rem; font-weight: 600; margin-top: 12px; cursor: pointer; text-decoration: underline; font-family: inherit; }
+  
   .confetti { position: fixed; top: -20px; width: 10px; height: 10px; border-radius: 2px; z-index: 15; pointer-events: none; animation: fall linear forwards; }
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+
+  /* ===== Кнопки выхода ===== */
+  .exit-btn {
+    position: absolute; top: 10px; right: 10px;
+    background: #fff; border: none;
+    width: 36px; height: 36px; border-radius: 50%;
+    font-size: 1.2rem; color: var(--text);
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); z-index: 20;
+  }
+  .exit-btn:active { transform: scale(0.9); }
 
   @media (max-width: 380px) {
     body { padding: 16px 12px 30px; }
@@ -442,7 +453,11 @@
         </div>
       </div>
 
-      <div class="timer" id="timer"></div>
+      <div style="position: relative;">
+        <div class="timer" id="timer"></div>
+        <button class="exit-btn" id="exitGameBtn">✖</button>
+      </div>
+
       <div class="task-container"><div class="task" id="task">…</div></div>
       <div class="answers" id="answers"></div>
       <div class="msg" id="msg"></div>
@@ -551,13 +566,13 @@
         <input type="text" id="duelInput1" maxlength="12" placeholder="Игрок 1">
         <input type="text" id="duelInput2" maxlength="12" placeholder="Игрок 2">
         <button class="start-btn" id="startDuelBtn">Поехали!</button>
-        <button class="skip-btn" id="skipDuelBtn">Просто играть (без имён)</button>
       </div>
     </div>
   </div>
 
   <!-- ===== ЭКРАН ДУЭЛИ ===== -->
   <div id="screen-duel">
+    <button class="exit-btn" id="exitDuelBtn" style="left: 10px; right: auto;">✖</button>
     <div class="duel-timer" id="duelTimer">60</div>
     <div class="duel-side">
       <div class="duel-header">
@@ -1280,7 +1295,6 @@
   }
 
   $('startDuelBtn').onclick = startDuelGame;
-  $('skipDuelBtn').onclick = startDuelGame;
 
   $('duelInput2').addEventListener('keypress', (e) => {
     if (e.key === 'Enter') startDuelGame();
@@ -1317,6 +1331,24 @@
   $('closeDuelBtn').onclick = () => {
     $('screen-duel').classList.remove('active');
     $('duelResultPopup').classList.remove('visible');
+  };
+
+  // ===== КНОПКИ ВЫХОДА =====
+  $('exitGameBtn').onclick = () => {
+    if (confirm('Выйти в главное меню? Прогресс не сохранится.')) {
+      if (timerInterval) clearInterval(timerInterval);
+      $('timer').textContent = '';
+      showScreen('screen-menu');
+    }
+  };
+
+  $('exitDuelBtn').onclick = () => {
+    if (confirm('Выйти из гонки?')) {
+      if (duelTimerInterval) clearInterval(duelTimerInterval);
+      $('screen-duel').classList.remove('active');
+      $('duelResultPopup').classList.remove('visible');
+      duelActive = false;
+    }
   };
 
   // ===== РЕЙТИНГ =====
