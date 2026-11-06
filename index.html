@@ -425,15 +425,15 @@
       <h3>⚙️ Настройки учителя</h3>
 
       <div class="setting-block">
-        <h4>Сложение / вычитание <span class="val" id="as-label">от 1 до 20</span></h4>
+        <h4>Сложение / вычитание <span class="val" id="as-label">от 1 до 100</span></h4>
         <div class="hint">Числа и результат будут в этом диапазоне.</div>
         <div class="range-row">
           <span class="edge" id="as-min-val">1</span>
           <input type="range" id="as-min" min="1" max="100" value="1" step="1">
         </div>
         <div class="range-row" style="margin-top:8px">
-          <span class="edge" id="as-max-val">20</span>
-          <input type="range" id="as-max" min="2" max="100" value="20" step="1">
+          <span class="edge" id="as-max-val">100</span>
+          <input type="range" id="as-max" min="2" max="100" value="100" step="1">
         </div>
       </div>
 
@@ -444,11 +444,11 @@
       </div>
 
       <div class="setting-block">
-        <h4>Умножение / деление: второе число <span class="val" id="md-label">до 10</span></h4>
+        <h4>Умножение / деление: второе число <span class="val" id="md-label">до 12</span></h4>
         <div class="hint">Второй множитель (и делитель) будет от 1 до этого числа.</div>
         <div class="range-row">
-          <span class="edge" id="md-max-val">10</span>
-          <input type="range" id="md-max" min="1" max="12" value="10" step="1">
+          <span class="edge" id="md-max-val">12</span>
+          <input type="range" id="md-max" min="1" max="12" value="12" step="1">
         </div>
       </div>
 
@@ -470,11 +470,13 @@
   let wrongQueue = [];
 
   // ===== Настройки (сохраняются в localStorage) =====
+  // По умолчанию — «сложный» уровень: +/− от 1 до 100, таблицы все, ×/÷ второе число до 12.
+  // Как только учитель нажмёт «Применить» — его настройки сохранятся и будут подхватываться.
   const DEFAULT_SETTINGS = {
     asMin: 1,
-    asMax: 20,
+    asMax: 100,
     tables: [],       // пусто = все
-    mdMax: 10
+    mdMax: 12
   };
   let settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
 
@@ -551,17 +553,12 @@
     let a, b, ans, display;
 
     if (op === '+') {
-      // Оба числа в [asMin..asMax], результат тоже ≤ asMax
       const lo = Math.min(settings.asMin, settings.asMax);
       const hi = Math.max(settings.asMin, settings.asMax);
-      // Чтобы сумма ≤ hi, каждое слагаемое ≤ hi - lo
-      const maxA = Math.max(lo, hi - lo);
-      a = rnd(lo, maxA);
-      b = rnd(lo, hi - a > lo ? hi - a : lo);
-      // На случай, если b получилось меньше lo
-      if (b < lo) b = lo;
+      a = rnd(lo, Math.max(lo, hi - lo));
+      b = rnd(lo, Math.max(lo, hi - a));
+      if (a + b > hi) { b = Math.max(lo, hi - a); }
       ans = a + b;
-      if (ans > hi) { ans = hi; b = hi - a; }
       display = `${a} + ${b} = ?`;
     } else if (op === '−') {
       const lo = Math.min(settings.asMin, settings.asMax);
@@ -571,7 +568,6 @@
       ans = a - b;
       display = `${a} − ${b} = ?`;
     } else if (op === '×') {
-      // Первое число — из выбранных таблиц (или любое 2..10), второе — до mdMax
       let tables = settings.tables.length > 0
         ? settings.tables.filter(t => t >= 2 && t <= 10)
         : [2,3,4,5,6,7,8,9,10];
@@ -580,13 +576,13 @@
       b = rnd(1, Math.max(1, settings.mdMax));
       ans = a * b;
       display = `${a} × ${b} = ?`;
-    } else { // ÷
+    } else {
       let tables = settings.tables.length > 0
         ? settings.tables.filter(t => t >= 2 && t <= 10)
         : [2,3,4,5,6,7,8,9,10];
       if (tables.length === 0) tables = [2,3,4,5,6,7,8,9,10];
-      a = pick1(tables);            // делитель — из таблицы
-      b = rnd(1, Math.max(1, settings.mdMax)); // частное
+      a = pick1(tables);
+      b = rnd(1, Math.max(1, settings.mdMax));
       ans = b;
       display = `${a * b} ÷ ${a} = ?`;
     }
@@ -740,14 +736,12 @@
 
   // ===== UI настроек =====
   function syncSettingsUI() {
-    // +/-
     $('as-min').value = settings.asMin;
     $('as-max').value = settings.asMax;
     $('as-min-val').textContent = settings.asMin;
     $('as-max-val').textContent = settings.asMax;
     $('as-label').textContent = `от ${settings.asMin} до ${settings.asMax}`;
 
-    // таблицы
     document.querySelectorAll('.tbl-btn').forEach(b => {
       const t = +b.dataset.tbl;
       b.classList.toggle('active', settings.tables.includes(t));
@@ -756,7 +750,6 @@
       ? 'все'
       : settings.tables.slice().sort((x,y)=>x-y).map(t => '×' + t).join(', ');
 
-    // ×/÷
     $('md-max').value = settings.mdMax;
     $('md-max-val').textContent = settings.mdMax;
     $('md-label').textContent = `до ${settings.mdMax}`;
@@ -770,7 +763,6 @@
     $('settings-overlay').classList.remove('visible');
   }
 
-  // создаём кнопки таблиц
   (function buildTableButtons() {
     const grid = $('tbl-grid');
     for (let t = 2; t <= 10; t++) {
