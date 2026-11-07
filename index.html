@@ -32,11 +32,10 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px 16px 40px;
+    padding: 20px 16px 20px; /* Уменьшили отступ снизу */
     overflow-x: hidden;
     position: relative;
     color: var(--text);
-    padding-bottom: max(40px, env(safe-area-inset-bottom));
   }
 
   /* ===== Фон ===== */
@@ -202,14 +201,13 @@
   .btn-save-record:active { transform: scale(0.98); }
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
-  /* ===== БЛОК КНОПОК ВНИЗУ ИГРЫ ===== */
+  /* ===== БЛОК КНОПОК ВНИЗУ ИГРЫ (ТЕКСТОВЫЕ ССЫЛКИ) ===== */
   .actions { 
     display: flex; 
     flex-direction: column; 
     gap: 12px; 
-    margin-top: 16px; 
-    margin-bottom: 24px; 
-    padding-bottom: env(safe-area-inset-bottom); 
+    margin-top: 8px; /* Ближе к ответам */
+    margin-bottom: 0; 
   }
   
   .btn-main {
@@ -220,31 +218,23 @@
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
 
-  /* Кнопки "Начать заново" и "В главное меню" стали объёмными */
+  /* Возвращаем вид ссылок, чтобы не отвлекали */
   .link { 
-    background: #fff; 
+    background: none; 
     border: none; 
-    color: var(--text-soft); 
-    font-size: 1rem; 
+    color: rgba(45,58,90,0.55); 
+    font-size: 0.95rem; 
     cursor: pointer; 
-    padding: 16px; 
-    border-radius: 16px; 
-    font-weight: 800; 
-    box-shadow: 0 5px 0 #cbd5e1; 
-    transition: transform 0.1s;
+    text-decoration: underline; 
+    padding: 6px; 
+    font-weight: 700;
+    margin: 0 auto;
+    display: inline-block;
+    width: fit-content;
+    transition: color 0.2s;
   }
-  .link:active { 
-    transform: translateY(3px); 
-    box-shadow: 0 2px 0 #cbd5e1; 
-  }
-  .link.secondary { 
-    background: #f0f4f8; 
-    color: rgba(45,58,90,0.6); 
-    box-shadow: 0 5px 0 #e2e8f0; 
-  }
-  .link.secondary:active { 
-    box-shadow: 0 2px 0 #e2e8f0; 
-  }
+  .link:hover { color: var(--text); }
+  .link:active { color: var(--lavender-d); }
 
   /* ===== РЕЙТИНГ ===== */
   .rating-header { display: flex; align-items: center; margin-bottom: 22px; }
@@ -387,7 +377,7 @@
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
   @media (max-width: 380px) {
-    body { padding: 16px 12px 30px; }
+    body { padding: 16px 12px 20px; }
     .mode-card { padding: 16px 18px; }
     .mode-icon { width: 52px; height: 52px; margin-right: 14px; }
     .sun { width: 70px; height: 70px; top: 30px; right: 20px; }
@@ -489,10 +479,11 @@
 
       <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
 
+      <!-- Блок кнопок под ответами -->
       <div class="actions">
         <button class="btn-main" id="continue">▶ Продолжить</button>
         <button class="link" id="restart">Начать заново</button>
-        <button class="link secondary" id="backToMenu">← В главное меню</button>
+        <button class="link" id="backToMenu">← В главное меню</button>
       </div>
     </div>
 
