@@ -32,7 +32,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px 16px 20px; /* Уменьшили отступ снизу */
+    padding: 20px 16px 20px;
     overflow-x: hidden;
     position: relative;
     color: var(--text);
@@ -201,13 +201,13 @@
   .btn-save-record:active { transform: scale(0.98); }
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
-  /* ===== БЛОК КНОПОК ВНИЗУ ИГРЫ (ТЕКСТОВЫЕ ССЫЛКИ) ===== */
+  /* ===== БЛОК КНОПОК ВНИЗУ ИГРЫ (ПОДНЯТЫ ВЫШЕ) ===== */
   .actions { 
     display: flex; 
     flex-direction: column; 
-    gap: 12px; 
-    margin-top: 8px; /* Ближе к ответам */
-    margin-bottom: 0; 
+    gap: 8px; 
+    margin-top: 8px; 
+    margin-bottom: 40px; /* Значительный отступ снизу, чтобы не попадать под панель браузера */
   }
   
   .btn-main {
@@ -218,7 +218,7 @@
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
 
-  /* Возвращаем вид ссылок, чтобы не отвлекали */
+  /* Возвращаем вид ссылок */
   .link { 
     background: none; 
     border: none; 
@@ -226,7 +226,7 @@
     font-size: 0.95rem; 
     cursor: pointer; 
     text-decoration: underline; 
-    padding: 6px; 
+    padding: 8px; 
     font-weight: 700;
     margin: 0 auto;
     display: inline-block;
@@ -479,7 +479,7 @@
 
       <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
 
-      <!-- Блок кнопок под ответами -->
+      <!-- Блок кнопок под ответами (поднят выше) -->
       <div class="actions">
         <button class="btn-main" id="continue">▶ Продолжить</button>
         <button class="link" id="restart">Начать заново</button>
