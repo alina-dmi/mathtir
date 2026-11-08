@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Математический тир</title>
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
@@ -28,11 +28,12 @@
   body {
     font-family: 'Nunito', 'Segoe UI', -apple-system, sans-serif;
     background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
-    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 20px 16px 20px;
+    padding: 20px 16px;
+    padding-bottom: calc(20px + env(safe-area-inset-bottom));
     overflow-x: hidden;
     position: relative;
     color: var(--text);
@@ -67,12 +68,20 @@
   @keyframes floaty { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-18px) rotate(5deg); } }
 
   /* ===== Контейнер ===== */
-  #app { width: 100%; max-width: 440px; display: flex; flex-direction: column; z-index: 2; position: relative; }
-  .screen { display: none; flex-direction: column; width: 100%; }
-  .screen.active { display: flex; }
+  #app { 
+    width: 100%; 
+    max-width: 440px; 
+    display: flex; 
+    flex-direction: column; 
+    z-index: 2; 
+    position: relative; 
+    min-height: calc(100dvh - 40px); /* Растягиваем на весь экран для прижатия кнопок */
+  }
+  .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; }
+  .screen.active { display: flex !important; }
 
   /* ===== Верхняя строка ===== */
-  .menu-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; margin-top: 8px; }
+  .menu-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; margin-top: 8px; flex-shrink: 0; }
   .profile-chip {
     display: flex; align-items: center; gap: 10px; background: #fff;
     padding: 6px 18px 6px 6px; border-radius: 30px; cursor: pointer;
@@ -97,12 +106,12 @@
   .icon-btn svg { width: 26px; height: 26px; fill: currentColor; }
 
   /* ===== Заголовок ===== */
-  .header { text-align: center; margin-bottom: 26px; }
+  .header { text-align: center; margin-bottom: 26px; flex-shrink: 0; }
   .header h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.15; color: var(--text); }
   .header .subtitle { margin-top: 8px; font-size: 0.95rem; font-weight: 600; color: rgba(45,58,90,0.55); }
 
   /* ===== Большие карточки ===== */
-  .mode-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 16px; }
+  .mode-list { display: flex; flex-direction: column; gap: 14px; margin-bottom: 16px; flex-shrink: 0; }
   .mode-card {
     display: flex; align-items: center; padding: 20px 22px; border-radius: 26px; border: none;
     cursor: pointer; text-align: left; position: relative; overflow: hidden;
@@ -127,7 +136,7 @@
   #mode-all    { background: linear-gradient(160deg, #c9b8ff 0%, var(--lavender-d) 100%); }
 
   /* ===== Мини-режимы ===== */
-  .mini-modes-container { display: flex; gap: 14px; justify-content: center; margin-bottom: 22px; }
+  .mini-modes-container { display: flex; gap: 14px; justify-content: center; margin-bottom: 22px; flex-shrink: 0; }
   .mini-mode-btn {
     flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
     padding: 18px 12px; border: none; border-radius: 24px; cursor: pointer; background: #fff;
@@ -142,14 +151,17 @@
   .mini-text { font-size: clamp(0.85rem, 3.5vw, 0.92rem); font-weight: 700; text-align: center; line-height: 1.2; z-index: 1; white-space: nowrap; }
   #mode-timed .mini-text { color: #b86b00; }
   #mode-duel  .mini-text { color: #c2185b; }
-  .author { margin-top: 10px; font-size: 0.78rem; font-weight: 600; color: rgba(45,58,90,0.45); text-align: center; line-height: 1.5; }
+  
+  /* Автор прижимается к низу в меню */
+  .author { margin-top: auto; padding-bottom: 10px; font-size: 0.78rem; font-weight: 600; color: rgba(45,58,90,0.45); text-align: center; line-height: 1.5; flex-shrink: 0; }
   .author b { font-weight: 600; color: rgba(45,58,90,0.65); }
 
   /* ===== ЭКРАН ИГРЫ ===== */
+  .game-screen { display: flex; flex-direction: column; flex: 1; }
   .game-topbar {
     display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;
     background: #fff; padding: 16px; border-radius: 22px;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.05), 0 8px 20px rgba(0,0,0,0.05); flex-shrink: 0;
   }
   .game-topbar .stat { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
   .game-topbar .stat + .stat::before { content: ''; position: absolute; left: 0; top: 15%; bottom: 15%; width: 1px; background: rgba(0,0,0,0.08); }
@@ -158,7 +170,7 @@
   .game-topbar .hearts { font-size: 1.05rem; letter-spacing: 1px; }
   .game-topbar .rank { font-size: 0.82rem; color: var(--lavender-d); font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
 
-  .timer { font-size: 1.6rem; font-weight: 800; color: var(--sunny-d); margin-bottom: 14px; text-align: center; white-space: nowrap; }
+  .timer { font-size: 1.6rem; font-weight: 800; color: var(--sunny-d); margin-bottom: 14px; text-align: center; white-space: nowrap; flex-shrink: 0; }
 
   .task-container {
     background: #fff; border-radius: 30px; padding: 40px 20px; text-align: center;
@@ -173,7 +185,7 @@
   }
   .task.hit { color: var(--mint-d); transform: scale(1.05); }
 
-  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; flex-shrink: 0; }
   .ball {
     font-size: clamp(1.5rem, 6vw, 2rem); 
     padding: 28px 0; font-weight: 900; border: none; border-radius: 22px; cursor: pointer;
@@ -186,7 +198,7 @@
   .ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; border-color: #ef4444 !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.25), 0 7px 0 #991b1b !important; }
   .ball.reveal { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; opacity: 0.85; }
 
-  .msg { height: 2rem; font-size: 1.15rem; font-weight: 800; text-align: center; margin-bottom: 12px; opacity: 0; transition: opacity 0.15s; }
+  .msg { height: 2rem; font-size: 1.15rem; font-weight: 800; text-align: center; margin-bottom: 12px; opacity: 0; transition: opacity 0.15s; flex-shrink: 0; }
   .msg.show { opacity: 1; }
   .msg.success { color: var(--mint-d); }
   .msg.error { color: var(--coral-d); }
@@ -195,19 +207,20 @@
     background: rgba(16,185,129,0.15); border: 2px solid rgba(16,185,129,0.3); color: #059669;
     padding: 14px 16px; border-radius: 16px; font-size: 1rem; font-weight: 800; cursor: pointer;
     width: 100%; margin-bottom: 12px; transition: opacity 0.3s, background 0.3s;
-    opacity: 0; pointer-events: none;
+    opacity: 0; pointer-events: none; flex-shrink: 0;
   }
   .btn-save-record.show { opacity: 1; pointer-events: auto; }
   .btn-save-record:active { transform: scale(0.98); }
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
-  /* ===== БЛОК КНОПОК ВНИЗУ ИГРЫ (ПОДНЯТЫ ЗНАЧИТЕЛЬНО ВЫШЕ) ===== */
+  /* ===== НИЖНИЙ БЛОК КНОПОК ===== */
   .actions { 
     display: flex; 
     flex-direction: column; 
     gap: 8px; 
-    margin-top: 8px; 
-    margin-bottom: 90px; /* Значительный отступ снизу, чтобы не попадать под панель браузера */
+    margin-top: auto; /* Прижимаем к низу */
+    padding-bottom: calc(20px + env(safe-area-inset-bottom)); /* Безопасный отступ для айфонов */
+    flex-shrink: 0; 
   }
   
   .btn-main {
@@ -218,7 +231,6 @@
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
 
-  /* Возвращаем вид ссылок */
   .link { 
     background: none; 
     border: none; 
@@ -237,19 +249,19 @@
   .link:active { color: var(--lavender-d); }
 
   /* ===== РЕЙТИНГ ===== */
-  .rating-header { display: flex; align-items: center; margin-bottom: 22px; }
+  .rating-header { display: flex; align-items: center; margin-bottom: 22px; flex-shrink: 0; }
   .back-btn {
     background: #fff; border: none; color: var(--text); width: 42px; height: 42px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 14px;
     box-shadow: 0 4px 0 rgba(0,0,0,0.05);
   }
   .rating-title { font-size: 1.5rem; font-weight: 800; white-space: nowrap; }
-  .rating-group { display: flex; flex-direction: column; width: 100%; margin-bottom: 16px; }
+  .rating-group { display: flex; flex-direction: column; width: 100%; margin-bottom: 16px; flex-shrink: 0; }
   .rating-group-label { font-size: 0.78rem; color: rgba(45,58,90,0.5); margin-bottom: 7px; padding-left: 4px; font-weight: 700; }
   .rating-tabs { display: flex; gap: 8px; width: 100%; background: rgba(255,255,255,0.5); padding: 5px; border-radius: 14px; }
   .rating-tab { flex: 1; padding: 11px; border: none; border-radius: 10px; font-size: 0.9rem; font-weight: 700; cursor: pointer; background: transparent; color: rgba(45,58,90,0.5); transition: all 0.2s; white-space: nowrap; }
   .rating-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-  .rating-list { width: 100%; display: flex; flex-direction: column; gap: 9px; margin-top: 18px; }
+  .rating-list { width: 100%; display: flex; flex-direction: column; gap: 9px; margin-top: 18px; overflow-y: auto; flex: 1; padding-bottom: 20px; }
   .rating-row { display: flex; align-items: center; padding: 16px 18px; background: #fff; border-radius: 16px; box-shadow: 0 3px 0 rgba(0,0,0,0.04); }
   .rating-row .pos { font-weight: 800; color: var(--lavender-d); min-width: 2rem; font-size: 1.1rem; }
   .rating-row .nm { flex: 1; text-align: left; margin-left: 10px; font-weight: 700; font-size: 1rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -324,11 +336,12 @@
   #set-close { width: 100%; margin-top: 12px; padding: 12px 0; font-size: 0.9rem; border-radius: 12px; border: none; background: #f0f4f8; color: var(--text-soft); cursor: pointer; font-weight: 700; font-family: inherit; }
 
   /* ===== ДУЭЛЬ ===== */
-  #screen-duel { position: fixed; inset: 0; background: var(--sky2); z-index: 50; display: none; overflow: hidden; flex-direction: row; }
+  #screen-duel { position: fixed; inset: 0; background: var(--sky2); z-index: 50; display: none; overflow: hidden; flex-direction: column; }
   #screen-duel.active { display: flex; }
-  .duel-side { flex: 1; display: flex; flex-direction: column; padding: 15px; position: relative; padding-bottom: 60px; }
+  .duel-play-area { display: flex; flex: 1; flex-direction: row; overflow: hidden; }
+  .duel-side { flex: 1; display: flex; flex-direction: column; padding: 15px; position: relative; }
   .duel-side:first-child { border-right: 2px dashed rgba(45,58,90,0.15); }
-  .duel-header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 10px 15px; border-radius: 16px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); margin-bottom: 15px; overflow: hidden; }
+  .duel-header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 10px 15px; border-radius: 16px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); margin-bottom: 15px; overflow: hidden; flex-shrink: 0; }
   .duel-name { font-size: 1rem; font-weight: 800; color: var(--lavender-d); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .duel-score { font-size: 1.4rem; font-weight: 900; color: var(--text); }
   .duel-tasks { display: flex; flex-direction: column; gap: 12px; flex: 1; justify-content: center; }
@@ -349,13 +362,20 @@
   .duel-ball:active { transform: translateY(4px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 1px 0 #3b66d9; }
   .duel-ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; border-color: #10b981 !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 5px 0 #047857 !important; }
   .duel-ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; border-color: #ef4444 !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 5px 0 #991b1b !important; }
-  .duel-timer { position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-size: 1.5rem; font-weight: 900; color: var(--text); z-index: 10; text-shadow: 0 0 20px rgba(255,255,255,1); }
+  .duel-timer { text-align: center; font-size: 1.5rem; font-weight: 900; color: var(--text); padding: 10px; z-index: 10; text-shadow: 0 0 20px rgba(255,255,255,1); flex-shrink: 0; }
   
-  .duel-exit-wrapper { position: absolute; bottom: 15px; left: 0; width: 100%; display: flex; justify-content: center; z-index: 20; }
-  .duel-exit-btn { background: rgba(255,255,255,0.8); border: none; padding: 12px 24px; border-radius: 20px; font-size: 0.95rem; font-weight: 800; color: var(--text-soft); cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.1); font-family: inherit; }
+  .duel-footer { 
+    display: flex; 
+    justify-content: center; 
+    padding: 15px 15px calc(20px + env(safe-area-inset-bottom)); 
+    background: rgba(255,255,255,0.4); 
+    border-top: 1px solid rgba(45,58,90,0.1); 
+    flex-shrink: 0;
+  }
+  .duel-exit-btn { background: #fff; border: none; padding: 12px 24px; border-radius: 20px; font-size: 0.95rem; font-weight: 800; color: var(--text-soft); cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.1); font-family: inherit; }
   .duel-exit-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
 
-  @media (max-width: 800px) { .duel-name { font-size: 0.85rem; } .duel-score { font-size: 1.2rem; } .duel-header { padding: 8px 10px; margin-bottom: 10px; } .duel-side { padding: 10px; padding-bottom: 60px; } .duel-timer { font-size: 1.2rem; } }
+  @media (max-width: 800px) { .duel-name { font-size: 0.85rem; } .duel-score { font-size: 1.2rem; } .duel-header { padding: 8px 10px; margin-bottom: 10px; } .duel-side { padding: 10px; } .duel-timer { font-size: 1.2rem; padding: 5px; } }
 
   .result-popup { position: fixed; inset: 0; background: rgba(45,58,90,0.4); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
   .result-popup.visible { display: flex; }
@@ -376,13 +396,16 @@
   .confetti { position: fixed; top: -20px; width: 10px; height: 10px; border-radius: 2px; z-index: 15; pointer-events: none; animation: fall linear forwards; }
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
+  /* Для маленьких экранов */
   @media (max-width: 380px) {
-    body { padding: 16px 12px 20px; }
+    body { padding: 16px 12px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
     .mode-card { padding: 16px 18px; }
     .mode-icon { width: 52px; height: 52px; margin-right: 14px; }
     .sun { width: 70px; height: 70px; top: 30px; right: 20px; }
     .tbl-grid { grid-template-columns: repeat(5, 1fr); gap: 5px; }
     .tbl-btn { font-size: 0.85rem; padding: 8px 0; }
+    .task-container { min-height: 130px; padding: 30px 15px; }
+    .ball { padding: 22px 0; }
   }
 </style>
 </head>
@@ -456,7 +479,7 @@
     </div>
 
     <!-- ===== ИГРА ===== -->
-    <div id="screen-game" class="screen">
+    <div id="screen-game" class="screen game-screen">
       <div class="game-topbar">
         <div class="stat">
           <span class="stat-label">Счёт</span>
@@ -479,7 +502,7 @@
 
       <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
 
-      <!-- Блок кнопок под ответами (поднят значительно выше) -->
+      <!-- Нижний блок кнопок (привязан к низу) -->
       <div class="actions">
         <button class="btn-main" id="continue">▶ Продолжить</button>
         <button class="link" id="restart">Начать заново</button>
@@ -593,29 +616,31 @@
   <div id="screen-duel">
     <div class="duel-timer" id="duelTimer">60</div>
     
-    <div class="duel-side">
-      <div class="duel-header">
-        <div class="duel-name" id="duelName1">Игрок 1</div>
-        <div class="duel-score" id="duelScore1">0</div>
+    <div class="duel-play-area">
+      <div class="duel-side">
+        <div class="duel-header">
+          <div class="duel-name" id="duelName1">Игрок 1</div>
+          <div class="duel-score" id="duelScore1">0</div>
+        </div>
+        <div class="duel-tasks">
+          <div class="duel-task" id="duelTask1">…</div>
+          <div class="duel-answers" id="duelAnswers1"></div>
+        </div>
       </div>
-      <div class="duel-tasks">
-        <div class="duel-task" id="duelTask1">…</div>
-        <div class="duel-answers" id="duelAnswers1"></div>
-      </div>
-    </div>
-    
-    <div class="duel-side">
-      <div class="duel-header">
-        <div class="duel-name" id="duelName2">Игрок 2</div>
-        <div class="duel-score" id="duelScore2">0</div>
-      </div>
-      <div class="duel-tasks">
-        <div class="duel-task" id="duelTask2">…</div>
-        <div class="duel-answers" id="duelAnswers2"></div>
+      
+      <div class="duel-side">
+        <div class="duel-header">
+          <div class="duel-name" id="duelName2">Игрок 2</div>
+          <div class="duel-score" id="duelScore2">0</div>
+        </div>
+        <div class="duel-tasks">
+          <div class="duel-task" id="duelTask2">…</div>
+          <div class="duel-answers" id="duelAnswers2"></div>
+        </div>
       </div>
     </div>
 
-    <div class="duel-exit-wrapper">
+    <div class="duel-footer">
       <button class="duel-exit-btn" id="exitDuelBtn">← Покинуть гонку</button>
     </div>
   </div>
