@@ -40,14 +40,7 @@
   }
 
   /* ===== Фон ===== */
-  .sun {
-    position: fixed; top: 40px; right: 30px;
-    width: 90px; height: 90px;
-    background: radial-gradient(circle, #fff6a8 0%, var(--sun) 60%, #ffcc33 100%);
-    border-radius: 50%;
-    box-shadow: 0 0 60px rgba(255,224,102,0.8), 0 0 100px rgba(255,224,102,0.4);
-    z-index: 0; animation: sunPulse 4s ease-in-out infinite;
-  }
+  .sun { position: fixed; top: 40px; right: 30px; width: 90px; height: 90px; background: radial-gradient(circle, #fff6a8 0%, var(--sun) 60%, #ffcc33 100%); border-radius: 50%; box-shadow: 0 0 60px rgba(255,224,102,0.8), 0 0 100px rgba(255,224,102,0.4); z-index: 0; animation: sunPulse 4s ease-in-out infinite; }
   @keyframes sunPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
 
   .cloud { position: fixed; background: #fff; border-radius: 100px; opacity: 0.85; z-index: 0; pointer-events: none; }
@@ -75,7 +68,7 @@
     flex-direction: column; 
     z-index: 2; 
     position: relative; 
-    min-height: calc(100dvh - 40px); /* Растягиваем на весь экран для прижатия кнопок */
+    min-height: calc(100dvh - 40px); 
   }
   .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; }
   .screen.active { display: flex !important; }
@@ -152,7 +145,6 @@
   #mode-timed .mini-text { color: #b86b00; }
   #mode-duel  .mini-text { color: #c2185b; }
   
-  /* Автор прижимается к низу в меню */
   .author { margin-top: auto; padding-bottom: 10px; font-size: 0.78rem; font-weight: 600; color: rgba(45,58,90,0.45); text-align: center; line-height: 1.5; flex-shrink: 0; }
   .author b { font-weight: 600; color: rgba(45,58,90,0.65); }
 
@@ -217,9 +209,9 @@
   .actions { 
     display: flex; 
     flex-direction: column; 
-    gap: 8px; 
-    margin-top: auto; /* Прижимаем к низу */
-    padding-bottom: calc(20px + env(safe-area-inset-bottom)); /* Безопасный отступ для айфонов */
+    gap: 10px; 
+    margin-top: auto; 
+    padding-bottom: calc(20px + env(safe-area-inset-bottom)); 
     flex-shrink: 0; 
   }
   
@@ -231,22 +223,24 @@
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
 
+  /* Стиль кнопки "В главное меню" как в твоем файле */
   .link { 
     background: none; 
     border: none; 
     color: rgba(45,58,90,0.55); 
     font-size: 0.95rem; 
     cursor: pointer; 
-    text-decoration: underline; 
-    padding: 8px; 
+    text-decoration: none; 
+    padding: 12px 24px; 
+    border-radius: 12px;
+    background: rgba(255,255,255,0.5); /* Легкий фон, чтобы было похоже на кнопку из твоего файла */
     font-weight: 700;
     margin: 0 auto;
     display: inline-block;
     width: fit-content;
-    transition: color 0.2s;
+    transition: background 0.2s;
   }
-  .link:hover { color: var(--text); }
-  .link:active { color: var(--lavender-d); }
+  .link:active { background: rgba(255,255,255,0.8); color: var(--lavender-d); }
 
   /* ===== РЕЙТИНГ ===== */
   .rating-header { display: flex; align-items: center; margin-bottom: 22px; flex-shrink: 0; }
@@ -396,7 +390,6 @@
   .confetti { position: fixed; top: -20px; width: 10px; height: 10px; border-radius: 2px; z-index: 15; pointer-events: none; animation: fall linear forwards; }
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 
-  /* Для маленьких экранов */
   @media (max-width: 380px) {
     body { padding: 16px 12px; padding-bottom: calc(16px + env(safe-area-inset-bottom)); }
     .mode-card { padding: 16px 18px; }
@@ -502,10 +495,9 @@
 
       <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
 
-      <!-- Нижний блок кнопок (привязан к низу) -->
+      <!-- Кнопки внизу (без кнопки "Начать заново") -->
       <div class="actions">
         <button class="btn-main" id="continue">▶ Продолжить</button>
-        <button class="link" id="restart">Начать заново</button>
         <button class="link" id="backToMenu">← В главное меню</button>
       </div>
     </div>
@@ -1472,7 +1464,6 @@
   };
 
   $('continue').onclick = () => startGame(currentMode);
-  $('restart').onclick = () => startGame(currentMode);
   
   $('backToMenu').onclick = () => {
     if (timerInterval) clearInterval(timerInterval);
