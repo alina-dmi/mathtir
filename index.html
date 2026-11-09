@@ -27,12 +27,9 @@
     --text-soft: #3b4a6b;
   }
 
-  /* ===== ФОН НА ВЕСЬ ЭКРАН ===== */
   html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
+    margin: 0; padding: 0;
+    width: 100%; height: 100%;
     overflow: hidden;
   }
 
@@ -46,28 +43,20 @@
     height: 100dvh;
   }
 
-  /* ===== КОМПЬЮТЕР (ПК) ===== */
   @media (min-width: 480px) {
     body { padding: 20px; }
-    #app {
-      max-width: 440px;
-      height: 100%;
-      max-height: 800px;
-    }
+    #app { max-width: 440px; height: 100%; max-height: 800px; }
   }
 
-  /* ===== ТЕЛЕФОН ===== */
   @media (max-width: 479px) {
     #app {
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       padding: 12px;
       padding-bottom: calc(12px + env(safe-area-inset-bottom));
       padding-top: calc(12px + env(safe-area-inset-top));
     }
   }
 
-  /* ===== Фон ===== */
   .sun { position: absolute; top: 20px; right: 20px; width: clamp(50px, 10vh, 90px); height: clamp(50px, 10vh, 90px); background: radial-gradient(circle, #fff6a8 0%, var(--sun) 60%, #ffcc33 100%); border-radius: 50%; box-shadow: 0 0 60px rgba(255,224,102,0.8); z-index: 0; animation: sunPulse 4s ease-in-out infinite; }
   @keyframes sunPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
   .cloud { position: absolute; background: #fff; border-radius: 100px; opacity: 0.85; z-index: 0; pointer-events: none; }
@@ -77,46 +66,24 @@
   .cloud1::after  { width: 30px; height: 30px; top: -10px; left: 50px; }
   @keyframes drift { to { transform: translateX(calc(100vw + 200px)); } }
 
-  /* ===== КОНТЕЙНЕР ===== */
-  #app { 
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    z-index: 2; 
-    position: relative; 
-    overflow: hidden;
-  }
-  
-  .screen { 
-    display: none !important; 
-    flex-direction: column; 
-    width: 100%; 
-    flex: 1; 
-    overflow: hidden; 
-  }
+  .float-sym { position: absolute; font-size: 3rem; opacity: 0.15; pointer-events: none; }
+  .float-sym.s1 { left: 5%; top: 20%; color: #ff8a80; }
+  .float-sym.s2 { right: 10%; top: 60%; color: #2ec4a0; }
+
+  #app { width: 100%; display: flex; flex-direction: column; z-index: 2; position: relative; overflow: hidden; }
+
+  .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; overflow: hidden; }
   .screen.active { display: flex !important; }
 
-  /* ===== ЦЕНТРИРОВАНИЕ МЕНЮ ===== */
-  #screen-menu {
-    justify-content: center;
-    padding-bottom: 20px;
-  }
+  #screen-menu { justify-content: center; padding-bottom: 20px; }
 
-  /* ===== ВЕРХНЯЯ СТРОКА ===== */
-  .menu-topbar { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    margin-bottom: clamp(10px, 2vh, 20px); 
-    flex-shrink: 0; 
-  }
+  .menu-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: clamp(10px, 2vh, 20px); flex-shrink: 0; }
   .profile-chip { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 14px 4px 4px; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
   .avatar { width: clamp(30px, 4vh, 34px); height: clamp(30px, 4vh, 34px); background: linear-gradient(135deg, var(--sunny), var(--coral)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(0.9rem, 2vh, 1rem); }
   .profile-name { font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
   .icon-btn { width: clamp(38px, 5vh, 44px); height: clamp(38px, 5vh, 44px); background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; color: var(--sunny-d); box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
   .icon-btn svg { width: clamp(18px, 2.5vh, 22px); height: clamp(18px, 2.5vh, 22px); fill: currentColor; }
 
-  /* ===== МЕНЮ ===== */
   .header { text-align: center; margin-bottom: clamp(15px, 3vh, 24px); flex-shrink: 0; }
   .header h1 { font-size: clamp(1.4rem, 4vh, 1.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 6px; color: var(--text); }
   .header .subtitle { font-size: clamp(0.8rem, 1.8vh, 0.9rem); font-weight: 600; color: rgba(45,58,90,0.55); }
@@ -148,7 +115,6 @@
   .author { margin-top: clamp(10px, 2vh, 15px); padding-bottom: 5px; font-size: clamp(0.65rem, 1.5vh, 0.7rem); font-weight: 600; color: rgba(45,58,90,0.45); text-align: center; flex-shrink: 0; }
   .author b { font-weight: 600; color: rgba(45,58,90,0.65); }
 
-  /* ===== ЭКРАН ИГРЫ ===== */
   .game-screen { display: flex; flex-direction: column; height: 100%; }
   .game-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: clamp(10px, 2vh, 15px); background: #fff; padding: clamp(10px, 2vh, 12px); border-radius: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); flex-shrink: 0; }
   .game-topbar .stat { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
@@ -160,62 +126,15 @@
 
   .timer { font-size: clamp(1.2rem, 3.5vh, 1.4rem); font-weight: 800; color: var(--sunny-d); margin-bottom: 10px; text-align: center; white-space: nowrap; flex-shrink: 0; }
 
-  /* ===== ПОЛЕ С ПРИМЕРОМ ===== */
-  .task-container { 
-    background: #fff; border-radius: 26px; 
-    padding: 20px 15px;
-    text-align: center; 
-    margin-bottom: 15px; 
-    flex: none;
-    height: 140px;
-    display: flex; align-items: center; justify-content: center; 
-    box-shadow: 0 8px 0 rgba(0,0,0,0.06); 
-    position: relative; overflow: hidden; 
-  }
-
-  @media (min-width: 480px) {
-    .task-container {
-      height: 180px;
-      padding: 30px 20px;
-    }
-  }
-
-  .task { 
-    font-size: clamp(2.5rem, 8vw, 3.5rem); 
-    font-weight: 900; color: var(--text); 
-    z-index: 1; transition: 0.15s; white-space: nowrap; 
-    max-width: 100%; overflow: hidden; 
-  }
-
-  @media (min-width: 480px) {
-    .task {
-      font-size: 3.2rem; 
-    }
-  }
-
+  .task-container { background: #fff; border-radius: 26px; padding: 20px 15px; text-align: center; margin-bottom: 15px; flex: none; height: 140px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 0 rgba(0,0,0,0.06); position: relative; overflow: hidden; }
+  @media (min-width: 480px) { .task-container { height: 180px; padding: 30px 20px; } }
+  .task { font-size: clamp(2.5rem, 8vw, 3.5rem); font-weight: 900; color: var(--text); z-index: 1; transition: 0.15s; white-space: nowrap; max-width: 100%; overflow: hidden; }
+  @media (min-width: 480px) { .task { font-size: 3.2rem; } }
   .task.hit { color: var(--mint-d); transform: scale(1.05); }
 
-  .answers { 
-    display: grid; grid-template-columns: 1fr 1fr; 
-    gap: clamp(10px, 2vh, 12px); 
-    margin-bottom: clamp(10px, 2vh, 15px); flex-shrink: 0; 
-  }
-  .ball { 
-    font-size: clamp(1.5rem, 6vw, 2rem); 
-    padding: clamp(15px, 3vh, 25px) 0; 
-    font-weight: 900; border: none; border-radius: 18px; cursor: pointer; 
-    color: #fff; transition: 0.1s; 
-    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.15); 
-    background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); 
-  }
-
-  @media (min-width: 480px) {
-    .ball {
-      font-size: 2rem; 
-      padding: 25px 0;
-    }
-  }
-
+  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 2vh, 12px); margin-bottom: clamp(10px, 2vh, 15px); flex-shrink: 0; }
+  .ball { font-size: clamp(1.5rem, 6vw, 2rem); padding: clamp(15px, 3vh, 25px) 0; font-weight: 900; border: none; border-radius: 18px; cursor: pointer; color: #fff; transition: 0.1s; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.15); background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); }
+  @media (min-width: 480px) { .ball { font-size: 2rem; padding: 25px 0; } }
   .ball:active { transform: translateY(4px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 0 rgba(0,0,0,0.15); }
   .ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 6px 0 #047857 !important; }
   .ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 #991b1b !important; }
@@ -230,24 +149,13 @@
   .btn-save-record.show { opacity: 1; pointer-events: auto; }
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
-  /* ===== КНОПКИ ВНИЗУ ===== */
-  .actions { 
-    display: flex; 
-    flex-direction: column; 
-    gap: 8px; 
-    margin-top: auto; 
-    padding-bottom: 10px; 
-    flex-shrink: 0; 
-  }
-
+  .actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-bottom: 10px; flex-shrink: 0; }
   .btn-main { padding: clamp(12px, 2.5vh, 14px); font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
-  
   .link { background: rgba(255,255,255,0.6); border: none; color: rgba(45,58,90,0.6); font-size: clamp(0.85rem, 2vh, 0.9rem); cursor: pointer; text-decoration: none; padding: clamp(10px, 2vh, 12px) 20px; border-radius: 12px; font-weight: 700; margin: 0 auto; display: inline-block; width: fit-content; transition: background 0.2s; }
   .link:active { background: #fff; }
 
-  /* ===== РЕЙТИНГ ===== */
   .rating-header { display: flex; align-items: center; margin-bottom: clamp(12px, 2vh, 16px); flex-shrink: 0; }
   .back-btn { background: #fff; border: none; color: var(--text); width: clamp(32px, 4vh, 36px); height: clamp(32px, 4vh, 36px); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 12px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); }
   .rating-title { font-size: clamp(1.2rem, 3vh, 1.4rem); font-weight: 800; white-space: nowrap; }
@@ -257,19 +165,7 @@
   .rating-tab { flex: 1; padding: clamp(8px, 1.5vh, 10px); border: none; border-radius: 10px; font-size: clamp(0.8rem, 1.8vh, 0.85rem); font-weight: 700; cursor: pointer; background: transparent; color: rgba(45,58,90,0.5); transition: all 0.2s; white-space: nowrap; }
   .rating-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 
-  .rating-list { 
-    width: 100%; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 8px; 
-    margin-top: clamp(12px, 2vh, 16px); 
-    flex: 1; 
-    overflow-y: auto; 
-    padding-right: 5px; 
-    padding-bottom: 20px;
-    min-height: 0; 
-  }
-
+  .rating-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: clamp(12px, 2vh, 16px); flex: 1; overflow-y: auto; padding-right: 5px; padding-bottom: 20px; min-height: 0; }
   .rating-list::-webkit-scrollbar { width: 6px; }
   .rating-list::-webkit-scrollbar-track { background: rgba(45,58,90,0.05); border-radius: 10px; }
   .rating-list::-webkit-scrollbar-thumb { background: var(--lavender-d); border-radius: 10px; }
@@ -280,7 +176,6 @@
   .rating-row .sc { font-weight: 800; color: var(--sunny-d); font-size: clamp(1rem, 2.2vh, 1.1rem); }
   .rating-empty { text-align: center; color: rgba(45,58,90,0.4); font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 600; padding: 30px 0; }
 
-  /* ===== МОДАЛКИ ===== */
   .modal-overlay { position: fixed; inset: 0; background: rgba(45,58,90,0.35); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
   .modal-overlay.visible { display: flex; }
   .modal-box { background: #fff; border-radius: 26px; padding: clamp(20px, 4vh, 24px) 20px; width: 100%; max-width: 360px; box-shadow: 0 12px 50px rgba(45,58,90,0.25); text-align: center; max-height: 90vh; overflow-y: auto; }
@@ -297,7 +192,6 @@
   .settings-btn-in-profile { width: 100%; padding: 12px; margin-top: 10px; border: 2px solid #f0e6d2; border-radius: 14px; background: #fffbf0; color: #b8860b; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit; }
   .settings-btn-in-profile:active { transform: scale(0.98); }
 
-  /* ===== НАСТРОЙКИ ===== */
   #settings-panel { background: #fff; border-radius: 26px; padding: 22px 18px 16px; width: 100%; max-width: 400px; max-height: 88vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(45,58,90,0.25); text-align: left; }
   #settings-panel h3 { margin: 0 0 16px; font-size: clamp(1.1rem, 2.8vh, 1.1rem); text-align: center; color: var(--text); font-weight: 800; }
   .setting-block { margin-bottom: 16px; background: #f4f8ff; border-radius: 14px; padding: 14px 12px 12px; }
@@ -323,7 +217,6 @@
   #set-apply { background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 4px 0 #047857; }
   #set-close { width: 100%; margin-top: 10px; padding: 10px 0; font-size: clamp(0.8rem, 1.8vh, 0.85rem); border-radius: 10px; border: none; background: #f0f4f8; color: var(--text-soft); cursor: pointer; font-weight: 700; font-family: inherit; }
 
-  /* ===== ДУЭЛЬ ===== */
   #screen-duel { position: fixed; inset: 0; background: var(--sky2); z-index: 50; display: none; overflow: hidden; flex-direction: column; }
   #screen-duel.active { display: flex; }
   .duel-play-area { display: flex; flex: 1; flex-direction: row; overflow: hidden; }
@@ -359,7 +252,7 @@
   .duel-setup-box input:focus { border-color: var(--pink-d); }
   .duel-setup-box .start-btn { width: 100%; padding: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 12px; background: linear-gradient(180deg, #ff9bbd 0%, var(--pink-d) 100%); color: #fff; box-shadow: 0 5px 0 #d04a7f; cursor: pointer; font-family: inherit; }
   .duel-setup-box .start-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #d04a7f; }
-  
+
   .confetti { position: fixed; top: -20px; width: 8px; height: 8px; border-radius: 2px; z-index: 15; pointer-events: none; animation: fall linear forwards; }
   @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
 </style>
@@ -368,20 +261,19 @@
 
   <div class="sun"></div>
   <div class="cloud cloud1"></div>
-  <div class="float-sym s1" style="position:absolute; font-size:3rem; opacity:0.15; left:5%; top:20%; color:#ff8a80;">+</div>
-  <div class="float-sym s2" style="position:absolute; font-size:3rem; opacity:0.15; right:10%; top:60%; color:#2ec4a0;">×</div>
+  <div class="float-sym s1" aria-hidden="true">+</div>
+  <div class="float-sym s2" aria-hidden="true">×</div>
 
   <div id="app">
-    <!-- ===== МЕНЮ ===== -->
     <div id="screen-menu" class="screen active">
       <div class="menu-topbar">
         <div class="profile-chip" id="editNameBtn">
           <div class="avatar" id="avatarLetter">?</div>
           <div class="profile-name" id="profileName">Гость</div>
         </div>
-        <div class="icon-btn" id="openRatingBtn" title="Рейтинг">
+        <button class="icon-btn" id="openRatingBtn" title="Рейтинг" aria-label="Рейтинг">
           <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2 6.6.5-5.1 4.4 1.6 6.5-5.5-3.6-5.5 3.6 1.6-6.5-5.1-4.4 6.6-.5z"/></svg>
-        </div>
+        </button>
       </div>
 
       <div class="header">
@@ -424,13 +316,9 @@
         </button>
       </div>
 
-      <p class="author">
-        Автор и создатель<br>
-        <b>Алина Дмитриевна Оленева</b>
-      </p>
+      <p class="author">Автор и создатель<br><b>Алина Дмитриевна Оленева</b></p>
     </div>
 
-    <!-- ===== ИГРА ===== -->
     <div id="screen-game" class="screen game-screen">
       <div class="game-topbar">
         <div class="stat">
@@ -439,11 +327,11 @@
         </div>
         <div class="stat" id="hearts-container">
           <span class="stat-label">Жизни</span>
-          <span class="hearts" id="hearts">❤️❤️❤️❤️❤️</span>
+          <span class="hearts" id="hearts"></span>
         </div>
         <div class="stat" id="rank-container">
           <span class="stat-label">Ранг</span>
-          <span class="rank" id="rank">🌱 Новичок</span>
+          <span class="rank" id="rank"></span>
         </div>
       </div>
 
@@ -460,10 +348,9 @@
       </div>
     </div>
 
-    <!-- ===== РЕЙТИНГ ===== -->
     <div id="screen-rating" class="screen">
       <div class="rating-header">
-        <button class="back-btn" id="backFromRating">
+        <button class="back-btn" id="backFromRating" aria-label="Назад">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
         <div class="rating-title">🏆 Рейтинг</div>
@@ -490,7 +377,6 @@
       <div class="rating-list" id="ratingList"></div>
     </div>
 
-    <!-- ===== ПРОФИЛЬ ===== -->
     <div class="modal-overlay" id="nameModal">
       <div class="modal-box">
         <h3>Твой профиль</h3>
@@ -507,14 +393,13 @@
       </div>
     </div>
 
-    <!-- ===== НАСТРОЙКИ ===== -->
     <div class="modal-overlay" id="settingsModal">
       <div id="settings-panel">
         <h3>⚙️ Мои настройки</h3>
 
         <div class="setting-block">
           <h4>Сложение / вычитание <span class="val" id="as-label">от 1 до 50</span></h4>
-          <div class="hint">Числа и результат будут в этом диапазоне.</div>
+          <div class="hint">Числа и результат будут в этом диапазоне. Минимум не больше половины максимума.</div>
           <div class="range-row">
             <span class="edge" id="as-min-val">1</span>
             <input type="range" id="as-min" min="1" max="100" value="1" step="1">
@@ -523,6 +408,7 @@
             <span class="edge" id="as-max-val">50</span>
             <input type="range" id="as-max" min="2" max="100" value="50" step="1">
           </div>
+          <div class="hint" id="as-warning" style="color:#dc2626; display:none;">Минимум слишком большой — увеличь максимум.</div>
         </div>
 
         <div class="setting-block">
@@ -530,7 +416,7 @@
             <h4 style="margin: 0;">Таблицы умножения</h4>
             <button class="tbl-btn-all" id="tbl-select-all">Выбрать все</button>
           </div>
-          <div class="hint">Нажми, чтобы выбрать одну или несколько таблиц.</div>
+          <div class="hint">Нажми, чтобы включить/выключить таблицу.</div>
           <div class="tbl-grid" id="tbl-grid"></div>
         </div>
 
@@ -551,7 +437,6 @@
       </div>
     </div>
 
-    <!-- ===== ДУЭЛЬ (ВВОД ИМЕН) ===== -->
     <div class="modal-overlay" id="duelSetupModal">
       <div class="duel-setup-box">
         <h3>Гонка на двоих</h3>
@@ -562,7 +447,6 @@
     </div>
   </div>
 
-  <!-- ===== ЭКРАН ДУЭЛИ ===== -->
   <div id="screen-duel">
     <div class="duel-timer" id="duelTimer">60</div>
     <div class="duel-play-area">
@@ -592,7 +476,6 @@
     </div>
   </div>
 
-  <!-- ===== РЕЗУЛЬТАТ ДУЭЛИ ===== -->
   <div class="result-popup" id="duelResultPopup">
     <div class="result-box">
       <h2 id="duelResultTitle">🏁 Время вышло!</h2>
@@ -607,6 +490,9 @@
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
   import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+  // ============================================================
+  //  КОНСТАНТЫ
+  // ============================================================
   const firebaseConfig = {
     apiKey: "AIzaSyCfUKWp5QxddmDba6Y8_Na0fvnPisRC8pY",
     authDomain: "mathtir01.firebaseapp.com",
@@ -617,76 +503,90 @@
     appId: "1:539557078014:web:f98da5889bafc236d056af"
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
   const MAX_LIVES = 5;
-  let score = 0, lives = MAX_LIVES, answer = 0, locked = false;
-  let currentMode = 'all';
-  let currentDisplayKey = '';
-  let recentTasks = [];
+  const TIMED_DURATION = 60;
+  const DUEL_DURATION = 60;
   const RECENT_LIMIT = 8;
-  let wrongQueue = [];
-  
-  let isTimedMode = false;
-  let timeLeft = 60;
-  let timerInterval = null;
+  const WRONG_QUEUE_LIMIT = 10;
+  const OPTIONS_COUNT = 4;
 
-  let playerName = localStorage.getItem('mathTirName') || '';
-  let statBestClassic = parseInt(localStorage.getItem('mathTirBestClassic') || '0', 10);
-  let statBestTimed = parseInt(localStorage.getItem('mathTirBestTimed') || '0', 10);
-  let statTotal = parseInt(localStorage.getItem('mathTirTotal') || '0', 10);
+  const DELAYS = {
+    correct: 350,
+    wrongTimed: 600,
+    wrongClassic: 1200,
+    gameOver: 900,
+    duelCorrect: 150,
+    duelWrong: 800
+  };
 
-  let currentRatingMode = 'classic';
-  let currentRatingPeriod = 'all';
-
-  let duelActive = false;
-  let duelScore1 = 0, duelScore2 = 0;
-  let duelTimeLeft = 60;
-  let duelTimerInterval = null;
-  let duelTask1 = null, duelTask2 = null;
-  let duelPlayerName1 = 'Игрок 1';
-  let duelPlayerName2 = 'Игрок 2';
+  const ALL_TABLES = [2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const DEFAULT_SETTINGS = { asMin: 1, asMax: 50, tables: [], mdMax: 10 };
-  let settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-
-  function loadSettings() {
-    try {
-      const raw = localStorage.getItem('mathTirSettings');
-      if (raw) {
-        const s = JSON.parse(raw);
-        if (typeof s.asMin === 'number') settings.asMin = s.asMin;
-        if (typeof s.asMax === 'number') settings.asMax = s.asMax;
-        if (Array.isArray(s.tables)) settings.tables = s.tables;
-        if (typeof s.mdMax === 'number') settings.mdMax = s.mdMax;
-      }
-    } catch (e) {}
-  }
-  function saveSettings() {
-    try { localStorage.setItem('mathTirSettings', JSON.stringify(settings)); } catch (e) {}
-  }
-
-  const $ = id => document.getElementById(id);
-  const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
-  const pick1 = arr => arr[rnd(0, arr.length - 1)];
 
   const RANKS = [
-    { at: 0,   name: 'Новичок',              emoji: '🌱' },
-    { at: 3,   name: 'Считатель',            emoji: '🔢' },
-    { at: 5,   name: 'Умник',                emoji: '💡' },
-    { at: 10,  name: 'Мастер счёта',         emoji: '🏆' },
-    { at: 15,  name: 'Гений чисел',          emoji: '🧠' },
-    { at: 20,  name: 'Профессор',            emoji: '🎓' },
-    { at: 30,  name: 'Король математики',    emoji: '👑' },
-    { at: 40,  name: 'Повелитель цифр',      emoji: '⚡' },
-    { at: 50,  name: 'Суперсчётчик',         emoji: '🚀' },
-    { at: 60,  name: 'Магистр формул',       emoji: '🔮' },
-    { at: 70,  name: 'Легенда чисел',        emoji: '⭐' },
-    { at: 80,  name: 'Алмазный ум',          emoji: '💎' },
-    { at: 90,  name: 'Чемпион',              emoji: '🥇' },
-    { at: 100, name: 'Абсолютный гений',     emoji: '🌟' },
+    { at: 0,   name: 'Новичок',            emoji: '🌱' },
+    { at: 3,   name: 'Считатель',          emoji: '🔢' },
+    { at: 5,   name: 'Умник',              emoji: '💡' },
+    { at: 10,  name: 'Мастер счёта',       emoji: '🏆' },
+    { at: 15,  name: 'Гений чисел',        emoji: '🧠' },
+    { at: 20,  name: 'Профессор',          emoji: '🎓' },
+    { at: 30,  name: 'Король математики',  emoji: '👑' },
+    { at: 40,  name: 'Повелитель цифр',    emoji: '⚡' },
+    { at: 50,  name: 'Суперсчётчик',       emoji: '🚀' },
+    { at: 60,  name: 'Магистр формул',     emoji: '🔮' },
+    { at: 70,  name: 'Легенда чисел',      emoji: '⭐' },
+    { at: 80,  name: 'Алмазный ум',        emoji: '💎' },
+    { at: 90,  name: 'Чемпион',            emoji: '🥇' },
+    { at: 100, name: 'Абсолютный гений',   emoji: '🌟' }
   ];
+
+  const STORAGE_KEYS = {
+    name: 'mathTirName',
+    bestClassic: 'mathTirBestClassic',
+    bestTimed: 'mathTirBestTimed',
+    total: 'mathTirTotal',
+    settings: 'mathTirSettings'
+  };
+
+  // ============================================================
+  //  FIREBASE
+  // ============================================================
+  const fbApp = initializeApp(firebaseConfig);
+  const db = getDatabase(fbApp);
+
+  function saveScore(mode, finalScore, name) {
+    if (!name) return Promise.resolve();
+    return push(ref(db, `scores/${mode}`), {
+      name: String(name).slice(0, 40),
+      score: Number(finalScore) || 0,
+      timestamp: Date.now()
+    }).catch(err => console.error('saveScore error:', err));
+  }
+
+  function subscribeLeaderboard(mode, onData) {
+    const q = query(ref(db, `scores/${mode}`), limitToLast(100));
+    return onValue(q,
+      snap => onData(snap.val() || {}),
+      err => console.error('leaderboard error:', err)
+    );
+  }
+
+  // ============================================================
+  //  ХЕЛПЕРЫ
+  // ============================================================
+  const $ = id => document.getElementById(id);
+  const rand = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+  const pickRandom = arr => arr[rand(0, arr.length - 1)];
+  const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v));
+
+  function readInt(key, fallback = 0) {
+    const v = parseInt(localStorage.getItem(key) ?? '', 10);
+    return Number.isFinite(v) ? v : fallback;
+  }
+
+  function writeStorage(key, value) {
+    try { localStorage.setItem(key, value); } catch { /* quota */ }
+  }
 
   function rankFor(s) {
     let r = RANKS[0];
@@ -694,64 +594,116 @@
     return r;
   }
 
-  function confetti(n) {
-    const colors = ['#fca5a5','#5eead4','#fcd34d','#a5b4fc','#7dd3fc','#c084fc'];
-    for (let i = 0; i < n; i++) {
-      const c = document.createElement('div');
-      c.className = 'confetti';
-      c.style.left = rnd(0, 100) + 'vw';
-      c.style.background = colors[rnd(0, colors.length - 1)];
-      c.style.animationDuration = (1 + Math.random() * 1.2) + 's';
-      c.style.animationDelay = (Math.random() * 0.3) + 's';
-      c.style.width = c.style.height = rnd(6, 12) + 'px';
-      document.body.appendChild(c);
-      setTimeout(() => c.remove(), 2500);
-    }
+  // ============================================================
+  //  СОСТОЯНИЕ
+  // ============================================================
+  let playerName = localStorage.getItem(STORAGE_KEYS.name) || '';
+  let statBestClassic = readInt(STORAGE_KEYS.bestClassic);
+  let statBestTimed = readInt(STORAGE_KEYS.bestTimed);
+  let statTotal = readInt(STORAGE_KEYS.total);
+
+  let settings = { ...DEFAULT_SETTINGS };
+  let draftSettings = { ...DEFAULT_SETTINGS };
+
+  const gameState = {
+    mode: 'all',
+    isTimed: false,
+    score: 0,
+    lives: MAX_LIVES,
+    answer: 0,
+    locked: false,
+    ended: false,
+    currentTaskKey: '',
+    recentTasks: [],
+    wrongQueue: [],
+    timeLeft: TIMED_DURATION,
+    timerId: null,
+    lastMode: 'all',
+    recordSaved: false
+  };
+
+  let duelState = {
+    active: false,
+    score1: 0,
+    score2: 0,
+    timeLeft: DUEL_DURATION,
+    timerId: null,
+    name1: 'Игрок 1',
+    name2: 'Игрок 2'
+  };
+
+  // ============================================================
+  //  НАСТРОЙКИ
+  // ============================================================
+  function loadSettings() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEYS.settings);
+      if (!raw) return;
+      const s = JSON.parse(raw);
+      if (Number.isFinite(s.asMin)) settings.asMin = s.asMin;
+      if (Number.isFinite(s.asMax)) settings.asMax = s.asMax;
+      if (Array.isArray(s.tables)) settings.tables = s.tables.filter(t => ALL_TABLES.includes(t));
+      if (Number.isFinite(s.mdMax)) settings.mdMax = s.mdMax;
+    } catch { /* ignore */ }
   }
 
-  function updateHearts() {
-    $('hearts').textContent = '❤️'.repeat(lives) + '🖤'.repeat(MAX_LIVES - lives);
+  function saveSettings() {
+    try {
+      localStorage.setItem(STORAGE_KEYS.settings, JSON.stringify(settings));
+    } catch { /* ignore */ }
   }
 
-  function pickOp() {
-    if (currentMode === 'addsub') return pick1(['+', '−']);
-    if (currentMode === 'muldiv') return pick1(['×', '÷']);
-    return pick1(['+', '−', '×', '÷']);
+  function areSettingsValid(s) {
+    const lo = Math.min(s.asMin, s.asMax);
+    const hi = Math.max(s.asMin, s.asMax);
+    return hi >= 2 * lo;
   }
 
-  function buildTask() {
-    const op = pickOp();
-    let a, b, ans, display;
+  function getEffectiveTables(tables) {
+    const filtered = (tables || []).filter(t => ALL_TABLES.includes(t));
+    return filtered.length ? filtered : ALL_TABLES;
+  }
 
+  // ============================================================
+  //  МАТЕМАТИКА
+  // ============================================================
+  function pickOp(mode) {
+    if (mode === 'addsub') return pickRandom(['+', '−']);
+    if (mode === 'muldiv') return pickRandom(['×', '÷']);
+    return pickRandom(['+', '−', '×', '÷']);
+  }
+
+  function buildTask(mode) {
+    const op = pickOp(mode);
     const asMin = Math.min(settings.asMin, settings.asMax);
     const asMax = Math.max(settings.asMin, settings.asMax);
     const mdMax = Math.max(1, settings.mdMax);
-    
-    let tables = settings.tables.length === 0 ? [2,3,4,5,6,7,8,9,10] : settings.tables.filter(t => t >= 2 && t <= 10);
-    if (tables.length === 0) tables = [2,3,4,5,6,7,8,9,10];
+    const tables = getEffectiveTables(settings.tables);
+
+    let a, b, ans, display;
 
     if (op === '+') {
-      a = rnd(asMin, Math.max(asMin, asMax - asMin));
-      b = rnd(asMin, Math.max(asMin, asMax - a));
-      if (a + b > asMax) { b = Math.max(asMin, asMax - a); }
+      a = rand(asMin, asMax - asMin);
+      b = rand(asMin, asMax - a);
       ans = a + b;
       display = `${a} + ${b} = ?`;
     } else if (op === '−') {
-      a = rnd(asMin + 1, asMax);
-      b = rnd(asMin, a);
+      a = rand(asMin + 1, asMax);
+      b = rand(asMin, a);
       ans = a - b;
       display = `${a} − ${b} = ?`;
     } else if (op === '×') {
-      a = pick1(tables);
-      b = rnd(1, mdMax);
+      a = pickRandom(tables);
+      b = rand(1, mdMax);
       ans = a * b;
       display = `${a} × ${b} = ?`;
     } else {
-      a = pick1(tables);
-      b = rnd(1, mdMax);
+      a = pickRandom(tables);
+      b = rand(1, mdMax);
       ans = b;
       display = `${a * b} ÷ ${a} = ?`;
     }
+
     return { display, answer: ans, key: display, op, a, b };
   }
 
@@ -763,233 +715,416 @@
     if (op === '+') ans = a + b;
     else if (op === '−') ans = a - b;
     else if (op === '×') ans = a * b;
-    else ans = Math.round(a / b);
+    else {
+      if (b === 0 || a % b !== 0) return null;
+      ans = a / b;
+    }
     return { display: key, answer: ans, key, op, a, b };
   }
 
-  function makeDistractors(task) {
-    const { op, answer, a, b } = task;
-    const set = new Set();
+  function buildOptions(task) {
+    const { answer, op, a, b } = task;
+    const distractors = new Set();
+
     const add = v => {
-      if (Number.isFinite(v) && Number.isInteger(v) && v !== answer && v > 0) set.add(v);
+      if (Number.isFinite(v) && Number.isInteger(v) && v !== answer && v > 0) {
+        distractors.add(v);
+      }
     };
 
     if (op === '+' || op === '−') {
-      add(answer + 10); add(answer - 10); add(answer + 1); add(answer - 1); add(a + b); add(a - b);
-    } else if (op === '×' || op === '÷') {
-      if (op === '×') { add(answer + a); add(answer - a); add(answer + b); add(answer - b); add(a + b); }
-      else { add(answer + 1); add(answer - 1); add(answer + 2); add(answer - 2); add(a - b); }
+      add(answer + 10); add(answer - 10);
+      add(answer + 1);  add(answer - 1);
+      add(a + b);       add(a - b);
+    } else if (op === '×') {
+      add(answer + a);  add(answer - a);
+      add(answer + b);  add(answer - b);
+      add(a + b);
+    } else {
+      add(answer + 1);  add(answer - 1);
+      add(answer + 2);  add(answer - 2);
+      add(a + b);       add(a * b);
     }
 
     const scale = Math.max(2, Math.round(Math.abs(answer) * 0.2));
     let guard = 0;
-    while (set.size < 8 && guard < 50) {
+    while (distractors.size < OPTIONS_COUNT - 1 && guard < 50) {
       guard++;
-      add(answer + pick1([-scale, -Math.round(scale/2), Math.round(scale/2), scale, -1, 1, 2, -2]));
+      add(answer + pickRandom([-scale, -1, 1, 2, -2, scale]));
     }
-    return [...set];
+    guard = 0;
+    while (distractors.size < OPTIONS_COUNT - 1 && guard < 100) {
+      guard++;
+      add(answer + rand(-20, 20));
+    }
+
+    const values = [...distractors].slice(0, OPTIONS_COUNT - 1);
+    values.push(answer);
+    for (let i = values.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [values[i], values[j]] = [values[j], values[i]];
+    }
+    return values;
   }
 
   function makeTask() {
+    if (gameState.ended) return;
+
     let task = null;
-    if (wrongQueue.length > 0 && Math.random() < 0.4) {
-      const key = wrongQueue[Math.floor(Math.random() * wrongQueue.length)];
+    if (gameState.wrongQueue.length > 0 && Math.random() < 0.4) {
+      const idx = Math.floor(Math.random() * gameState.wrongQueue.length);
+      const key = gameState.wrongQueue[idx];
       const restored = restoreTask(key);
-      if (restored) { task = restored; wrongQueue = wrongQueue.filter(k => k !== key); }
-    }
-    if (!task) {
-      let attempts = 0;
-      task = buildTask();
-      while (recentTasks.includes(task.key) && attempts < 30) {
-        task = buildTask(); attempts++;
+      if (restored) {
+        task = restored;
+        gameState.wrongQueue.splice(idx, 1);
       }
     }
-    recentTasks.push(task.key);
-    if (recentTasks.length > RECENT_LIMIT) recentTasks.shift();
 
-    answer = task.answer;
-    currentDisplayKey = task.key;
+    if (!task) {
+      let attempts = 0;
+      task = buildTask(gameState.mode);
+      while (gameState.recentTasks.includes(task.key) && attempts < 30) {
+        task = buildTask(gameState.mode);
+        attempts++;
+      }
+    }
+
+    gameState.recentTasks.push(task.key);
+    if (gameState.recentTasks.length > RECENT_LIMIT) gameState.recentTasks.shift();
+
+    gameState.answer = task.answer;
+    gameState.currentTaskKey = task.key;
+
     $('task').textContent = task.display;
     $('task').classList.remove('hit');
 
-    const distractors = makeDistractors(task);
-    for (let i = distractors.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [distractors[i], distractors[j]] = [distractors[j], distractors[i]];
-    }
-    const opts = new Set([answer]);
-    for (const d of distractors) {
-      if (opts.size >= 4) break;
-      opts.add(d);
-    }
-    let guard = 0;
-    while (opts.size < 4 && guard < 50) {
-      guard++;
-      const v = answer + rnd(-20, 20);
-      if (v > 0) opts.add(v);
-    }
-    const arr = [...opts].sort(() => Math.random() - 0.5);
-
+    const options = buildOptions(task);
     const box = $('answers');
     box.innerHTML = '';
-    arr.forEach(v => {
+    for (const v of options) {
       const btn = document.createElement('button');
       btn.className = 'ball';
       btn.textContent = v;
       btn.dataset.value = v;
-      btn.onclick = () => pick(btn, v);
+      btn.addEventListener('click', () => pick(btn, v));
       box.appendChild(btn);
-    });
-    locked = false;
+    }
+
+    gameState.locked = false;
     $('msg').classList.remove('show');
   }
 
+  // ============================================================
+  //  ИГРА
+  // ============================================================
+  function startGame(mode) {
+    const isTimed = mode === 'timed';
+    const playMode = isTimed ? 'all' : mode;
+
+    gameState.mode = playMode;
+    gameState.isTimed = isTimed;
+    gameState.lastMode = mode;
+    gameState.score = 0;
+    gameState.lives = MAX_LIVES;
+    gameState.answer = 0;
+    gameState.locked = false;
+    gameState.ended = false;
+    gameState.currentTaskKey = '';
+    gameState.recentTasks = [];
+    gameState.wrongQueue = [];
+    gameState.timeLeft = TIMED_DURATION;
+    gameState.recordSaved = false;
+
+    if (gameState.timerId) {
+      clearInterval(gameState.timerId);
+      gameState.timerId = null;
+    }
+
+    $('score').textContent = '0';
+    updateHearts();
+    $('rank').textContent = `${RANKS[0].emoji} ${RANKS[0].name}`;
+    $('continue').classList.remove('visible');
+    $('saveRecordBtn').classList.remove('show', 'saved');
+    $('saveRecordBtn').textContent = 'Сохранить рекорд';
+
+    showScreen('screen-game');
+
+    if (isTimed) {
+      $('hearts-container').style.display = 'none';
+      $('rank-container').style.display = 'none';
+      $('timer').textContent = `⏱️ ${TIMED_DURATION} сек`;
+
+      gameState.timerId = setInterval(() => {
+        gameState.timeLeft--;
+        $('timer').textContent = `⏱️ ${gameState.timeLeft} сек`;
+        if (gameState.timeLeft <= 0) {
+          clearInterval(gameState.timerId);
+          gameState.timerId = null;
+          gameOver();
+        }
+      }, 1000);
+    } else {
+      $('hearts-container').style.display = 'flex';
+      $('rank-container').style.display = 'flex';
+      $('timer').textContent = '';
+    }
+
+    makeTask();
+  }
+
   function pick(btn, value) {
-    if (locked) return;
-    locked = true;
-    if (value === answer) {
-      const prevRank = rankFor(score);
-      score++;
-      statTotal++; 
-      localStorage.setItem('mathTirTotal', statTotal);
-      
-      $('score').textContent = score;
+    if (gameState.locked || gameState.ended) return;
+    gameState.locked = true;
+
+    if (value === gameState.answer) {
+      const prevRank = rankFor(gameState.score);
+      gameState.score++;
+      statTotal++;
+      writeStorage(STORAGE_KEYS.total, statTotal);
+
+      $('score').textContent = gameState.score;
       btn.classList.add('correct');
       $('task').classList.add('hit');
       $('msg').textContent = 'Верно!';
       $('msg').className = 'msg show success';
 
-      const newRank = rankFor(score);
-      if (newRank.at > prevRank.at && !isTimedMode) {
+      const newRank = rankFor(gameState.score);
+      if (newRank.at > prevRank.at && !gameState.isTimed) {
         $('rank').textContent = `${newRank.emoji} ${newRank.name}`;
         confetti(40);
       }
-      
-      if (!isTimedMode) {
-        const recordKey = 'mathTirBestClassic';
-        if (score > parseInt(localStorage.getItem(recordKey) || '0', 10)) {
-          $('saveRecordBtn').classList.add('show');
-          $('saveRecordBtn').classList.remove('saved');
-          $('saveRecordBtn').textContent = 'Сохранить рекорд';
-        }
-      }
-      
-      setTimeout(makeTask, 350);
+
+      setTimeout(makeTask, DELAYS.correct);
     } else {
-      if (!isTimedMode) {
-        lives--;
+      if (!gameState.isTimed) {
+        gameState.lives = Math.max(0, gameState.lives - 1);
         updateHearts();
       }
       btn.classList.add('wrong');
-      document.querySelectorAll('.ball').forEach(b => {
-        if (parseInt(b.dataset.value, 10) === answer) b.classList.add('reveal');
+      document.querySelectorAll('#answers .ball').forEach(b => {
+        if (parseInt(b.dataset.value, 10) === gameState.answer) {
+          b.classList.add('reveal');
+        }
       });
-      $('msg').textContent = `Правильно: ${answer}`;
+      $('msg').textContent = `Правильно: ${gameState.answer}`;
       $('msg').className = 'msg show error';
 
-      if (currentDisplayKey && !wrongQueue.includes(currentDisplayKey)) {
-        wrongQueue.push(currentDisplayKey);
-        if (wrongQueue.length > 10) wrongQueue.shift();
+      if (gameState.currentTaskKey && !gameState.wrongQueue.includes(gameState.currentTaskKey)) {
+        gameState.wrongQueue.push(gameState.currentTaskKey);
+        if (gameState.wrongQueue.length > WRONG_QUEUE_LIMIT) gameState.wrongQueue.shift();
       }
-      
-      if (!isTimedMode && lives <= 0) setTimeout(gameOver, 900);
-      else setTimeout(makeTask, isTimedMode ? 600 : 1200);
+
+      if (!gameState.isTimed && gameState.lives <= 0) {
+        setTimeout(gameOver, DELAYS.gameOver);
+      } else {
+        setTimeout(makeTask, gameState.isTimed ? DELAYS.wrongTimed : DELAYS.wrongClassic);
+      }
     }
   }
 
-  function saveScore(mode, finalScore, customName) {
-    const nameToSave = customName || playerName;
-    if (!nameToSave) return;
-    push(ref(db, `scores/${mode}`), {
-      name: nameToSave,
-      score: finalScore,
-      timestamp: Date.now()
-    }).catch(e => console.error(e));
+  function gameOver() {
+    if (gameState.ended) return;
+    gameState.ended = true;
+
+    if (gameState.timerId) {
+      clearInterval(gameState.timerId);
+      gameState.timerId = null;
+    }
+
+    $('timer').textContent = '';
+    $('task').textContent = gameState.isTimed ? 'Время вышло!' : 'Жизни кончились!';
+    $('answers').innerHTML = '';
+
+    const r = rankFor(gameState.score);
+    $('msg').textContent = `Счёт: ${gameState.score} · ${r.emoji} ${r.name}`;
+    $('msg').className = 'msg show success';
+    $('continue').classList.add('visible');
+
+    // Автосохранение рекорда (один раз)
+    if (playerName && !gameState.recordSaved) {
+      gameState.recordSaved = true;
+      const recordKey = gameState.isTimed ? STORAGE_KEYS.bestTimed : STORAGE_KEYS.bestClassic;
+      const currentBest = readInt(recordKey);
+      if (gameState.score > currentBest) {
+        if (gameState.isTimed) {
+          statBestTimed = gameState.score;
+          writeStorage(STORAGE_KEYS.bestTimed, gameState.score);
+        } else {
+          statBestClassic = gameState.score;
+          writeStorage(STORAGE_KEYS.bestClassic, gameState.score);
+        }
+        saveScore(gameState.isTimed ? 'timed' : 'classic', gameState.score, playerName);
+      }
+    }
+  }
+
+  function updateHearts() {
+    const safe = clamp(gameState.lives, 0, MAX_LIVES);
+    $('hearts').textContent = '❤️'.repeat(safe) + '🖤'.repeat(MAX_LIVES - safe);
   }
 
   function checkAndSaveRecord() {
-    if (score === 0 || !playerName) return;
-    const recordKey = isTimedMode ? 'mathTirBestTimed' : 'mathTirBestClassic';
-    const currentBest = parseInt(localStorage.getItem(recordKey) || '0', 10);
-    if (score > currentBest) {
-      localStorage.setItem(recordKey, score);
-      saveScore(isTimedMode ? 'timed' : 'classic', score);
+    if (gameState.ended || gameState.recordSaved) return;
+    if (gameState.score <= 0 || !playerName) return;
+
+    const recordKey = gameState.isTimed ? STORAGE_KEYS.bestTimed : STORAGE_KEYS.bestClassic;
+    const currentBest = readInt(recordKey);
+    if (gameState.score > currentBest) {
+      gameState.recordSaved = true;
+      if (gameState.isTimed) {
+        statBestTimed = gameState.score;
+        writeStorage(STORAGE_KEYS.bestTimed, gameState.score);
+      } else {
+        statBestClassic = gameState.score;
+        writeStorage(STORAGE_KEYS.bestClassic, gameState.score);
+      }
+      saveScore(gameState.isTimed ? 'timed' : 'classic', gameState.score, playerName);
     }
   }
 
-  function loadLeaderboard(mode, period, containerId) {
-    const container = $(containerId);
-    container.innerHTML = '<div class="rating-empty">Загрузка...</div>';
-    
-    const q = query(ref(db, `scores/${mode}`), limitToLast(100));
-    onValue(q, (snapshot) => {
-      const data = snapshot.val();
-      container.innerHTML = '';
-      if (!data) {
-        container.innerHTML = '<div class="rating-empty">Пока нет результатов</div>';
-        return;
-      }
-      
-      let filtered = Object.values(data);
-      if (period === 'month') {
-        const monthAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
-        filtered = filtered.filter(item => item.timestamp >= monthAgo);
-      } else if (period === 'week') {
-        const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-        filtered = filtered.filter(item => item.timestamp >= weekAgo);
-      }
-
-      const bestScores = {};
-      filtered.forEach(item => {
-        if (!bestScores[item.name] || item.score > bestScores[item.name]) {
-          bestScores[item.name] = item.score;
-        }
-      });
-      
-      const sorted = Object.keys(bestScores)
-        .map(name => ({ name, score: bestScores[name] }))
-        .sort((a, b) => b.score - a.score)
-        .slice(0, 100); 
-        
-      if (sorted.length === 0) {
-        container.innerHTML = '<div class="rating-empty">Пока нет результатов</div>';
-        return;
-      }
-      
-      sorted.forEach((item, index) => {
-        const row = document.createElement('div');
-        row.className = 'rating-row';
-        row.innerHTML = `
-          <span class="pos">${index + 1}</span>
-          <span class="nm">${item.name}</span>
-          <span class="sc">${item.score}</span>
-        `;
-        container.appendChild(row);
-      });
-    });
+  // ============================================================
+  //  ДУЭЛЬ
+  // ============================================================
+  function createDuelOptions(container, task, onPick) {
+    container.innerHTML = '';
+    const options = buildOptions(task);
+    for (const v of options) {
+      const btn = document.createElement('button');
+      btn.className = 'duel-ball';
+      btn.textContent = v;
+      btn.addEventListener('click', () => onPick(btn, v));
+      container.appendChild(btn);
+    }
   }
 
+  function nextDuelTask(player) {
+    if (!duelState.active) return;
+
+    const task = buildTask('all');
+    if (player === 1) {
+      $('duelTask1').textContent = task.display;
+      createDuelOptions($('duelAnswers1'), task, (btn, val) => {
+        if (!duelState.active) return;
+        if (val === task.answer) {
+          btn.classList.add('correct');
+          duelState.score1++;
+          $('duelScore1').textContent = duelState.score1;
+          setTimeout(() => nextDuelTask(1), DELAYS.duelCorrect);
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(() => nextDuelTask(1), DELAYS.duelWrong);
+        }
+      });
+    } else {
+      $('duelTask2').textContent = task.display;
+      createDuelOptions($('duelAnswers2'), task, (btn, val) => {
+        if (!duelState.active) return;
+        if (val === task.answer) {
+          btn.classList.add('correct');
+          duelState.score2++;
+          $('duelScore2').textContent = duelState.score2;
+          setTimeout(() => nextDuelTask(2), DELAYS.duelCorrect);
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(() => nextDuelTask(2), DELAYS.duelWrong);
+        }
+      });
+    }
+  }
+
+  function startDuelGame() {
+    duelState.name1 = $('duelInput1').value.trim() || 'Игрок 1';
+    duelState.name2 = $('duelInput2').value.trim() || 'Игрок 2';
+
+    $('duelSetupModal').classList.remove('visible');
+
+    duelState.active = true;
+    duelState.score1 = 0;
+    duelState.score2 = 0;
+    duelState.timeLeft = DUEL_DURATION;
+
+    $('duelScore1').textContent = '0';
+    $('duelScore2').textContent = '0';
+    $('duelTimer').textContent = String(DUEL_DURATION);
+    $('duelName1').textContent = duelState.name1;
+    $('duelName2').textContent = duelState.name2;
+
+    $('screen-duel').classList.add('active');
+    $('duelResultPopup').classList.remove('visible');
+
+    if (duelState.timerId) clearInterval(duelState.timerId);
+    duelState.timerId = setInterval(() => {
+      duelState.timeLeft--;
+      $('duelTimer').textContent = String(duelState.timeLeft);
+      if (duelState.timeLeft <= 0) {
+        clearInterval(duelState.timerId);
+        duelState.timerId = null;
+        endDuel();
+      }
+    }, 1000);
+
+    nextDuelTask(1);
+    nextDuelTask(2);
+  }
+
+  function endDuel() {
+    duelState.active = false;
+
+    const totalScore = duelState.score1 + duelState.score2;
+    const pairName = `${duelState.name1} и ${duelState.name2}`;
+
+    $('duelResultScore').textContent = `${duelState.score1} : ${duelState.score2}`;
+
+    if (duelState.score1 > duelState.score2) {
+      $('duelResultTitle').textContent = '🏆 Победил Игрок 1!';
+      $('duelResultSubtitle').textContent = `${duelState.name1} — молодец!`;
+    } else if (duelState.score2 > duelState.score1) {
+      $('duelResultTitle').textContent = '🏆 Победил Игрок 2!';
+      $('duelResultSubtitle').textContent = `${duelState.name2} — молодец!`;
+    } else {
+      $('duelResultTitle').textContent = '🤝 Ничья!';
+      $('duelResultSubtitle').textContent = 'Победила дружба!';
+    }
+
+    const saveBtn = $('saveDuelBtn');
+    saveBtn.textContent = 'Сохранить в Рейтинг';
+    saveBtn.style.background = '';
+    saveBtn.style.boxShadow = '';
+    saveBtn.style.color = '';
+    saveBtn.onclick = () => {
+      saveScore('duel', totalScore, pairName);
+      saveBtn.textContent = 'Сохранено!';
+      saveBtn.style.background = '#f0f4f8';
+      saveBtn.style.boxShadow = 'none';
+      saveBtn.style.color = '#64748b';
+      saveBtn.onclick = null;
+    };
+
+    $('duelResultPopup').classList.add('visible');
+  }
+
+  // ============================================================
+  //  UI
+  // ============================================================
   function showScreen(id) {
     document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
     $(id).classList.add('active');
   }
 
-  function gameOver() {
-    if (timerInterval) clearInterval(timerInterval);
-    $('timer').textContent = '';
-    $('task').textContent = isTimedMode ? 'Время вышло!' : 'Жизни кончились!';
-    $('answers').innerHTML = '';
-    
-    const r = rankFor(score);
-    $('msg').textContent = `Счёт: ${score} · ${r.emoji} ${r.name}`;
-    $('msg').className = 'msg show success';
-    $('continue').classList.add('visible');
-    
-    if (playerName) {
-      saveScore(isTimedMode ? 'timed' : 'classic', score);
-      const recordKey = isTimedMode ? 'mathTirBestTimed' : 'mathTirBestClassic';
-      const currentBest = parseInt(localStorage.getItem(recordKey) || '0', 10);
-      if (score > currentBest) localStorage.setItem(recordKey, score);
+  function confetti(n) {
+    const colors = ['#fca5a5','#5eead4','#fcd34d','#a5b4fc','#7dd3fc','#c084fc'];
+    for (let i = 0; i < n; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = rand(0, 100) + 'vw';
+      c.style.background = colors[rand(0, colors.length - 1)];
+      c.style.animationDuration = (1 + Math.random() * 1.2) + 's';
+      c.style.animationDelay = (Math.random() * 0.3) + 's';
+      const size = rand(6, 12);
+      c.style.width = c.style.height = size + 'px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 2500);
     }
   }
 
@@ -998,424 +1133,386 @@
     $('avatarLetter').textContent = playerName ? playerName.charAt(0).toUpperCase() : '?';
   }
 
-  function syncSettingsUI() {
-    $('as-min').value = settings.asMin;
-    $('as-max').value = settings.asMax;
-    $('as-min-val').textContent = settings.asMin;
-    $('as-max-val').textContent = settings.asMax;
-    $('as-label').textContent = `от ${settings.asMin} до ${settings.asMax}`;
+  function refreshProfileStats() {
+    $('pStatBestClassic').textContent = String(statBestClassic);
+    $('pStatBestTimed').textContent = String(statBestTimed);
+    $('pStatTotal').textContent = String(statTotal);
+  }
 
+  // ============================================================
+  //  РЕЙТИНГ
+  // ============================================================
+  let currentRatingMode = 'classic';
+  let currentRatingPeriod = 'all';
+  let leaderboardUnsub = null;
+
+  function filterByPeriod(items, period) {
+    if (period === 'all') return items;
+    const now = Date.now();
+    const ms = period === 'month' ? 30 * 24 * 60 * 60 * 1000 : 7 * 24 * 60 * 60 * 1000;
+    return items.filter(it => it.timestamp >= now - ms);
+  }
+
+  function aggregateBest(items) {
+    const best = new Map();
+    for (const it of items) {
+      if (!best.has(it.name) || it.score > best.get(it.name)) {
+        best.set(it.name, it.score);
+      }
+    }
+    return [...best.entries()]
+      .map(([name, score]) => ({ name, score }))
+      .sort((a, b) => b.score - a.score);
+  }
+
+  function renderLeaderboard(data) {
+    const container = $('ratingList');
+    container.innerHTML = '';
+
+    const items = Object.values(data);
+    const filtered = filterByPeriod(items, currentRatingPeriod);
+    const sorted = aggregateBest(filtered).slice(0, 100);
+
+    if (sorted.length === 0) {
+      const empty = document.createElement('div');
+      empty.className = 'rating-empty';
+      empty.textContent = 'Пока нет результатов';
+      container.appendChild(empty);
+      return;
+    }
+
+    const frag = document.createDocumentFragment();
+    sorted.forEach((item, index) => {
+      const row = document.createElement('div');
+      row.className = 'rating-row';
+
+      const pos = document.createElement('span');
+      pos.className = 'pos';
+      pos.textContent = String(index + 1);
+
+      const nm = document.createElement('span');
+      nm.className = 'nm';
+      nm.textContent = item.name;   // безопасно, без innerHTML
+
+      const sc = document.createElement('span');
+      sc.className = 'sc';
+      sc.textContent = String(item.score);
+
+      row.append(pos, nm, sc);
+      frag.appendChild(row);
+    });
+    container.appendChild(frag);
+  }
+
+  function loadLeaderboard() {
+    if (leaderboardUnsub) {
+      leaderboardUnsub();
+      leaderboardUnsub = null;
+    }
+
+    const container = $('ratingList');
+    container.innerHTML = '';
+    const loading = document.createElement('div');
+    loading.className = 'rating-empty';
+    loading.textContent = 'Загрузка...';
+    container.appendChild(loading);
+
+    leaderboardUnsub = subscribeLeaderboard(currentRatingMode, renderLeaderboard);
+  }
+
+  // ============================================================
+  //  НАСТРОЙКИ UI
+  // ============================================================
+  function buildTableButtons() {
+    const grid = $('tbl-grid');
+    grid.innerHTML = '';
+    for (const t of ALL_TABLES) {
+      const b = document.createElement('button');
+      b.className = 'tbl-btn';
+      b.dataset.tbl = t;
+      b.textContent = '×' + t;
+      b.addEventListener('click', () => {
+        // [] = все выбраны. Если сейчас "все" — превращаем в "все кроме t".
+        // Если t выбран — убираем. Если не выбран — добавляем.
+        if (draftSettings.tables.length === 0) {
+          draftSettings.tables = ALL_TABLES.filter(x => x !== t);
+        } else {
+          const idx = draftSettings.tables.indexOf(t);
+          if (idx >= 0) {
+            draftSettings.tables.splice(idx, 1);
+          } else {
+            draftSettings.tables.push(t);
+          }
+          if (draftSettings.tables.length === ALL_TABLES.length) {
+            draftSettings.tables = []; // все выбраны → пустой = все
+          }
+        }
+        syncSettingsUI();
+      });
+      grid.appendChild(b);
+    }
+  }
+
+  function syncSettingsUI() {
+    const s = draftSettings;
+
+    $('as-min').value = s.asMin;
+    $('as-max').value = s.asMax;
+    $('as-min-val').textContent = s.asMin;
+    $('as-max-val').textContent = s.asMax;
+    $('as-label').textContent = `от ${s.asMin} до ${s.asMax}`;
+
+    const valid = areSettingsValid(s);
+    $('as-warning').style.display = valid ? 'none' : 'block';
+    $('set-apply').disabled = !valid;
+    $('set-apply').style.opacity = valid ? '1' : '0.5';
+
+    const tables = getEffectiveTables(s.tables);
     document.querySelectorAll('.tbl-btn').forEach(b => {
       const t = +b.dataset.tbl;
-      b.classList.toggle('active', settings.tables.length === 0 || settings.tables.includes(t));
+      b.classList.toggle('active', tables.includes(t));
     });
 
     const allBtn = $('tbl-select-all');
-    if (settings.tables.length === 0) {
-      allBtn.textContent = 'Все выбраны';
-      allBtn.disabled = true;
+    if (s.tables.length === 0) {
+      allBtn.textContent = 'Снять все';
+      allBtn.disabled = false;
     } else {
       allBtn.textContent = 'Выбрать все';
       allBtn.disabled = false;
     }
 
-    $('md-max').value = settings.mdMax;
-    $('md-max-val').textContent = settings.mdMax;
-    $('md-label').textContent = `до ${settings.mdMax}`;
+    $('md-max').value = s.mdMax;
+    $('md-max-val').textContent = s.mdMax;
+    $('md-label').textContent = `до ${s.mdMax}`;
   }
 
-  (function buildTableButtons() {
-    const grid = $('tbl-grid');
-    for (let t = 2; t <= 10; t++) {
-      const b = document.createElement('button');
-      b.className = 'tbl-btn';
-      b.dataset.tbl = t;
-      b.textContent = '×' + t;
-      b.onclick = () => {
-        if (settings.tables.length === 0) {
-          settings.tables = [t];
-        } else {
-          const idx = settings.tables.indexOf(t);
-          if (idx >= 0) settings.tables.splice(idx, 1);
-          else settings.tables.push(t);
-          if (settings.tables.length === 0) settings.tables = [];
-        }
-        syncSettingsUI();
-      };
-      grid.appendChild(b);
-    }
-  })();
+  // ============================================================
+  //  ИНИЦИАЛИЗАЦИЯ
+  // ============================================================
+  function init() {
+    loadSettings();
+    updateNameUI();
+    refreshProfileStats();
+    buildTableButtons();
 
-  $('tbl-select-all').onclick = () => {
-    settings.tables = [];
-    syncSettingsUI();
-  };
+    // --- Кнопки режимов ---
+    $('mode-addsub').onclick = () => startGame('addsub');
+    $('mode-muldiv').onclick = () => startGame('muldiv');
+    $('mode-all').onclick    = () => startGame('all');
+    $('mode-timed').onclick  = () => startGame('timed');
 
-  $('as-min').oninput = (e) => {
-    let v = +e.target.value;
-    if (v >= settings.asMax) { v = settings.asMax - 1; e.target.value = v; }
-    settings.asMin = v;
-    syncSettingsUI();
-  };
-  $('as-max').oninput = (e) => {
-    let v = +e.target.value;
-    if (v <= settings.asMin) { v = settings.asMin + 1; e.target.value = v; }
-    settings.asMax = v;
-    syncSettingsUI();
-  };
-  $('md-max').oninput = (e) => {
-    settings.mdMax = +e.target.value;
-    syncSettingsUI();
-  };
+    // --- "Продолжить" — перезапускает последний режим ---
+    $('continue').onclick = () => startGame(gameState.lastMode);
 
-  $('set-apply').onclick = () => {
-    saveSettings();
-    $('settingsModal').classList.remove('visible');
-  };
-  $('set-reset').onclick = () => {
-    settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
-    syncSettingsUI();
-  };
-  $('set-close').onclick = () => $('settingsModal').classList.remove('visible');
-  $('openSettingsBtn').onclick = () => {
-    syncSettingsUI();
-    $('nameModal').classList.remove('visible');
-    $('settingsModal').classList.add('visible');
-  };
-  $('settingsModal').onclick = (e) => {
-    if (e.target === $('settingsModal')) $('settingsModal').classList.remove('visible');
-  };
-
-  $('editNameBtn').onclick = () => {
-    $('nameInput').value = playerName;
-    $('nameInput').readOnly = true;
-    $('nameWrapper').classList.remove('active');
-    if (document.activeElement) document.activeElement.blur();
-
-    $('pStatBestClassic').textContent = localStorage.getItem('mathTirBestClassic') || '0';
-    $('pStatBestTimed').textContent = localStorage.getItem('mathTirBestTimed') || '0';
-    $('pStatTotal').textContent = localStorage.getItem('mathTirTotal') || '0';
-
-    $('nameModal').classList.add('visible');
-  };
-
-  $('nameWrapper').onclick = () => {
-    if ($('nameInput').readOnly) {
-      $('nameInput').readOnly = false;
-      $('nameWrapper').classList.add('active');
-      $('nameInput').focus();
-    }
-  };
-
-  $('saveName').onclick = () => {
-    const val = $('nameInput').value.trim();
-    if (val) {
-      playerName = val;
-      localStorage.setItem('mathTirName', val);
-      updateNameUI();
-      $('nameModal').classList.remove('visible');
-    } else {
-      const inp = $('nameInput');
-      inp.style.transform = 'translateX(5px)';
-      setTimeout(() => inp.style.transform = 'translateX(-5px)', 50);
-      setTimeout(() => inp.style.transform = 'translateX(5px)', 100);
-      setTimeout(() => inp.style.transform = 'translateX(0)', 150);
-    }
-  };
-
-  $('nameInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') $('saveName').click();
-  });
-
-  function startGame(mode) {
-    currentMode = mode;
-    isTimedMode = (mode === 'timed');
-    duelActive = false;
-    if (isTimedMode) currentMode = 'all';
-
-    score = 0; lives = MAX_LIVES;
-    recentTasks = []; wrongQueue = [];
-    $('score').textContent = 0;
-    updateHearts();
-    $('rank').textContent = `${RANKS[0].emoji} ${RANKS[0].name}`;
-    $('continue').classList.remove('visible');
-    $('saveRecordBtn').classList.remove('show', 'saved');
-    
-    showScreen('screen-game');
-    
-    if (isTimedMode) {
-      $('hearts-container').style.display = 'none';
-      $('rank-container').style.display = 'none';
-      timeLeft = 60;
-      $('timer').textContent = `⏱️ ${timeLeft} сек`;
-      if (timerInterval) clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        $('timer').textContent = `⏱️ ${timeLeft} сек`;
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          gameOver();
-        }
-      }, 1000);
-    } else {
-      $('hearts-container').style.display = 'flex';
-      $('rank-container').style.display = 'flex';
-      $('timer').textContent = '';
-      if (timerInterval) clearInterval(timerInterval);
-    }
-    
-    makeTask();
-  }
-
-  $('saveRecordBtn').onclick = () => {
-    if (score === 0 || !playerName) return;
-    const recordKey = 'mathTirBestClassic';
-    localStorage.setItem(recordKey, score);
-    saveScore('classic', score);
-    $('saveRecordBtn').textContent = 'Сохранено!';
-    $('saveRecordBtn').classList.add('saved');
-    $('saveRecordBtn').classList.remove('show');
-  };
-
-  $('mode-addsub').onclick = () => startGame('addsub');
-  $('mode-muldiv').onclick = () => startGame('muldiv');
-  $('mode-all').onclick    = () => startGame('all');
-  $('mode-timed').onclick  = () => startGame('timed');
-
-  function createDuelOptions(container, correctAnswer, task, onPick) {
-    container.innerHTML = '';
-    const distractors = makeDistractors(task);
-    for (let i = distractors.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [distractors[i], distractors[j]] = [distractors[j], distractors[i]];
-    }
-    const opts = new Set([correctAnswer]);
-    for (const d of distractors) {
-      if (opts.size >= 4) break;
-      opts.add(d);
-    }
-    let guard = 0;
-    while (opts.size < 4 && guard < 50) {
-      guard++;
-      const v = correctAnswer + rnd(-20, 20);
-      if (v > 0) opts.add(v);
-    }
-    const arr = [...opts].sort(() => Math.random() - 0.5);
-
-    arr.forEach(v => {
-      const btn = document.createElement('button');
-      btn.className = 'duel-ball';
-      btn.textContent = v;
-      btn.onclick = () => onPick(btn, v);
-      container.appendChild(btn);
-    });
-  }
-
-  function nextDuelTask(player) {
-    const task = buildTask();
-    if (player === 1) {
-      duelTask1 = task;
-      $('duelTask1').textContent = task.display;
-      createDuelOptions($('duelAnswers1'), task.answer, task, (btn, val) => {
-        if (val === task.answer) {
-          btn.classList.add('correct');
-          duelScore1++;
-          $('duelScore1').textContent = duelScore1;
-          setTimeout(() => nextDuelTask(1), 150);
-        } else {
-          btn.classList.add('wrong');
-          setTimeout(() => nextDuelTask(1), 800);
-        }
-      });
-    } else {
-      duelTask2 = task;
-      $('duelTask2').textContent = task.display;
-      createDuelOptions($('duelAnswers2'), task.answer, task, (btn, val) => {
-        if (val === task.answer) {
-          btn.classList.add('correct');
-          duelScore2++;
-          $('duelScore2').textContent = duelScore2;
-          setTimeout(() => nextDuelTask(2), 150);
-        } else {
-          btn.classList.add('wrong');
-          setTimeout(() => nextDuelTask(2), 800);
-        }
-      });
-    }
-  }
-
-  $('mode-duel').onclick = () => {
-    $('duelInput1').value = '';
-    $('duelInput2').value = '';
-    $('duelSetupModal').classList.add('visible');
-    setTimeout(() => $('duelInput1').focus(), 100);
-  };
-
-  function startDuelGame() {
-    duelPlayerName1 = $('duelInput1').value.trim() || 'Игрок 1';
-    duelPlayerName2 = $('duelInput2').value.trim() || 'Игрок 2';
-
-    $('duelSetupModal').classList.remove('visible');
-    
-    duelActive = true;
-    duelScore1 = 0; duelScore2 = 0; duelTimeLeft = 60;
-    $('duelScore1').textContent = '0';
-    $('duelScore2').textContent = '0';
-    $('duelTimer').textContent = '60';
-    $('duelName1').textContent = duelPlayerName1;
-    $('duelName2').textContent = duelPlayerName2;
-
-    $('screen-duel').classList.add('active');
-    $('duelResultPopup').classList.remove('visible');
-
-    nextDuelTask(1);
-    nextDuelTask(2);
-
-    if (duelTimerInterval) clearInterval(duelTimerInterval);
-    duelTimerInterval = setInterval(() => {
-      duelTimeLeft--;
-      $('duelTimer').textContent = duelTimeLeft;
-      if (duelTimeLeft <= 0) {
-        clearInterval(duelTimerInterval);
-        endDuel();
+    $('backToMenu').onclick = () => {
+      if (gameState.timerId) {
+        clearInterval(gameState.timerId);
+        gameState.timerId = null;
       }
-    }, 1000);
-  }
-
-  $('startDuelBtn').onclick = startDuelGame;
-
-  $('duelInput2').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') startDuelGame();
-  });
-
-  function endDuel() {
-    duelActive = false;
-    const totalScore = duelScore1 + duelScore2;
-    const pairName = `${duelPlayerName1} и ${duelPlayerName2}`;
-
-    $('duelResultScore').textContent = `${duelScore1} : ${duelScore2}`;
-    if (duelScore1 > duelScore2) {
-      $('duelResultTitle').textContent = '🏆 Победил Игрок 1!';
-      $('duelResultSubtitle').textContent = `${duelPlayerName1} — молодец!`;
-    } else if (duelScore2 > duelScore1) {
-      $('duelResultTitle').textContent = '🏆 Победил Игрок 2!';
-      $('duelResultSubtitle').textContent = `${duelPlayerName2} — молодец!`;
-    } else {
-      $('duelResultTitle').textContent = '🤝 Ничья!';
-      $('duelResultSubtitle').textContent = 'Победила дружба!';
-    }
-
-    $('saveDuelBtn').onclick = () => {
-      saveScore('duel', totalScore, pairName);
-      $('saveDuelBtn').textContent = 'Сохранено!';
-      $('saveDuelBtn').style.background = '#f0f4f8';
-      $('saveDuelBtn').style.boxShadow = 'none';
-      $('saveDuelBtn').style.color = '#64748b';
+      checkAndSaveRecord();
+      gameState.ended = true;
+      showScreen('screen-menu');
     };
 
-    $('duelResultPopup').classList.add('visible');
-  }
+    // --- Сохранить рекорд вручную ---
+    $('saveRecordBtn').onclick = () => {
+      if (gameState.score <= 0 || !playerName) return;
+      if (gameState.recordSaved) return;
+      gameState.recordSaved = true;
+      const recordKey = gameState.isTimed ? STORAGE_KEYS.bestTimed : STORAGE_KEYS.bestClassic;
+      if (gameState.score > readInt(recordKey)) {
+        if (gameState.isTimed) {
+          statBestTimed = gameState.score;
+          writeStorage(STORAGE_KEYS.bestTimed, gameState.score);
+        } else {
+          statBestClassic = gameState.score;
+          writeStorage(STORAGE_KEYS.bestClassic, gameState.score);
+        }
+        saveScore(gameState.isTimed ? 'timed' : 'classic', gameState.score, playerName);
+      }
+      $('saveRecordBtn').textContent = 'Сохранено!';
+      $('saveRecordBtn').classList.add('saved');
+      $('saveRecordBtn').classList.remove('show');
+    };
 
-  $('closeDuelBtn').onclick = () => {
-    $('screen-duel').classList.remove('active');
-    $('duelResultPopup').classList.remove('visible');
-  };
+    // --- Профиль ---
+    $('editNameBtn').onclick = () => {
+      refreshProfileStats();
+      $('nameInput').value = playerName;
+      $('nameInput').readOnly = true;
+      $('nameWrapper').classList.remove('active');
+      if (document.activeElement) document.activeElement.blur();
+      $('nameModal').classList.add('visible');
+    };
 
-  $('exitDuelBtn').onclick = () => {
-    if (confirm('Покинуть гонку? Результат не сохранится.')) {
-      if (duelTimerInterval) clearInterval(duelTimerInterval);
+    $('nameWrapper').onclick = () => {
+      if ($('nameInput').readOnly) {
+        $('nameInput').readOnly = false;
+        $('nameWrapper').classList.add('active');
+        $('nameInput').focus();
+      }
+    };
+
+    $('saveName').onclick = () => {
+      const val = $('nameInput').value.trim();
+      if (val) {
+        playerName = val;
+        writeStorage(STORAGE_KEYS.name, val);
+        updateNameUI();
+        $('nameModal').classList.remove('visible');
+      } else {
+        const inp = $('nameInput');
+        inp.style.transform = 'translateX(5px)';
+        setTimeout(() => inp.style.transform = 'translateX(-5px)', 50);
+        setTimeout(() => inp.style.transform = 'translateX(5px)', 100);
+        setTimeout(() => inp.style.transform = 'translateX(0)', 150);
+      }
+    };
+
+    $('nameInput').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') $('saveName').click();
+    });
+
+    // --- Настройки ---
+    $('openSettingsBtn').onclick = () => {
+      draftSettings = JSON.parse(JSON.stringify(settings));
+      syncSettingsUI();
+      $('nameModal').classList.remove('visible');
+      $('settingsModal').classList.add('visible');
+    };
+
+    $('as-min').oninput = (e) => {
+      draftSettings.asMin = +e.target.value;
+      if (draftSettings.asMin >= draftSettings.asMax) {
+        draftSettings.asMax = draftSettings.asMin + 1;
+      }
+      syncSettingsUI();
+    };
+
+    $('as-max').oninput = (e) => {
+      draftSettings.asMax = +e.target.value;
+      if (draftSettings.asMax <= draftSettings.asMin) {
+        draftSettings.asMin = Math.max(1, draftSettings.asMax - 1);
+      }
+      syncSettingsUI();
+    };
+
+    $('md-max').oninput = (e) => {
+      draftSettings.mdMax = +e.target.value;
+      syncSettingsUI();
+    };
+
+    $('tbl-select-all').onclick = () => {
+      if (draftSettings.tables.length === 0) {
+        // "Снять все" → оставляем одну, чтобы не было пусто
+        draftSettings.tables = [2];
+      } else {
+        draftSettings.tables = [];
+      }
+      syncSettingsUI();
+    };
+
+    $('set-apply').onclick = () => {
+      if (!areSettingsValid(draftSettings)) return;
+      settings = JSON.parse(JSON.stringify(draftSettings));
+      saveSettings();
+      $('settingsModal').classList.remove('visible');
+    };
+
+    $('set-reset').onclick = () => {
+      draftSettings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+      syncSettingsUI();
+    };
+
+    $('set-close').onclick = () => {
+      $('settingsModal').classList.remove('visible');
+    };
+
+    $('settingsModal').onclick = (e) => {
+      if (e.target === $('settingsModal')) {
+        $('settingsModal').classList.remove('visible');
+      }
+    };
+
+    // --- Рейтинг ---
+    $('openRatingBtn').onclick = () => {
+      showScreen('screen-rating');
+      currentRatingMode = 'classic';
+      currentRatingPeriod = 'all';
+      updateRatingTabs();
+      loadLeaderboard();
+    };
+
+    $('backFromRating').onclick = () => {
+      if (leaderboardUnsub) {
+        leaderboardUnsub();
+        leaderboardUnsub = null;
+      }
+      showScreen('screen-menu');
+    };
+
+    $('tabClassic').onclick = () => { currentRatingMode = 'classic'; updateRatingTabs(); loadLeaderboard(); };
+    $('tabTimed').onclick   = () => { currentRatingMode = 'timed';   updateRatingTabs(); loadLeaderboard(); };
+    $('tabDuel').onclick    = () => { currentRatingMode = 'duel';    updateRatingTabs(); loadLeaderboard(); };
+
+    $('periodAll').onclick   = () => { currentRatingPeriod = 'all';   updateRatingTabs(); loadLeaderboard(); };
+    $('periodMonth').onclick = () => { currentRatingPeriod = 'month'; updateRatingTabs(); loadLeaderboard(); };
+    $('periodWeek').onclick  = () => { currentRatingPeriod = 'week';  updateRatingTabs(); loadLeaderboard(); };
+
+    // --- Дуэль ---
+    $('mode-duel').onclick = () => {
+      $('duelInput1').value = '';
+      $('duelInput2').value = '';
+      $('duelSetupModal').classList.add('visible');
+      setTimeout(() => $('duelInput1').focus(), 100);
+    };
+
+    $('startDuelBtn').onclick = startDuelGame;
+
+    $('duelInput2').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') startDuelGame();
+    });
+
+    $('exitDuelBtn').onclick = () => {
+      if (!confirm('Покинуть гонку? Результат не сохранится.')) return;
+      duelState.active = false;
+      if (duelState.timerId) {
+        clearInterval(duelState.timerId);
+        duelState.timerId = null;
+      }
       $('screen-duel').classList.remove('active');
       $('duelResultPopup').classList.remove('visible');
-      duelActive = false;
+    };
+
+    $('closeDuelBtn').onclick = () => {
+      $('screen-duel').classList.remove('active');
+      $('duelResultPopup').classList.remove('visible');
+    };
+
+    // --- Закрытие вкладки ---
+    window.addEventListener('beforeunload', () => {
+      checkAndSaveRecord();
+    });
+
+    // --- Первый запуск: показать профиль ---
+    if (!playerName) {
+      $('nameModal').classList.add('visible');
+      $('nameInput').readOnly = true;
     }
-  };
-
-  $('openRatingBtn').onclick = () => {
-    showScreen('screen-rating');
-    $('tabClassic').classList.add('active');
-    $('tabTimed').classList.remove('active');
-    $('tabDuel').classList.remove('active');
-    $('periodAll').classList.add('active');
-    $('periodMonth').classList.remove('active');
-    $('periodWeek').classList.remove('active');
-    currentRatingMode = 'classic';
-    currentRatingPeriod = 'all';
-    loadLeaderboard('classic', 'all', 'ratingList');
-  };
-
-  $('backFromRating').onclick = () => showScreen('screen-menu');
-
-  $('tabClassic').onclick = () => {
-    $('tabClassic').classList.add('active');
-    $('tabTimed').classList.remove('active');
-    $('tabDuel').classList.remove('active');
-    currentRatingMode = 'classic';
-    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
-  };
-
-  $('tabTimed').onclick = () => {
-    $('tabTimed').classList.add('active');
-    $('tabClassic').classList.remove('active');
-    $('tabDuel').classList.remove('active');
-    currentRatingMode = 'timed';
-    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
-  };
-
-  $('tabDuel').onclick = () => {
-    $('tabDuel').classList.add('active');
-    $('tabClassic').classList.remove('active');
-    $('tabTimed').classList.remove('active');
-    currentRatingMode = 'duel';
-    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
-  };
-
-  $('periodAll').onclick = () => {
-    $('periodAll').classList.add('active');
-    $('periodMonth').classList.remove('active');
-    $('periodWeek').classList.remove('active');
-    currentRatingPeriod = 'all';
-    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
-  };
-
-  $('periodMonth').onclick = () => {
-    $('periodMonth').classList.add('active');
-    $('periodAll').classList.remove('active');
-    $('periodWeek').classList.remove('active');
-    currentRatingPeriod = 'month';
-    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
-  };
-
-  $('periodWeek').onclick = () => {
-    $('periodWeek').classList.add('active');
-    $('periodAll').classList.remove('active');
-    $('periodMonth').classList.remove('active');
-    currentRatingPeriod = 'week';
-    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
-  };
-
-  $('continue').onclick = () => startGame(currentMode);
-  
-  $('backToMenu').onclick = () => {
-    if (timerInterval) clearInterval(timerInterval);
-    checkAndSaveRecord();
-    showScreen('screen-menu');
-  };
-
-  window.addEventListener('beforeunload', () => {
-    checkAndSaveRecord();
-  });
-
-  loadSettings();
-  syncSettingsUI();
-  updateNameUI();
-  
-  if (!playerName) {
-    $('pStatBestClassic').textContent = localStorage.getItem('mathTirBestClassic') || '0';
-    $('pStatBestTimed').textContent = localStorage.getItem('mathTirBestTimed') || '0';
-    $('pStatTotal').textContent = localStorage.getItem('mathTirTotal') || '0';
-    $('nameModal').classList.add('visible');
-    $('nameInput').readOnly = true;
   }
+
+  function updateRatingTabs() {
+    $('tabClassic').classList.toggle('active', currentRatingMode === 'classic');
+    $('tabTimed').classList.toggle('active', currentRatingMode === 'timed');
+    $('tabDuel').classList.toggle('active', currentRatingMode === 'duel');
+
+    $('periodAll').classList.toggle('active', currentRatingPeriod === 'all');
+    $('periodMonth').classList.toggle('active', currentRatingPeriod === 'month');
+    $('periodWeek').classList.toggle('active', currentRatingPeriod === 'week');
+  }
+
+  init();
 </script>
 </body>
 </html>
