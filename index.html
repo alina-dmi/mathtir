@@ -101,7 +101,7 @@
   .screen.active { display: flex !important; }
 
   /* =========================================
-     МЕНЮ (Идеальное центрирование)
+     МЕНЮ (Центрирование кнопок + верхняя панель)
      ========================================= */
   #screen-menu {
     justify-content: center;
@@ -110,29 +110,36 @@
     position: relative;
   }
 
-  .menu-center-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin: auto 0;
-  }
-
+  /* Верхняя панель (Имя и Рейтинг) теперь прибита к верху */
   .menu-topbar { 
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    margin-bottom: clamp(15px, 3vh, 25px); 
-    flex-shrink: 0; 
     width: 100%; 
     max-width: 400px;
+    margin: 0 auto;
     padding: 0 10px;
+    z-index: 10;
   }
   .profile-chip { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 14px 4px 4px; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
   .avatar { width: clamp(30px, 4vh, 34px); height: clamp(30px, 4vh, 34px); background: linear-gradient(135deg, var(--sunny), var(--coral)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(0.9rem, 2vh, 1rem); }
   .profile-name { font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
   .icon-btn { width: clamp(38px, 5vh, 44px); height: clamp(38px, 5vh, 44px); background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; color: var(--sunny-d); box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
   .icon-btn svg { width: clamp(18px, 2.5vh, 22px); height: clamp(18px, 2.5vh, 22px); fill: currentColor; }
+
+  /* Центральный блок */
+  .menu-center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: auto 0;
+    padding-top: 60px; /* Отступ, чтобы верхняя панель не наезжала */
+  }
 
   .header { text-align: center; margin-bottom: clamp(15px, 3vh, 24px); flex-shrink: 0; width: 100%; }
   .header h1 { font-size: clamp(1.4rem, 4vh, 1.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 6px; color: var(--text); }
@@ -358,18 +365,20 @@
 
   <div id="app">
     <div id="screen-menu" class="screen active">
-      <!-- Обертка для центрирования -->
-      <div class="menu-center-content">
-        <div class="menu-topbar">
-          <div class="profile-chip" id="editNameBtn">
-            <div class="avatar" id="avatarLetter">?</div>
-            <div class="profile-name" id="profileName">Гость</div>
-          </div>
-          <button class="icon-btn" id="openRatingBtn" title="Рейтинг" aria-label="Рейтинг">
-            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2 6.6.5-5.1 4.4 1.6 6.5-5.5-3.6-5.5 3.6 1.6-6.5-5.1-4.4 6.6-.5z"/></svg>
-          </button>
+      
+      <!-- Верхняя панель (Имя и Рейтинг) -->
+      <div class="menu-topbar">
+        <div class="profile-chip" id="editNameBtn">
+          <div class="avatar" id="avatarLetter">?</div>
+          <div class="profile-name" id="profileName">Гость</div>
         </div>
+        <button class="icon-btn" id="openRatingBtn" title="Рейтинг" aria-label="Рейтинг">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2 6.6.5-5.1 4.4 1.6 6.5-5.5-3.6-5.5 3.6 1.6-6.5-5.1-4.4 6.6-.5z"/></svg>
+        </button>
+      </div>
 
+      <!-- Центральный блок -->
+      <div class="menu-center-content">
         <div class="header">
           <h1>Математический тир</h1>
           <div class="subtitle">Тренируем счёт играя</div>
@@ -600,9 +609,7 @@
   const TIMED_DURATION = 60;
   const DUEL_DURATION = 60;
   const RECENT_LIMIT = 8;
-  const WRONG_QUEUE_LIMIT = 10;
-  const OPTIONS_COUNT = 4;
-  const QUARANTINE_DELAY = 3; // Задержка перед возвратом сложного примера (в ходах)
+  const QUARANTINE_DELAY = 3; // Сколько правильных ответов нужно, чтобы вернуть сложный пример
 
   const DELAYS = {
     correct: 500,       // Правильный ответ (0.5 сек)
@@ -702,8 +709,9 @@
     ended: false,
     currentTaskKey: '',
     recentTasks: [],
-    wrongQueue: [],      
-    quarantine: [],      
+    wrongQueue: [],        // Очередь на повтор
+    quarantine: [],        // Заблокированные ошибки
+    correctStreak: 0,      // Счетчик правильных ответов подряд для карантина
     timeLeft: TIMED_DURATION,
     timerId: null,
     lastMode: 'all',
@@ -832,17 +840,17 @@
 
     const scale = Math.max(2, Math.round(Math.abs(answer) * 0.2));
     let guard = 0;
-    while (distractors.size < OPTIONS_COUNT - 1 && guard < 50) {
+    while (distractors.size < 3 && guard < 50) {
       guard++;
       add(answer + pickRandom([-scale, -1, 1, 2, -2, scale]));
     }
     guard = 0;
-    while (distractors.size < OPTIONS_COUNT - 1 && guard < 100) {
+    while (distractors.size < 3 && guard < 100) {
       guard++;
       add(answer + rand(-20, 20));
     }
 
-    const values = [...distractors].slice(0, OPTIONS_COUNT - 1);
+    const values = [...distractors].slice(0, 3);
     values.push(answer);
     for (let i = values.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -856,20 +864,20 @@
 
     let task = null;
 
-    // 1. Сначала смотрим в «карантин» — возвращаем ошибки только через 3-4 хода
-    if (gameState.quarantine.length > 0) {
-      const restored = restoreTask(gameState.quarantine[0]);
+    // 1. Логика «карантина»
+    // Если мы набрали нужное количество правильных ответов (3), выпускаем 1 ошибку из карантина
+    if (gameState.correctStreak >= QUARANTINE_DELAY && gameState.quarantine.length > 0) {
+      const key = gameState.quarantine.shift(); // Забираем самый старый
+      const restored = restoreTask(key);
       if (restored) {
         task = restored;
-        gameState.quarantine.shift(); // Убираем из карантина, теперь он снова в игре
-        gameState.wrongQueue.push(task.key); // Добавляем в список на повтор
-      } else {
-        gameState.quarantine.shift(); // Если пример битый, просто удаляем
+        gameState.correctStreak = 0; // Сбрасываем счетчик, так как сейчас будет сложный вопрос
+        // Не добавляем в wrongQueue, так как мы его только что достали
       }
     }
 
-    // 2. Если карантин пуст, с шансом 40% берем из очереди ошибок
-    if (!task && gameState.wrongQueue.length > 0 && Math.random() < 0.4) {
+    // 2. Если карантин не сработал, с шансом 20% берем из очереди обычных ошибок (не из карантина)
+    if (!task && gameState.wrongQueue.length > 0 && Math.random() < 0.2) {
       const idx = Math.floor(Math.random() * gameState.wrongQueue.length);
       const key = gameState.wrongQueue[idx];
       const restored = restoreTask(key);
@@ -879,19 +887,26 @@
       }
     }
 
-    // 3. Иначе генерируем новую задачу
+    // 3. Если ничего не взяли, генерируем новую задачу
     if (!task) {
       let attempts = 0;
       task = buildTask(gameState.mode);
-      while (gameState.recentTasks.includes(task.key) && attempts < 30) {
+      // Проверяем, чтобы новый пример не повторял недавние (recentTasks) 
+      // И чтобы он не был в карантине (чтобы не выскочил случайно сразу)
+      while (
+        (gameState.recentTasks.includes(task.key) || gameState.quarantine.includes(task.key)) 
+        && attempts < 50
+      ) {
         task = buildTask(gameState.mode);
         attempts++;
       }
     }
 
-    // Запоминаем задачу, чтобы избежать повторов подряд
-    gameState.recentTasks.push(task.key);
-    if (gameState.recentTasks.length > RECENT_LIMIT) gameState.recentTasks.shift();
+    // Если задача не из карантина, добавляем её в историю недавних
+    if (!gameState.quarantine.includes(task.key)) {
+      gameState.recentTasks.push(task.key);
+      if (gameState.recentTasks.length > RECENT_LIMIT) gameState.recentTasks.shift();
+    }
 
     gameState.answer = task.answer;
     gameState.currentTaskKey = task.key;
@@ -931,7 +946,8 @@
     gameState.currentTaskKey = '';
     gameState.recentTasks = [];
     gameState.wrongQueue = [];
-    gameState.quarantine = []; // Очищаем карантин при старте
+    gameState.quarantine = [];
+    gameState.correctStreak = 0;
     gameState.timeLeft = TIMED_DURATION;
     gameState.recordSaved = false;
 
@@ -980,6 +996,7 @@
       const prevRank = rankFor(gameState.score);
       gameState.score++;
       statTotal++;
+      gameState.correctStreak++; // Увеличиваем счетчик для карантина
       writeStorage(STORAGE_KEYS.total, statTotal);
 
       $('score').textContent = gameState.score;
@@ -1009,10 +1026,15 @@
       $('msg').textContent = `Правильно: ${gameState.answer}`;
       $('msg').className = 'msg show error';
 
-      // Отправляем в «карантин» (повторится через 3-4 хода)
+      // Отправляем в «карантин» на длительную заморозку
       if (gameState.currentTaskKey) {
-        gameState.quarantine.push(gameState.currentTaskKey);
+        // Если этого примера еще нет в карантине, добавляем
+        if (!gameState.quarantine.includes(gameState.currentTaskKey)) {
+          gameState.quarantine.push(gameState.currentTaskKey);
+        }
       }
+      
+      gameState.correctStreak = 0; // Сбрасываем счетчик, так как была ошибка
 
       if (!gameState.isTimed && gameState.lives <= 0) {
         setTimeout(gameOver, DELAYS.gameOver);
