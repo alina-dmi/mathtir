@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Математический тир</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
 
@@ -41,7 +43,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Общий скролл страницы запрещен */
+    overflow: hidden;
     position: relative;
     color: var(--text);
   }
@@ -88,7 +90,8 @@
     z-index: 2; 
     position: relative; 
   }
-  .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; }
+  
+  .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; overflow: hidden; }
   .screen.active { display: flex !important; }
 
   /* ===== ВЕРХНЯЯ СТРОКА ===== */
@@ -212,9 +215,10 @@
     overflow-y: auto; /* Включаем вертикальный скролл */
     padding-right: 5px; 
     padding-bottom: 20px;
+    min-height: 0; /* ВАЖНО! Без этого flex-элемент не даст себя скроллить */
   }
 
-  /* Красивый тонкий ползунок */
+  /* Кастомный ползунок */
   .rating-list::-webkit-scrollbar {
     width: 6px;
   }
