@@ -33,30 +33,31 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Убираем скролл страницы нафиг */
+    overflow: hidden;
     position: relative;
     color: var(--text);
   }
 
-  /* На компьютере (ПК) */
+  /* ===== КОМПЬЮТЕР (ПК) ===== */
   @media (min-width: 480px) {
     body {
-      padding: 20px; /* Небольшой отступ по краям окна */
+      padding: 20px;
     }
     #app {
       background: transparent;
       box-shadow: none;
       max-width: 440px;
-      /* Карточка занимает всю доступную высоту минус отступы, но не больше 800px */
+      /* Занимает всю высоту минус отступы */
       height: calc(100dvh - 40px); 
       max-height: 800px;
     }
   }
 
-  /* На телефоне */
+  /* ===== ТЕЛЕФОН ===== */
   @media (max-width: 479px) {
     #app {
-      height: 100dvh; /* Строго высота экрана */
+      /* На телефоне высота по содержимому, но не меньше экрана */
+      min-height: 100dvh;
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
       padding-top: calc(16px + env(safe-area-inset-top));
@@ -170,6 +171,13 @@
     margin-top: auto; 
     padding-bottom: 10px; /* Легкий отступ снизу */
     flex-shrink: 0; 
+  }
+
+  /* На компьютере поднимаем кнопку "В главное меню" еще выше */
+  @media (min-width: 480px) {
+    .actions {
+      padding-bottom: 60px; /* Значительно поднимаем на ПК */
+    }
   }
 
   .btn-main { padding: clamp(12px, 2.5vh, 16px); font-size: clamp(0.95rem, 2.2vh, 1.05rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
