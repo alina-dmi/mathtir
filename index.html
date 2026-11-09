@@ -44,17 +44,16 @@
   }
 
   /* =========================================
-     ПК ВЕРСИЯ (Ограничение ширины и фоновый блок)
+     ПК ВЕРСИЯ (Без рамки, на весь экран)
      ========================================= */
   @media (min-width: 480px) {
-    body { padding: 20px; }
+    body { padding: 0; }
     #app { 
-      max-width: 440px; 
-      height: 100%; 
-      max-height: 800px; 
-      background: rgba(255, 255, 255, 0.2); /* Легкий фон для ПК */
-      border-radius: 30px;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+      max-width: 480px; 
+      height: 100dvh; 
+      max-height: none;
+      background: transparent; 
+      box-shadow: none;
     }
   }
 
@@ -102,22 +101,31 @@
   .screen.active { display: flex !important; }
 
   /* =========================================
-     МЕНЮ (Центрирование)
+     МЕНЮ (Идеальное центрирование)
      ========================================= */
   #screen-menu {
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
     width: 100%;
+    position: relative;
+  }
+
+  .menu-center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: auto 0;
   }
 
   .menu-topbar { 
     display: flex; 
     justify-content: space-between; 
     align-items: center; 
-    margin-bottom: clamp(10px, 2vh, 20px); 
+    margin-bottom: clamp(15px, 3vh, 25px); 
     flex-shrink: 0; 
     width: 100%; 
+    max-width: 400px;
     padding: 0 10px;
   }
   .profile-chip { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 14px 4px 4px; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
@@ -156,7 +164,7 @@
     display: flex; 
     gap: 12px; 
     justify-content: center; 
-    margin-bottom: 20px; 
+    margin-bottom: 10px; 
     flex-shrink: 0; 
     width: 100%; 
     max-width: 400px;
@@ -172,7 +180,15 @@
   #mode-timed .mini-text { color: #b86b00; }
   #mode-duel  .mini-text { color: #c2185b; }
 
-  .author { margin-top: auto; padding-bottom: 5px; font-size: clamp(0.65rem, 1.5vh, 0.7rem); font-weight: 600; color: rgba(45,58,90,0.45); text-align: center; flex-shrink: 0; width: 100%; }
+  .author { 
+    position: absolute; 
+    bottom: 20px; 
+    width: 100%; 
+    text-align: center; 
+    font-size: clamp(0.65rem, 1.5vh, 0.7rem); 
+    font-weight: 600; 
+    color: rgba(45,58,90,0.45); 
+  }
   .author b { font-weight: 600; color: rgba(45,58,90,0.65); }
 
   /* =========================================
@@ -342,54 +358,57 @@
 
   <div id="app">
     <div id="screen-menu" class="screen active">
-      <div class="menu-topbar">
-        <div class="profile-chip" id="editNameBtn">
-          <div class="avatar" id="avatarLetter">?</div>
-          <div class="profile-name" id="profileName">Гость</div>
+      <!-- Обертка для центрирования -->
+      <div class="menu-center-content">
+        <div class="menu-topbar">
+          <div class="profile-chip" id="editNameBtn">
+            <div class="avatar" id="avatarLetter">?</div>
+            <div class="profile-name" id="profileName">Гость</div>
+          </div>
+          <button class="icon-btn" id="openRatingBtn" title="Рейтинг" aria-label="Рейтинг">
+            <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2 6.6.5-5.1 4.4 1.6 6.5-5.5-3.6-5.5 3.6 1.6-6.5-5.1-4.4 6.6-.5z"/></svg>
+          </button>
         </div>
-        <button class="icon-btn" id="openRatingBtn" title="Рейтинг" aria-label="Рейтинг">
-          <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2 6.6.5-5.1 4.4 1.6 6.5-5.5-3.6-5.5 3.6 1.6-6.5-5.1-4.4 6.6-.5z"/></svg>
-        </button>
-      </div>
 
-      <div class="header">
-        <h1>Математический тир</h1>
-        <div class="subtitle">Тренируем счёт играя</div>
-      </div>
+        <div class="header">
+          <h1>Математический тир</h1>
+          <div class="subtitle">Тренируем счёт играя</div>
+        </div>
 
-      <div class="mode-list">
-        <button class="mode-card" id="mode-addsub">
-          <div class="mode-icon"><svg><path d="M5 12h14M12 5v14"/></svg></div>
-          <div class="mode-text">
-            <span class="mode-title">Сложение и вычитание</span>
-            <span class="mode-desc">Плюс и минус — тренируем счёт</span>
-          </div>
-        </button>
-        <button class="mode-card" id="mode-muldiv">
-          <div class="mode-icon"><svg><path d="M18 6L6 18M6 6l12 12"/></svg></div>
-          <div class="mode-text">
-            <span class="mode-title">Умножение и деление</span>
-            <span class="mode-desc">Таблицы умножения</span>
-          </div>
-        </button>
-        <button class="mode-card" id="mode-all">
-          <div class="mode-icon"><svg><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 01-7 7 7 7 0 01-7-7 7 7 0 017-7 7 7 0 017 7z"/></svg></div>
-          <div class="mode-text">
-            <span class="mode-title">Всё вместе</span>
-            <span class="mode-desc">Полный микс из всех заданий</span>
-          </div>
-        </button>
-      </div>
+        <div class="mode-list">
+          <button class="mode-card" id="mode-addsub">
+            <div class="mode-icon"><svg><path d="M5 12h14M12 5v14"/></svg></div>
+            <div class="mode-text">
+              <span class="mode-title">Сложение и вычитание</span>
+              <span class="mode-desc">Плюс и минус — тренируем счёт</span>
+            </div>
+          </button>
+          <button class="mode-card" id="mode-muldiv">
+            <div class="mode-icon"><svg><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+            <div class="mode-text">
+              <span class="mode-title">Умножение и деление</span>
+              <span class="mode-desc">Таблицы умножения</span>
+            </div>
+          </button>
+          <button class="mode-card" id="mode-all">
+            <div class="mode-icon"><svg><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 01-7 7 7 7 0 01-7-7 7 7 0 017-7 7 7 0 017 7z"/></svg></div>
+            <div class="mode-text">
+              <span class="mode-title">Всё вместе</span>
+              <span class="mode-desc">Полный микс из всех заданий</span>
+            </div>
+          </button>
+        </div>
 
-      <div class="mini-modes-container">
-        <button class="mini-mode-btn" id="mode-timed">
-          <div class="mini-icon"><svg><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
-          <div class="mini-text">Блиц-турнир</div>
-        </button>
-        <button class="mini-mode-btn" id="mode-duel">
-          <div class="mini-icon"><svg><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
-          <div class="mini-text">Гонка на двоих</div>
-        </button>
+        <div class="mini-modes-container">
+          <button class="mini-mode-btn" id="mode-timed">
+            <div class="mini-icon"><svg><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div class="mini-text">Блиц-турнир</div>
+          </button>
+          <button class="mini-mode-btn" id="mode-duel">
+            <div class="mini-icon"><svg><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+            <div class="mini-text">Гонка на двоих</div>
+          </button>
+        </div>
       </div>
 
       <p class="author">Автор и создатель<br><b>Алина Дмитриевна Оленева</b></p>
@@ -583,14 +602,15 @@
   const RECENT_LIMIT = 8;
   const WRONG_QUEUE_LIMIT = 10;
   const OPTIONS_COUNT = 4;
+  const QUARANTINE_DELAY = 3; // Задержка перед возвратом сложного примера (в ходах)
 
   const DELAYS = {
-    correct: 350,
-    wrongTimed: 600,
-    wrongClassic: 1200,
-    gameOver: 900,
-    duelCorrect: 150,
-    duelWrong: 800
+    correct: 500,       // Правильный ответ (0.5 сек)
+    wrongTimed: 1200,   // Блиц (1.2 сек)
+    wrongClassic: 2500, // Классика (2.5 сек)
+    gameOver: 1500,     // Конец игры
+    duelCorrect: 300,   // Дуэль: верно
+    duelWrong: 1000     // Дуэль: ошибка
   };
 
   const ALL_TABLES = [2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -682,7 +702,8 @@
     ended: false,
     currentTaskKey: '',
     recentTasks: [],
-    wrongQueue: [],
+    wrongQueue: [],      
+    quarantine: [],      
     timeLeft: TIMED_DURATION,
     timerId: null,
     lastMode: 'all',
@@ -834,7 +855,21 @@
     if (gameState.ended) return;
 
     let task = null;
-    if (gameState.wrongQueue.length > 0 && Math.random() < 0.4) {
+
+    // 1. Сначала смотрим в «карантин» — возвращаем ошибки только через 3-4 хода
+    if (gameState.quarantine.length > 0) {
+      const restored = restoreTask(gameState.quarantine[0]);
+      if (restored) {
+        task = restored;
+        gameState.quarantine.shift(); // Убираем из карантина, теперь он снова в игре
+        gameState.wrongQueue.push(task.key); // Добавляем в список на повтор
+      } else {
+        gameState.quarantine.shift(); // Если пример битый, просто удаляем
+      }
+    }
+
+    // 2. Если карантин пуст, с шансом 40% берем из очереди ошибок
+    if (!task && gameState.wrongQueue.length > 0 && Math.random() < 0.4) {
       const idx = Math.floor(Math.random() * gameState.wrongQueue.length);
       const key = gameState.wrongQueue[idx];
       const restored = restoreTask(key);
@@ -844,6 +879,7 @@
       }
     }
 
+    // 3. Иначе генерируем новую задачу
     if (!task) {
       let attempts = 0;
       task = buildTask(gameState.mode);
@@ -853,6 +889,7 @@
       }
     }
 
+    // Запоминаем задачу, чтобы избежать повторов подряд
     gameState.recentTasks.push(task.key);
     if (gameState.recentTasks.length > RECENT_LIMIT) gameState.recentTasks.shift();
 
@@ -894,6 +931,7 @@
     gameState.currentTaskKey = '';
     gameState.recentTasks = [];
     gameState.wrongQueue = [];
+    gameState.quarantine = []; // Очищаем карантин при старте
     gameState.timeLeft = TIMED_DURATION;
     gameState.recordSaved = false;
 
@@ -971,9 +1009,9 @@
       $('msg').textContent = `Правильно: ${gameState.answer}`;
       $('msg').className = 'msg show error';
 
-      if (gameState.currentTaskKey && !gameState.wrongQueue.includes(gameState.currentTaskKey)) {
-        gameState.wrongQueue.push(gameState.currentTaskKey);
-        if (gameState.wrongQueue.length > WRONG_QUEUE_LIMIT) gameState.wrongQueue.shift();
+      // Отправляем в «карантин» (повторится через 3-4 хода)
+      if (gameState.currentTaskKey) {
+        gameState.quarantine.push(gameState.currentTaskKey);
       }
 
       if (!gameState.isTimed && gameState.lives <= 0) {
