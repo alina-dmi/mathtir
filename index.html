@@ -29,11 +29,11 @@
   body {
     font-family: 'Nunito', 'Segoe UI', -apple-system, sans-serif;
     background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
-    min-height: 100dvh; /* Ровно высота экрана */
+    min-height: 100dvh;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Убираем скролл */
+    /* Убираем скрытие, чтобы на ПК не обрезались кнопки */
     position: relative;
     color: var(--text);
   }
@@ -42,24 +42,25 @@
   @media (min-width: 480px) {
     body {
       padding: 20px;
-      /* Светлый фон вокруг игры */
       background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
+      overflow-y: auto; /* Если не влезет по высоте, появится скролл, но кнопки не потеряются */
     }
     #app {
-      /* Сама игра в виде аккуратной карточки */
-      background: linear-gradient(180deg, #ffffff 0%, #f0f9ff 100%);
-      border-radius: 40px;
-      box-shadow: 0 20px 60px rgba(45, 58, 90, 0.15), 0 0 0 4px #fff;
-      max-width: 420px;
+      /* Убираем БЕЛЫЙ ФОН и тени, делаем прозрачным */
+      background: transparent;
+      box-shadow: none;
+      max-width: 440px;
       height: 100%;
       max-height: 850px;
-      padding: 20px 16px;
-      padding-bottom: calc(16px + env(safe-area-inset-bottom));
+      padding: 10px 0;
     }
   }
 
   /* На телефоне */
   @media (max-width: 479px) {
+    body {
+      overflow: hidden; /* На телефоне скролл не нужен, всё помещается */
+    }
     #app {
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
@@ -366,7 +367,6 @@
 
       <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
 
-      <!-- Кнопки внизу (без "Начать заново") -->
       <div class="actions">
         <button class="btn-main" id="continue">▶ Продолжить</button>
         <button class="link" id="backToMenu">← В главное меню</button>
