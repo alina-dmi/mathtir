@@ -28,30 +28,28 @@
   }
 
   /* ===== ФОН НА ВЕСЬ ЭКРАН ===== */
-  html, body {
+  html {
     margin: 0;
     padding: 0;
-    width: 100%;
     height: 100%;
-    overflow: hidden; /* Убираем любые скроллы страницы */
+    background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
   }
 
   body {
     font-family: 'Nunito', 'Segoe UI', -apple-system, sans-serif;
-    /* Фон фиксируем на весь экран */
-    background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
-    background-attachment: fixed;
-    background-size: cover;
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
     position: relative;
     color: var(--text);
+    height: 100dvh;
   }
 
   /* ===== КОМПЬЮТЕР (ПК) ===== */
   @media (min-width: 480px) {
-    body { padding: 20px; }
+    body { padding: 20px; height: auto; }
     #app {
       background: transparent;
       box-shadow: none;
@@ -65,7 +63,7 @@
   @media (max-width: 479px) {
     #app {
       width: 100%;
-      height: 100dvh; /* Строго высота экрана */
+      height: 100%;
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
       padding-top: calc(16px + env(safe-area-inset-top));
@@ -90,6 +88,7 @@
     flex-direction: column; 
     z-index: 2; 
     position: relative; 
+    overflow: hidden;
   }
   
   .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; overflow: hidden; }
@@ -148,18 +147,43 @@
   .timer { font-size: clamp(1.2rem, 3.5vh, 1.6rem); font-weight: 800; color: var(--sunny-d); margin-bottom: 10px; text-align: center; white-space: nowrap; flex-shrink: 0; }
 
   .task-container { 
-    background: #fff; border-radius: 26px; padding: clamp(20px, 5vh, 40px) 15px; text-align: center; 
-    margin-bottom: clamp(10px, 2vh, 20px); flex: 1; display: flex; align-items: center; justify-content: center; 
-    box-shadow: 0 8px 0 rgba(0,0,0,0.06); position: relative; overflow: hidden; 
+    background: #fff; border-radius: 30px; 
+    padding: clamp(30px, 5vh, 50px) 15px; 
+    text-align: center; 
+    margin-top: clamp(10px, 2vh, 20px); 
+    margin-bottom: clamp(20px, 4vh, 35px); 
+    min-height: clamp(160px, 28vh, 250px); 
+    flex: 1; 
+    display: flex; align-items: center; justify-content: center; 
+    box-shadow: 0 10px 0 rgba(0,0,0,0.06); 
+    position: relative; overflow: hidden; 
   }
-  .task { font-size: clamp(2rem, 8vh, 3.6rem); font-weight: 900; color: var(--text); z-index: 1; transition: 0.15s; white-space: nowrap; max-width: 100%; overflow: hidden; }
+  .task { 
+    font-size: clamp(2.5rem, 8vw, 4.5rem); 
+    font-weight: 900; color: var(--text); 
+    z-index: 1; transition: 0.15s; white-space: nowrap; 
+    max-width: 100%; overflow: hidden; 
+    letter-spacing: 2px; 
+  }
   .task.hit { color: var(--mint-d); transform: scale(1.05); }
 
-  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 2vh, 16px); margin-bottom: 10px; flex-shrink: 0; }
-  .ball { font-size: clamp(1.4rem, 4vh, 2rem); padding: clamp(15px, 4vh, 28px) 0; font-weight: 900; border: none; border-radius: 18px; cursor: pointer; color: #fff; transition: 0.1s; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.15); background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); }
+  .answers { 
+    display: grid; grid-template-columns: 1fr 1fr; 
+    gap: clamp(12px, 2.5vh, 20px); 
+    margin-top: clamp(5px, 1vh, 10px); 
+    margin-bottom: 15px; flex-shrink: 0; 
+  }
+  .ball { 
+    font-size: clamp(1.8rem, 5vw, 2.4rem); 
+    padding: clamp(20px, 4vh, 32px) 0; 
+    font-weight: 900; border: none; border-radius: 22px; cursor: pointer; 
+    color: #fff; transition: 0.1s; 
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 8px 0 rgba(0,0,0,0.15); 
+    background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); 
+  }
   .ball:active { transform: translateY(4px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 0 rgba(0,0,0,0.15); }
-  .ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 6px 0 #047857 !important; }
-  .ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 #991b1b !important; }
+  .ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 8px 0 #047857 !important; }
+  .ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 8px 0 #991b1b !important; }
   .ball.reveal { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; opacity: 0.85; }
 
   .msg { height: clamp(1.5rem, 3vh, 2rem); font-size: clamp(0.95rem, 2vh, 1.15rem); font-weight: 800; text-align: center; margin-bottom: 5px; opacity: 0; transition: opacity 0.15s; flex-shrink: 0; }
@@ -182,10 +206,9 @@
     flex-shrink: 0; 
   }
 
-  /* На компьютере поднимаем кнопку "В главное меню" еще выше */
   @media (min-width: 480px) {
     .actions {
-      padding-bottom: 100px; /* Значительно поднимаем на ПК */
+      padding-bottom: 100px; 
     }
   }
 
@@ -206,7 +229,6 @@
   .rating-tab { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: clamp(0.8rem, 1.8vh, 0.9rem); font-weight: 700; cursor: pointer; background: transparent; color: rgba(45,58,90,0.5); transition: all 0.2s; white-space: nowrap; }
   .rating-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 
-  /* ===== СКРОЛЛ ВНУТРИ РЕЙТИНГА ===== */
   .rating-list { 
     width: 100%; 
     display: flex; 
@@ -217,7 +239,7 @@
     overflow-y: auto; 
     padding-right: 5px; 
     padding-bottom: 20px;
-    min-height: 0; /* ВАЖНО! Без этого flex-элемент не даст себя скроллить */
+    min-height: 0; 
   }
 
   .rating-list::-webkit-scrollbar {
