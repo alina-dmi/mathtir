@@ -25,29 +25,34 @@
     --text-soft: #3b4a6b;
   }
 
-  /* ===== БАЗОВАЯ НАСТРОЙКА ЭКРАНА ===== */
+  /* ===== ФОН НА ВЕСЬ ЭКРАН ===== */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   body {
     font-family: 'Nunito', 'Segoe UI', -apple-system, sans-serif;
     background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
-    min-height: 100dvh;
+    background-attachment: fixed;
+    background-size: cover;
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow: hidden; /* Общий скролл страницы запрещен */
     position: relative;
     color: var(--text);
   }
 
   /* ===== КОМПЬЮТЕР (ПК) ===== */
   @media (min-width: 480px) {
-    body {
-      padding: 20px;
-    }
+    body { padding: 20px; }
     #app {
       background: transparent;
       box-shadow: none;
       max-width: 440px;
-      /* Занимает всю высоту минус отступы */
       height: calc(100dvh - 40px); 
       max-height: 800px;
     }
@@ -56,11 +61,12 @@
   /* ===== ТЕЛЕФОН ===== */
   @media (max-width: 479px) {
     #app {
-      /* На телефоне высота по содержимому, но не меньше экрана */
-      min-height: 100dvh;
+      width: 100%;
+      height: 100%;
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
       padding-top: calc(16px + env(safe-area-inset-top));
+      background: transparent;
     }
   }
 
@@ -163,20 +169,18 @@
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
   /* ===== КНОПКИ ВНИЗУ ===== */
-  /* Главный секрет: margin-top: auto прижимает блок кнопок к самому низу экрана */
   .actions { 
     display: flex; 
     flex-direction: column; 
     gap: 8px; 
     margin-top: auto; 
-    padding-bottom: 10px; /* Легкий отступ снизу */
+    padding-bottom: 10px; 
     flex-shrink: 0; 
   }
 
-  /* На компьютере поднимаем кнопку "В главное меню" еще выше */
   @media (min-width: 480px) {
     .actions {
-      padding-bottom: 60px; /* Значительно поднимаем на ПК */
+      padding-bottom: 100px; /* Поднимаем на ПК */
     }
   }
 
@@ -196,8 +200,37 @@
   .rating-tabs { display: flex; gap: 6px; width: 100%; background: rgba(255,255,255,0.5); padding: 4px; border-radius: 12px; }
   .rating-tab { flex: 1; padding: 10px; border: none; border-radius: 10px; font-size: clamp(0.8rem, 1.8vh, 0.9rem); font-weight: 700; cursor: pointer; background: transparent; color: rgba(45,58,90,0.5); transition: all 0.2s; white-space: nowrap; }
   .rating-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-  .rating-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: 16px; overflow-y: auto; flex: 1; padding-bottom: 20px; }
-  .rating-row { display: flex; align-items: center; padding: 14px 16px; background: #fff; border-radius: 14px; box-shadow: 0 3px 0 rgba(0,0,0,0.04); }
+
+  /* ===== СКРОЛЛ ВНУТРИ РЕЙТИНГА ===== */
+  .rating-list { 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    margin-top: 16px; 
+    flex: 1; 
+    overflow-y: auto; /* Включаем вертикальный скролл */
+    padding-right: 5px; 
+    padding-bottom: 20px;
+  }
+
+  /* Красивый тонкий ползунок */
+  .rating-list::-webkit-scrollbar {
+    width: 6px;
+  }
+  .rating-list::-webkit-scrollbar-track {
+    background: rgba(45,58,90,0.05);
+    border-radius: 10px;
+  }
+  .rating-list::-webkit-scrollbar-thumb {
+    background: var(--lavender-d); 
+    border-radius: 10px;
+  }
+  .rating-list::-webkit-scrollbar-thumb:hover {
+    background: var(--text-soft);
+  }
+
+  .rating-row { display: flex; align-items: center; padding: 14px 16px; background: #fff; border-radius: 14px; box-shadow: 0 3px 0 rgba(0,0,0,0.04); flex-shrink: 0; }
   .rating-row .pos { font-weight: 800; color: var(--lavender-d); min-width: 2rem; font-size: 1rem; }
   .rating-row .nm { flex: 1; text-align: left; margin-left: 8px; font-weight: 700; font-size: 0.95rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rating-row .sc { font-weight: 800; color: var(--sunny-d); font-size: 1.1rem; }
@@ -874,7 +907,7 @@
       const sorted = Object.keys(bestScores)
         .map(name => ({ name, score: bestScores[name] }))
         .sort((a, b) => b.score - a.score)
-        .slice(0, 10);
+        .slice(0, 100); // До 100 человек, чтобы был скролл
         
       if (sorted.length === 0) {
         container.innerHTML = '<div class="rating-empty">Пока нет результатов</div>';
