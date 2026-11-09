@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Убираем скрытие, чтобы на ПК не обрезались кнопки */
+    overflow: hidden; /* Убираем скролл */
     position: relative;
     color: var(--text);
   }
@@ -42,25 +42,21 @@
   @media (min-width: 480px) {
     body {
       padding: 20px;
+      overflow-y: auto; /* На всякий случай, если экран совсем низкий */
       background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
-      overflow-y: auto; /* Если не влезет по высоте, появится скролл, но кнопки не потеряются */
     }
     #app {
-      /* Убираем БЕЛЫЙ ФОН и тени, делаем прозрачным */
-      background: transparent;
+      background: transparent; /* Никакого белого фона! */
       box-shadow: none;
-      max-width: 440px;
+      max-width: 420px;
       height: 100%;
-      max-height: 850px;
+      max-height: 800px;
       padding: 10px 0;
     }
   }
 
   /* На телефоне */
   @media (max-width: 479px) {
-    body {
-      overflow: hidden; /* На телефоне скролл не нужен, всё помещается */
-    }
     #app {
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
@@ -168,10 +164,26 @@
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
   /* ===== КНОПКИ ВНИЗУ ===== */
-  .actions { display: flex; flex-direction: column; gap: 8px; margin-top: auto; padding-bottom: calc(5px + env(safe-area-inset-bottom)); flex-shrink: 0; }
+  .actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    margin-top: auto; 
+    padding-bottom: calc(10px + env(safe-area-inset-bottom)); /* Для телефонов */
+    flex-shrink: 0; 
+  }
+
+  /* На компьютере поднимаем кнопки повыше от края экрана */
+  @media (min-width: 480px) {
+    .actions {
+      padding-bottom: 40px; /* Вот этот отступ поднимет кнопку "В главное меню" на ПК */
+    }
+  }
+
   .btn-main { padding: clamp(12px, 2.5vh, 16px); font-size: clamp(0.95rem, 2.2vh, 1.05rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
+  
   .link { background: rgba(255,255,255,0.6); border: none; color: rgba(45,58,90,0.6); font-size: clamp(0.85rem, 2vh, 0.95rem); cursor: pointer; text-decoration: none; padding: clamp(10px, 2vh, 12px) 20px; border-radius: 12px; font-weight: 700; margin: 0 auto; display: inline-block; width: fit-content; transition: background 0.2s; }
   .link:active { background: #fff; }
 
