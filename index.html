@@ -30,7 +30,7 @@
   html, body {
     margin: 0; padding: 0;
     width: 100%; height: 100%;
-    overflow: hidden;
+    overflow: hidden; /* Запрещаем скролл всей страницы */
   }
 
   body {
@@ -44,7 +44,7 @@
   }
 
   /* =========================================
-     ПК ВЕРСИЯ (Без рамки, чуть шире)
+     ПК ВЕРСИЯ
      ========================================= */
   @media (min-width: 480px) {
     body { padding: 0; }
@@ -101,7 +101,7 @@
     overflow: hidden;
   }
   
-  .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; overflow: hidden; }
+  .screen { display: none !important; flex-direction: column; width: 100%; height: 100%; overflow: hidden; }
   .screen.active { display: flex !important; }
 
   /* =========================================
@@ -140,7 +140,7 @@
     align-items: center;
     width: 100%;
     margin: auto 0;
-    padding-top: 60px;
+    padding-top: 40px; /* Выровняли отступ */
   }
 
   .header { text-align: center; margin-bottom: clamp(15px, 3vh, 24px); flex-shrink: 0; width: 100%; }
@@ -201,9 +201,15 @@
   .author b { font-weight: 600; color: rgba(45,58,90,0.65); }
 
   /* =========================================
-     ЭКРАН ИГРЫ
+     ЭКРАН ИГРЫ (Гибкая высота без скролла)
      ========================================= */
-  .game-screen { display: flex; flex-direction: column; height: 100%; padding: 0 10px; }
+  .game-screen { 
+    display: flex; 
+    flex-direction: column; 
+    height: 100%; 
+    padding: 0 10px 80px 10px; /* Место под прибитую кнопку меню */
+    position: relative;
+  }
   .game-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: clamp(10px, 2vh, 15px); background: #fff; padding: clamp(10px, 2vh, 12px); border-radius: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); flex-shrink: 0; }
   .game-topbar .stat { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
   .game-topbar .stat + .stat::before { content: ''; position: absolute; left: 0; top: 15%; bottom: 15%; width: 1px; background: rgba(0,0,0,0.08); }
@@ -214,15 +220,51 @@
 
   .timer { font-size: clamp(1.2rem, 3.5vh, 1.4rem); font-weight: 800; color: var(--sunny-d); margin-bottom: 10px; text-align: center; white-space: nowrap; flex-shrink: 0; }
 
-  .task-container { background: #fff; border-radius: 26px; padding: 20px 15px; text-align: center; margin-bottom: 15px; flex: none; height: 140px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 0 rgba(0,0,0,0.06); position: relative; overflow: hidden; }
-  @media (min-width: 480px) { .task-container { height: 180px; padding: 30px 20px; } }
-  .task { font-size: clamp(2.5rem, 8vw, 3.5rem); font-weight: 900; color: var(--text); z-index: 1; transition: 0.15s; white-space: nowrap; max-width: 100%; overflow: hidden; }
-  @media (min-width: 480px) { .task { font-size: 3.2rem; } }
+  /* Умная высота для примера */
+  .task-container { 
+    background: #fff; 
+    border-radius: 26px; 
+    padding: 15px; 
+    text-align: center; 
+    margin-bottom: 15px; 
+    flex: 1 1 auto; 
+    min-height: 110px; 
+    max-height: 180px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    box-shadow: 0 8px 0 rgba(0,0,0,0.06); 
+    position: relative; 
+    overflow: hidden; 
+  }
+  .task { font-size: clamp(2rem, 7vw, 3.2rem); font-weight: 900; color: var(--text); z-index: 1; transition: 0.15s; white-space: nowrap; max-width: 100%; overflow: hidden; }
   .task.hit { color: var(--mint-d); transform: scale(1.05); }
 
-  .answers { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 2vh, 12px); margin-bottom: clamp(10px, 2vh, 15px); flex-shrink: 0; }
-  .ball { font-size: clamp(1.5rem, 6vw, 2rem); padding: clamp(15px, 3vh, 25px) 0; font-weight: 900; border: none; border-radius: 18px; cursor: pointer; color: #fff; transition: 0.1s; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.15); background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); }
-  @media (min-width: 480px) { .ball { font-size: 2rem; padding: 25px 0; } }
+  /* Умная высота для ответов */
+  .answers { 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: clamp(10px, 2vh, 12px); 
+    margin-bottom: 10px; 
+    flex: 1 1 auto; 
+    min-height: 150px; 
+    max-height: 220px; 
+  }
+  .ball { 
+    font-size: clamp(1.5rem, 5vw, 2rem); 
+    font-weight: 900; 
+    border: none; 
+    border-radius: 18px; 
+    cursor: pointer; 
+    color: #fff; 
+    transition: 0.1s; 
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.15); 
+    background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); 
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
   .ball:active { transform: translateY(4px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 0 rgba(0,0,0,0.15); }
   .ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 6px 0 #047857 !important; }
   .ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 #991b1b !important; }
@@ -237,46 +279,39 @@
   .btn-save-record.show { opacity: 1; pointer-events: auto; }
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
-  /* =========================================
-     НИЖНИЕ КНОПКИ (Адаптив)
-     ========================================= */
+  /* Прибиваем кнопки к низу */
   .actions { 
+    position: absolute;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
     display: flex; 
     flex-direction: column; 
     gap: 8px; 
     flex-shrink: 0; 
-  }
-
-  /* Для ПК (кнопка меню сразу под ответами) */
-  @media (min-width: 480px) {
-    .actions { margin-top: 15px; padding-bottom: 10px; }
-  }
-
-  /* Для телефона (кнопка меню прижата к низу) */
-  @media (max-width: 479px) {
-    .actions { margin-top: auto; padding-bottom: 10px; }
+    z-index: 10;
   }
 
   .btn-main { padding: clamp(12px, 2.5vh, 14px); font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
-  .link { background: rgba(255,255,255,0.6); border: none; color: rgba(45,58,90,0.6); font-size: clamp(0.85rem, 2vh, 0.9rem); cursor: pointer; text-decoration: none; padding: clamp(10px, 2vh, 12px) 20px; border-radius: 12px; font-weight: 700; margin: 0 auto; display: inline-block; width: fit-content; transition: background 0.2s; }
+  .link { background: rgba(255,255,255,0.8); border: none; color: rgba(45,58,90,0.7); font-size: clamp(0.85rem, 2vh, 0.9rem); cursor: pointer; text-decoration: none; padding: clamp(10px, 2vh, 12px) 20px; border-radius: 12px; font-weight: 700; margin: 0 auto; display: inline-block; width: fit-content; transition: background 0.2s; backdrop-filter: blur(4px); }
   .link:active { background: #fff; }
 
   /* =========================================
      РЕЙТИНГ
      ========================================= */
-  #screen-rating { padding: 0 10px; }
+  #screen-rating { padding: 0 10px; height: 100%; display: flex; flex-direction: column; }
   .rating-header { display: flex; align-items: center; margin-bottom: clamp(12px, 2vh, 16px); flex-shrink: 0; }
   .back-btn { background: #fff; border: none; color: var(--text); width: clamp(32px, 4vh, 36px); height: clamp(32px, 4vh, 36px); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 12px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); }
   .rating-title { font-size: clamp(1.2rem, 3vh, 1.4rem); font-weight: 800; white-space: nowrap; }
-  .rating-group { display: flex; flex-direction: column; width: 100%; margin-bottom: clamp(8px, 1.5vh, 12px); flex-shrink: 0; }
+  .rating-group { display: flex; flex-direction: column; width: 100%; margin-bottom: clamp(12px, 2vh, 16px); flex-shrink: 0; }
   .rating-group-label { font-size: clamp(0.7rem, 1.5vh, 0.75rem); color: rgba(45,58,90,0.5); margin-bottom: 6px; padding-left: 4px; font-weight: 700; }
   .rating-tabs { display: flex; gap: 6px; width: 100%; background: rgba(255,255,255,0.5); padding: 4px; border-radius: 12px; }
   .rating-tab { flex: 1; padding: clamp(8px, 1.5vh, 10px); border: none; border-radius: 10px; font-size: clamp(0.8rem, 1.8vh, 0.85rem); font-weight: 700; cursor: pointer; background: transparent; color: rgba(45,58,90,0.5); transition: all 0.2s; white-space: nowrap; }
   .rating-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
 
-  .rating-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: clamp(12px, 2vh, 16px); flex: 1; overflow-y: auto; padding-right: 5px; padding-bottom: 20px; min-height: 0; }
+  .rating-list { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-top: 8px; flex: 1; overflow-y: auto; padding-right: 5px; padding-bottom: 20px; min-height: 0; }
   .rating-list::-webkit-scrollbar { width: 6px; }
   .rating-list::-webkit-scrollbar-track { background: rgba(45,58,90,0.05); border-radius: 10px; }
   .rating-list::-webkit-scrollbar-thumb { background: var(--lavender-d); border-radius: 10px; }
@@ -288,33 +323,33 @@
   .rating-empty { text-align: center; color: rgba(45,58,90,0.4); font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 600; padding: 30px 0; }
 
   /* =========================================
-     МОДАЛКИ
+     МОДАЛКИ (Воздушные)
      ========================================= */
   .modal-overlay { position: fixed; inset: 0; background: rgba(45,58,90,0.35); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
   .modal-overlay.visible { display: flex; }
-  .modal-box { background: #fff; border-radius: 26px; padding: clamp(20px, 4vh, 24px) 20px; width: 100%; max-width: 360px; box-shadow: 0 12px 50px rgba(45,58,90,0.25); text-align: center; max-height: 90vh; overflow-y: auto; }
+  .modal-box { background: #fff; border-radius: 26px; padding: 24px 20px; width: 100%; max-width: 360px; box-shadow: 0 12px 50px rgba(45,58,90,0.25); text-align: center; max-height: 90vh; overflow-y: auto; }
   .modal-box h3 { margin: 0 0 16px; font-size: clamp(1.2rem, 3vh, 1.3rem); font-weight: 800; color: var(--text); }
-  .personal-stats { background: #f4f8ff; border-radius: 16px; padding: 14px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .personal-stats { background: #f4f8ff; border-radius: 16px; padding: 16px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 12px; }
   .p-stat { display: flex; justify-content: space-between; align-items: center; font-size: clamp(0.85rem, 2vh, 0.9rem); }
   .p-stat span:first-child { color: rgba(45,58,90,0.6); font-weight: 600; }
   .p-stat span:last-child { color: var(--text); font-weight: 800; font-size: clamp(1rem, 2.2vh, 1.1rem); }
-  .name-input-wrapper { background: #f4f8ff; border: 2px solid transparent; border-radius: 14px; margin-bottom: 12px; transition: 0.2s; cursor: pointer; }
+  .name-input-wrapper { background: #f4f8ff; border: 2px solid transparent; border-radius: 14px; margin-bottom: 16px; transition: 0.2s; cursor: pointer; }
   .name-input-wrapper.active { border-color: var(--lavender-d); background: #eef0ff; cursor: text; }
   .name-input-wrapper input { width: 100%; border: none; background: transparent; color: var(--text); font-size: clamp(1rem, 2.2vh, 1.1rem); padding: 14px; outline: none; text-align: center; font-weight: 700; font-family: inherit; }
-  .modal-box .save { width: 100%; padding: 14px; border: none; border-radius: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; cursor: pointer; background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 5px 0 #047857; font-family: inherit; }
+  .modal-box .save { width: 100%; padding: 14px; border: none; border-radius: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; cursor: pointer; background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 5px 0 #047857; font-family: inherit; margin-bottom: 10px; }
   .modal-box .save:active { transform: translateY(3px); box-shadow: 0 2px 0 #047857; }
-  .settings-btn-in-profile { width: 100%; padding: 12px; margin-top: 10px; border: 2px solid #f0e6d2; border-radius: 14px; background: #fffbf0; color: #b8860b; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit; }
+  .settings-btn-in-profile { width: 100%; padding: 12px; border: 2px solid #f0e6d2; border-radius: 14px; background: #fffbf0; color: #b8860b; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit; }
   .settings-btn-in-profile:active { transform: scale(0.98); }
 
   /* =========================================
-     НАСТРОЙКИ
+     НАСТРОЙКИ (Воздушные)
      ========================================= */
   #settings-panel { background: #fff; border-radius: 26px; padding: 22px 18px 16px; width: 100%; max-width: 400px; max-height: 85vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(45,58,90,0.25); text-align: left; }
   #settings-panel h3 { margin: 0 0 16px; font-size: clamp(1.1rem, 2.8vh, 1.1rem); text-align: center; color: var(--text); font-weight: 800; }
-  .setting-block { margin-bottom: 16px; background: #f4f8ff; border-radius: 14px; padding: 14px 12px 12px; }
+  .setting-block { margin-bottom: 20px; background: #f4f8ff; border-radius: 14px; padding: 16px 14px 14px; }
   .setting-block h4 { margin: 0 0 8px; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 700; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
   .setting-block h4 .val { color: var(--lavender-d); font-weight: 800; font-size: clamp(0.85rem, 2vh, 0.9rem); }
-  .setting-block .hint { font-size: clamp(0.7rem, 1.5vh, 0.75rem); color: rgba(45,58,90,0.5); font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+  .setting-block .hint { font-size: clamp(0.7rem, 1.5vh, 0.75rem); color: rgba(45,58,90,0.5); font-weight: 600; margin-bottom: 12px; line-height: 1.3; }
   input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: #d4e0f0; outline: none; }
   input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--lavender-d); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 2px solid #fff; }
   .range-row { display: flex; align-items: center; gap: 8px; }
@@ -324,15 +359,15 @@
   .tbl-btn-all { background: #fff; border: 2px solid var(--mint-d); color: var(--mint-d); padding: 5px 12px; border-radius: 8px; font-size: clamp(0.75rem, 1.8vh, 0.8rem); font-weight: 800; cursor: pointer; font-family: inherit; transition: 0.2s; }
   .tbl-btn-all:active { transform: scale(0.95); }
   .tbl-btn-all:disabled { background: #f0f4f8; border-color: #cbd5e1; color: #94a3b8; cursor: default; transform: none; }
-  .tbl-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .tbl-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
   .tbl-btn { padding: clamp(8px, 1.8vh, 10px) 0; border-radius: 8px; border: 2px solid #d4e0f0; background: #fff; color: rgba(45,58,90,0.6); font-size: clamp(0.8rem, 1.8vh, 0.9rem); font-weight: 800; cursor: pointer; transition: 0.1s; font-family: inherit; }
   .tbl-btn.active { background: var(--mint-d); border-color: var(--mint-d); color: #fff; box-shadow: 0 2px 8px rgba(46,196,160,0.4); }
   .tbl-btn:active { transform: scale(0.95); }
-  .settings-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .settings-actions { display: flex; gap: 10px; margin-top: 10px; }
   .settings-actions button { flex: 1; padding: 12px 0; font-size: clamp(0.9rem, 2vh, 0.95rem); font-weight: 800; border-radius: 12px; border: none; cursor: pointer; font-family: inherit; }
   #set-reset { background: #f0f4f8; color: var(--text-soft); box-shadow: 0 4px 0 #cbd5e1; }
   #set-apply { background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 4px 0 #047857; }
-  #set-close { width: 100%; margin-top: 10px; padding: 10px 0; font-size: clamp(0.8rem, 1.8vh, 0.85rem); border-radius: 10px; border: none; background: #f0f4f8; color: var(--text-soft); cursor: pointer; font-weight: 700; font-family: inherit; }
+  #set-close { width: 100%; margin-top: 12px; padding: 12px 0; font-size: clamp(0.8rem, 1.8vh, 0.85rem); border-radius: 10px; border: none; background: #f0f4f8; color: var(--text-soft); cursor: pointer; font-weight: 700; font-family: inherit; }
 
   /* =========================================
      ДУЭЛЬ
@@ -343,7 +378,7 @@
   .duel-side { flex: 1; display: flex; flex-direction: column; padding: 12px; position: relative; }
   .duel-side:first-child { border-right: 2px dashed rgba(45,58,90,0.15); }
   .duel-header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; border-radius: 14px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); margin-bottom: 12px; flex-shrink: 0; }
-  .duel-name { font-size: clamp(0.8rem, 2vh, 0.9rem); font-weight: 800; color: var(--lavender-d); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .duel-name { font-size: clamp(0.8rem, 2vh, 0.9rem); font-weight: 800; color: var(--lavender-d); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60%; }
   .duel-score { font-size: clamp(1.1rem, 2.8vh, 1.2rem); font-weight: 900; color: var(--text); }
   .duel-tasks { display: flex; flex-direction: column; gap: 10px; flex: 1; justify-content: center; }
   .duel-task { font-size: clamp(1rem, 4.5vw, 2rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 900; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 16px; padding: 12px 5px; text-align: center; box-shadow: 0 6px 0 rgba(0,0,0,0.05); min-height: 60px; color: var(--text); }
@@ -366,9 +401,9 @@
   .result-btn { width: 100%; padding: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 14px; background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 5px 0 #047857; cursor: pointer; transition: 0.1s; margin-bottom: 10px; font-family: inherit; }
   .result-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #047857; }
 
-  .duel-setup-box { background: #fff; border-radius: 24px; padding: 22px; width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(45,58,90,0.25); text-align: center; }
+  .duel-setup-box { background: #fff; border-radius: 24px; padding: 24px 20px; width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(45,58,90,0.25); text-align: center; }
   .duel-setup-box h3 { margin: 0 0 16px; font-size: clamp(1.1rem, 3vh, 1.2rem); color: var(--text); font-weight: 800; }
-  .duel-setup-box input { width: 100%; padding: 12px; font-size: clamp(0.9rem, 2vh, 1rem); font-weight: 700; border-radius: 10px; border: 2px solid #d4e0f0; background: #f4f8ff; color: var(--text); outline: none; margin-bottom: 10px; text-align: center; font-family: inherit; }
+  .duel-setup-box input { width: 100%; padding: 12px; font-size: clamp(0.9rem, 2vh, 1rem); font-weight: 700; border-radius: 10px; border: 2px solid #d4e0f0; background: #f4f8ff; color: var(--text); outline: none; margin-bottom: 12px; text-align: center; font-family: inherit; }
   .duel-setup-box input:focus { border-color: var(--pink-d); }
   .duel-setup-box .start-btn { width: 100%; padding: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 12px; background: linear-gradient(180deg, #ff9bbd 0%, var(--pink-d) 100%); color: #fff; box-shadow: 0 5px 0 #d04a7f; cursor: pointer; font-family: inherit; }
   .duel-setup-box .start-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #d04a7f; }
@@ -465,6 +500,7 @@
 
       <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
 
+      <!-- Кнопки прибиты к низу -->
       <div class="actions">
         <button class="btn-main" id="continue">▶ Продолжить</button>
         <button class="link" id="backToMenu">← В главное меню</button>
