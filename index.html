@@ -37,9 +37,8 @@
 
   body {
     font-family: 'Nunito', 'Segoe UI', -apple-system, sans-serif;
-    /* Фон задан на body, чтобы избежать белых полос в Safari */
     background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
-    background-color: var(--sky2); /* Запасной цвет */
+    background-color: var(--sky2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,7 +64,7 @@
   @media (max-width: 479px) {
     #app {
       width: 100%;
-      height: 100dvh; /* Строго высота экрана */
+      height: 100dvh; 
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
       padding-top: calc(16px + env(safe-area-inset-top));
@@ -96,10 +95,12 @@
   .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; overflow: hidden; }
   .screen.active { display: flex !important; }
 
-  /* ===== ЦЕНТРИРОВАНИЕ МЕНЮ ===== */
-  #screen-menu {
-    justify-content: center; /* Центрируем контент меню */
-    padding-bottom: 10px;
+  /* ===== ЦЕНТРИРОВАНИЕ МЕНЮ НА ТЕЛЕФОНЕ ===== */
+  @media (max-width: 479px) {
+    #screen-menu {
+      justify-content: center;
+      padding-bottom: 20px;
+    }
   }
 
   /* ===== ВЕРХНЯЯ СТРОКА ===== */
@@ -160,17 +161,19 @@
     text-align: center; 
     margin-top: clamp(10px, 2vh, 20px); 
     margin-bottom: clamp(20px, 4vh, 35px); 
-    min-height: clamp(160px, 28vh, 250px); 
     flex: 1; 
     display: flex; align-items: center; justify-content: center; 
     box-shadow: 0 10px 0 rgba(0,0,0,0.06); 
     position: relative; overflow: hidden; 
   }
   
-  /* Жесткий min-height для ПК, чтобы поле не сжималось */
   @media (min-width: 480px) {
     .task-container {
-      min-height: 200px;
+      min-height: auto; /* Убрали min-height на ПК */
+      padding: clamp(20px, 3vh, 35px) 15px; /* Чуть компактнее */
+    }
+    .task {
+      font-size: clamp(2.5rem, 5vw, 3.5rem); /* Чуть меньше шрифт на ПК */
     }
   }
 
@@ -222,9 +225,10 @@
     flex-shrink: 0; 
   }
 
+  /* Поднимаем кнопку на ПК */
   @media (min-width: 480px) {
     .actions {
-      padding-bottom: 100px; 
+      padding-bottom: 20px; /* Было 100px — теперь в пределах экрана */
     }
   }
 
