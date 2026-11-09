@@ -33,7 +33,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden; /* Убираем скролл */
+    overflow: hidden; /* Убираем скролл страницы нафиг */
     position: relative;
     color: var(--text);
   }
@@ -41,23 +41,22 @@
   /* На компьютере (ПК) */
   @media (min-width: 480px) {
     body {
-      padding: 20px;
-      overflow-y: auto; /* На всякий случай, если экран совсем низкий */
-      background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
+      padding: 20px; /* Небольшой отступ по краям окна */
     }
     #app {
-      background: transparent; /* Никакого белого фона! */
+      background: transparent;
       box-shadow: none;
-      max-width: 420px;
-      height: 100%;
+      max-width: 440px;
+      /* Карточка занимает всю доступную высоту минус отступы, но не больше 800px */
+      height: calc(100dvh - 40px); 
       max-height: 800px;
-      padding: 10px 0;
     }
   }
 
   /* На телефоне */
   @media (max-width: 479px) {
     #app {
+      height: 100dvh; /* Строго высота экрана */
       padding: 16px 12px;
       padding-bottom: calc(16px + env(safe-area-inset-bottom));
       padding-top: calc(16px + env(safe-area-inset-top));
@@ -81,7 +80,6 @@
     flex-direction: column; 
     z-index: 2; 
     position: relative; 
-    height: 100%;
   }
   .screen { display: none !important; flex-direction: column; width: 100%; flex: 1; }
   .screen.active { display: flex !important; }
@@ -164,20 +162,14 @@
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
   /* ===== КНОПКИ ВНИЗУ ===== */
+  /* Главный секрет: margin-top: auto прижимает блок кнопок к самому низу экрана */
   .actions { 
     display: flex; 
     flex-direction: column; 
     gap: 8px; 
     margin-top: auto; 
-    padding-bottom: calc(10px + env(safe-area-inset-bottom)); /* Для телефонов */
+    padding-bottom: 10px; /* Легкий отступ снизу */
     flex-shrink: 0; 
-  }
-
-  /* На компьютере поднимаем кнопки повыше от края экрана */
-  @media (min-width: 480px) {
-    .actions {
-      padding-bottom: 40px; /* Вот этот отступ поднимет кнопку "В главное меню" на ПК */
-    }
   }
 
   .btn-main { padding: clamp(12px, 2.5vh, 16px); font-size: clamp(0.95rem, 2.2vh, 1.05rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
