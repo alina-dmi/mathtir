@@ -51,6 +51,1439 @@
     body { padding: 20px; }
     #app {
       max-width: 440px;
+      height: 100%;
+      max-height: 800px;
+    }
+  }
+
+  /* ===== ТЕЛЕФОН ===== */
+  @media (max-width: 479px) {
+    #app {
+      width: 100%;
+      height: 100%;
+      padding: 12px;
+      padding-bottom: calc(12px + env(safe-area-inset-bottom));
+      padding-top: calc(12px + env(safe-area-inset-top));
+    }
+  }
+
+  /* ===== Фон ===== */
+  .sun { position: absolute; top: 20px; right: 20px; width: clamp(50px, 10vh, 90px); height: clamp(50px, 10vh, 90px); background: radial-gradient(circle, #fff6a8 0%, var(--sun) 60%, #ffcc33 100%); border-radius: 50%; box-shadow: 0 0 60px rgba(255,224,102,0.8); z-index: 0; animation: sunPulse 4s ease-in-out infinite; }
+  @keyframes sunPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.08); } }
+  .cloud { position: absolute; background: #fff; border-radius: 100px; opacity: 0.85; z-index: 0; pointer-events: none; }
+  .cloud::before, .cloud::after { content: ''; position: absolute; background: #fff; border-radius: 50%; }
+  .cloud1 { width: 100px; height: 30px; top: 15%; left: -120px; animation: drift 40s linear infinite; }
+  .cloud1::before { width: 45px; height: 45px; top: -20px; left: 15px; }
+  .cloud1::after  { width: 30px; height: 30px; top: -10px; left: 50px; }
+  @keyframes drift { to { transform: translateX(calc(100vw + 200px)); } }
+
+  /* ===== КОНТЕЙНЕР ===== */
+  #app { 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    z-index: 2; 
+    position: relative; 
+    overflow: hidden;
+  }
+  
+  .screen { 
+    display: none !important; 
+    flex-direction: column; 
+    width: 100%; 
+    flex: 1; 
+    overflow: hidden; 
+  }
+  .screen.active { display: flex !important; }
+
+  /* ===== ЦЕНТРИРОВАНИЕ МЕНЮ ===== */
+  #screen-menu {
+    justify-content: center;
+    padding-bottom: 20px;
+  }
+
+  /* ===== ВЕРХНЯЯ СТРОКА ===== */
+  .menu-topbar { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    margin-bottom: clamp(10px, 2vh, 20px); 
+    flex-shrink: 0; 
+  }
+  .profile-chip { display: flex; align-items: center; gap: 8px; background: #fff; padding: 4px 14px 4px 4px; border-radius: 30px; cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
+  .avatar { width: clamp(30px, 4vh, 34px); height: clamp(30px, 4vh, 34px); background: linear-gradient(135deg, var(--sunny), var(--coral)); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: clamp(0.9rem, 2vh, 1rem); }
+  .profile-name { font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+  .icon-btn { width: clamp(38px, 5vh, 44px); height: clamp(38px, 5vh, 44px); background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; color: var(--sunny-d); box-shadow: 0 4px 0 rgba(0,0,0,0.08); }
+  .icon-btn svg { width: clamp(18px, 2.5vh, 22px); height: clamp(18px, 2.5vh, 22px); fill: currentColor; }
+
+  /* ===== МЕНЮ ===== */
+  .header { text-align: center; margin-bottom: clamp(15px, 3vh, 24px); flex-shrink: 0; }
+  .header h1 { font-size: clamp(1.4rem, 4vh, 1.8rem); font-weight: 800; line-height: 1.1; margin-bottom: 6px; color: var(--text); }
+  .header .subtitle { font-size: clamp(0.8rem, 1.8vh, 0.9rem); font-weight: 600; color: rgba(45,58,90,0.55); }
+
+  .mode-list { display: flex; flex-direction: column; gap: clamp(8px, 1.5vh, 12px); margin-bottom: clamp(12px, 2vh, 16px); flex-shrink: 0; }
+  .mode-card { display: flex; align-items: center; padding: clamp(12px, 2.5vh, 16px) 18px; border-radius: 22px; border: none; cursor: pointer; text-align: left; position: relative; overflow: hidden; box-shadow: 0 6px 0 rgba(0,0,0,0.12); transition: transform 0.1s; }
+  .mode-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 45%; background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 100%); pointer-events: none; }
+  .mode-card:active { transform: translateY(4px); box-shadow: 0 2px 0 rgba(0,0,0,0.12); }
+  .mode-icon { width: clamp(40px, 6vh, 50px); height: clamp(40px, 6vh, 50px); border-radius: 16px; display: flex; align-items: center; justify-content: center; margin-right: 14px; background: rgba(255,255,255,0.35); flex-shrink: 0; border: 2px solid rgba(255,255,255,0.5); z-index: 1; }
+  .mode-icon svg { width: clamp(22px, 3vh, 26px); height: clamp(22px, 3vh, 26px); fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  .mode-text { display: flex; flex-direction: column; flex: 1; z-index: 1; overflow: hidden; }
+  .mode-title { font-size: clamp(1rem, 2.5vh, 1.1rem); font-weight: 800; margin-bottom: 2px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mode-desc { font-size: clamp(0.75rem, 1.6vh, 0.8rem); font-weight: 600; color: rgba(255,255,255,0.95); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #mode-addsub { background: linear-gradient(160deg, #ffab91 0%, var(--coral) 100%); }
+  #mode-muldiv { background: linear-gradient(160deg, #80e6c9 0%, var(--mint-d) 100%); }
+  #mode-all    { background: linear-gradient(160deg, #c9b8ff 0%, var(--lavender-d) 100%); }
+
+  .mini-modes-container { display: flex; gap: 12px; justify-content: center; margin-bottom: auto; flex-shrink: 0; }
+  .mini-mode-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(10px, 2vh, 14px) 10px; border: none; border-radius: 20px; cursor: pointer; background: #fff; box-shadow: 0 5px 0 rgba(0,0,0,0.1); transition: transform 0.1s; }
+  .mini-mode-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+  .mini-icon { width: clamp(36px, 5vh, 44px); height: clamp(36px, 5vh, 44px); border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; z-index: 1; }
+  .mini-icon svg { width: clamp(20px, 2.8vh, 24px); height: clamp(20px, 2.8vh, 24px); fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+  #mode-timed .mini-icon { background: linear-gradient(135deg, var(--sunny), var(--sunny-d)); box-shadow: 0 0 15px rgba(255,217,61,0.4); }
+  #mode-duel .mini-icon { background: linear-gradient(135deg, var(--pink), var(--pink-d)); box-shadow: 0 0 15px rgba(255,111,165,0.4); }
+  .mini-text { font-size: clamp(0.75rem, 1.8vh, 0.85rem); font-weight: 700; text-align: center; z-index: 1; white-space: nowrap; }
+  #mode-timed .mini-text { color: #b86b00; }
+  #mode-duel  .mini-text { color: #c2185b; }
+
+  .author { margin-top: clamp(10px, 2vh, 15px); padding-bottom: 5px; font-size: clamp(0.65rem, 1.5vh, 0.7rem); font-weight: 600; color: rgba(45,58,90,0.45); text-align: center; flex-shrink: 0; }
+  .author b { font-weight: 600; color: rgba(45,58,90,0.65); }
+
+  /* ===== ЭКРАН ИГРЫ ===== */
+  .game-screen { display: flex; flex-direction: column; height: 100%; position: relative; }
+  .game-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: clamp(10px, 2vh, 15px); background: #fff; padding: clamp(10px, 2vh, 12px); border-radius: 20px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); flex-shrink: 0; }
+  .game-topbar .stat { display: flex; flex-direction: column; align-items: center; flex: 1; position: relative; }
+  .game-topbar .stat + .stat::before { content: ''; position: absolute; left: 0; top: 15%; bottom: 15%; width: 1px; background: rgba(0,0,0,0.08); }
+  .game-topbar .stat-label { font-size: clamp(0.6rem, 1.2vh, 0.65rem); color: rgba(45,58,90,0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; font-weight: 800; }
+  .game-topbar .stat-value { font-size: clamp(1.1rem, 3vh, 1.2rem); font-weight: 900; color: var(--text); }
+  .game-topbar .hearts { font-size: clamp(0.85rem, 2vh, 0.95rem); letter-spacing: 1px; }
+  .game-topbar .rank { font-size: clamp(0.7rem, 1.6vh, 0.75rem); color: var(--lavender-d); font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100px; }
+
+  .timer { font-size: clamp(1.2rem, 3.5vh, 1.4rem); font-weight: 800; color: var(--sunny-d); margin-bottom: 10px; text-align: center; white-space: nowrap; flex-shrink: 0; }
+
+  /* ===== ПОЛЕ С ПРИМЕРОМ (СТАТИЧНОЕ) ===== */
+  .task-container { 
+    background: #fff; border-radius: 26px; 
+    padding: 20px 15px;
+    text-align: center; 
+    margin-bottom: 15px; 
+    flex: none; /* Убрали растягивание */
+    height: 140px; /* Фиксированная высота для телефона */
+    display: flex; align-items: center; justify-content: center; 
+    box-shadow: 0 8px 0 rgba(0,0,0,0.06); 
+    position: relative; overflow: hidden; 
+  }
+
+  @media (min-width: 480px) {
+    .task-container {
+      height: 180px; /* Фиксированная высота для ПК */
+      padding: 30px 20px;
+    }
+  }
+
+  .task { 
+    font-size: clamp(2.5rem, 8vw, 3.5rem); 
+    font-weight: 900; color: var(--text); 
+    z-index: 1; transition: 0.15s; white-space: nowrap; 
+    max-width: 100%; overflow: hidden; 
+  }
+
+  @media (min-width: 480px) {
+    .task {
+      font-size: 3.2rem; 
+    }
+  }
+
+  .task.hit { color: var(--mint-d); transform: scale(1.05); }
+
+  .answers { 
+    display: grid; grid-template-columns: 1fr 1fr; 
+    gap: clamp(10px, 2vh, 12px); 
+    margin-bottom: clamp(10px, 2vh, 15px); flex-shrink: 0; 
+  }
+  .ball { 
+    font-size: clamp(1.5rem, 6vw, 2rem); 
+    padding: clamp(15px, 3vh, 25px) 0; 
+    font-weight: 900; border: none; border-radius: 18px; cursor: pointer; 
+    color: #fff; transition: 0.1s; 
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 rgba(0,0,0,0.15); 
+    background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); 
+  }
+
+  @media (min-width: 480px) {
+    .ball {
+      font-size: 2rem; 
+      padding: 25px 0;
+    }
+  }
+
+  .ball:active { transform: translateY(4px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 2px 0 rgba(0,0,0,0.15); }
+  .ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 6px 0 #047857 !important; }
+  .ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 6px 0 #991b1b !important; }
+  .ball.reveal { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; opacity: 0.85; }
+
+  .msg { height: clamp(1.5rem, 3vh, 1.8rem); font-size: clamp(0.9rem, 2vh, 1rem); font-weight: 800; text-align: center; margin-bottom: 5px; opacity: 0; transition: opacity 0.15s; flex-shrink: 0; }
+  .msg.show { opacity: 1; }
+  .msg.success { color: var(--mint-d); }
+  .msg.error { color: var(--coral-d); }
+
+  .btn-save-record { background: rgba(16,185,129,0.15); border: 2px solid rgba(16,185,129,0.3); color: #059669; padding: 10px; border-radius: 14px; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; cursor: pointer; width: 100%; margin-bottom: 8px; opacity: 0; pointer-events: none; flex-shrink: 0; transition: 0.3s; }
+  .btn-save-record.show { opacity: 1; pointer-events: auto; }
+  .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
+
+  /* ===== КНОПКИ ВНИЗУ (ПРИЖАТЫ К НИЗУ) ===== */
+  .actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    margin-top: auto; 
+    padding-bottom: 10px; 
+    flex-shrink: 0; 
+  }
+
+  @media (min-width: 480px) {
+    .actions {
+      position: absolute;
+      bottom: 15px;
+      left: 0;
+      right: 0;
+      padding: 0 20px;
+      margin-top: 0;
+      z-index: 10;
+      background: transparent;
+    }
+  }
+
+  .btn-main { padding: clamp(12px, 2.5vh, 14px); font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
+  .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
+  
+  .link { background: rgba(255,255,255,0.6); border: none; color: rgba(45,58,90,0.6); font-size: clamp(0.85rem, 2vh, 0.9rem); cursor: pointer; text-decoration: none; padding: clamp(10px, 2vh, 12px) 20px; border-radius: 12px; font-weight: 700; margin: 0 auto; display: inline-block; width: fit-content; transition: background 0.2s; }
+  .link:active { background: #fff; }
+
+  /* ===== РЕЙТИНГ ===== */
+  .rating-header { display: flex; align-items: center; margin-bottom: clamp(12px, 2vh, 16px); flex-shrink: 0; }
+  .back-btn { background: #fff; border: none; color: var(--text); width: clamp(32px, 4vh, 36px); height: clamp(32px, 4vh, 36px); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; margin-right: 12px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); }
+  .rating-title { font-size: clamp(1.2rem, 3vh, 1.4rem); font-weight: 800; white-space: nowrap; }
+  .rating-group { display: flex; flex-direction: column; width: 100%; margin-bottom: clamp(8px, 1.5vh, 12px); flex-shrink: 0; }
+  .rating-group-label { font-size: clamp(0.7rem, 1.5vh, 0.75rem); color: rgba(45,58,90,0.5); margin-bottom: 6px; padding-left: 4px; font-weight: 700; }
+  .rating-tabs { display: flex; gap: 6px; width: 100%; background: rgba(255,255,255,0.5); padding: 4px; border-radius: 12px; }
+  .rating-tab { flex: 1; padding: clamp(8px, 1.5vh, 10px); border: none; border-radius: 10px; font-size: clamp(0.8rem, 1.8vh, 0.85rem); font-weight: 700; cursor: pointer; background: transparent; color: rgba(45,58,90,0.5); transition: all 0.2s; white-space: nowrap; }
+  .rating-tab.active { background: #fff; color: var(--text); box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+
+  .rating-list { 
+    width: 100%; 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    margin-top: clamp(12px, 2vh, 16px); 
+    flex: 1; 
+    overflow-y: auto; 
+    padding-right: 5px; 
+    padding-bottom: 20px;
+    min-height: 0; 
+  }
+
+  .rating-list::-webkit-scrollbar { width: 6px; }
+  .rating-list::-webkit-scrollbar-track { background: rgba(45,58,90,0.05); border-radius: 10px; }
+  .rating-list::-webkit-scrollbar-thumb { background: var(--lavender-d); border-radius: 10px; }
+
+  .rating-row { display: flex; align-items: center; padding: clamp(10px, 2vh, 14px) 16px; background: #fff; border-radius: 14px; box-shadow: 0 3px 0 rgba(0,0,0,0.04); flex-shrink: 0; }
+  .rating-row .pos { font-weight: 800; color: var(--lavender-d); min-width: 2rem; font-size: clamp(0.9rem, 2vh, 1rem); }
+  .rating-row .nm { flex: 1; text-align: left; margin-left: 8px; font-weight: 700; font-size: clamp(0.85rem, 2vh, 0.95rem); color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .rating-row .sc { font-weight: 800; color: var(--sunny-d); font-size: clamp(1rem, 2.2vh, 1.1rem); }
+  .rating-empty { text-align: center; color: rgba(45,58,90,0.4); font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 600; padding: 30px 0; }
+
+  /* ===== МОДАЛКИ ===== */
+  .modal-overlay { position: fixed; inset: 0; background: rgba(45,58,90,0.35); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .modal-overlay.visible { display: flex; }
+  .modal-box { background: #fff; border-radius: 26px; padding: clamp(20px, 4vh, 24px) 20px; width: 100%; max-width: 360px; box-shadow: 0 12px 50px rgba(45,58,90,0.25); text-align: center; max-height: 90vh; overflow-y: auto; }
+  .modal-box h3 { margin: 0 0 16px; font-size: clamp(1.2rem, 3vh, 1.3rem); font-weight: 800; color: var(--text); }
+  .personal-stats { background: #f4f8ff; border-radius: 16px; padding: 14px; margin-bottom: 16px; display: flex; flex-direction: column; gap: 10px; }
+  .p-stat { display: flex; justify-content: space-between; align-items: center; font-size: clamp(0.85rem, 2vh, 0.9rem); }
+  .p-stat span:first-child { color: rgba(45,58,90,0.6); font-weight: 600; }
+  .p-stat span:last-child { color: var(--text); font-weight: 800; font-size: clamp(1rem, 2.2vh, 1.1rem); }
+  .name-input-wrapper { background: #f4f8ff; border: 2px solid transparent; border-radius: 14px; margin-bottom: 12px; transition: 0.2s; cursor: pointer; }
+  .name-input-wrapper.active { border-color: var(--lavender-d); background: #eef0ff; cursor: text; }
+  .name-input-wrapper input { width: 100%; border: none; background: transparent; color: var(--text); font-size: clamp(1rem, 2.2vh, 1.1rem); padding: 14px; outline: none; text-align: center; font-weight: 700; font-family: inherit; }
+  .modal-box .save { width: 100%; padding: 14px; border: none; border-radius: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; cursor: pointer; background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 5px 0 #047857; font-family: inherit; }
+  .modal-box .save:active { transform: translateY(3px); box-shadow: 0 2px 0 #047857; }
+  .settings-btn-in-profile { width: 100%; padding: 12px; margin-top: 10px; border: 2px solid #f0e6d2; border-radius: 14px; background: #fffbf0; color: #b8860b; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-family: inherit; }
+  .settings-btn-in-profile:active { transform: scale(0.98); }
+
+  /* ===== НАСТРОЙКИ ===== */
+  #settings-panel { background: #fff; border-radius: 26px; padding: 22px 18px 16px; width: 100%; max-width: 400px; max-height: 88vh; overflow-y: auto; box-shadow: 0 12px 40px rgba(45,58,90,0.25); text-align: left; }
+  #settings-panel h3 { margin: 0 0 16px; font-size: clamp(1.1rem, 2.8vh, 1.1rem); text-align: center; color: var(--text); font-weight: 800; }
+  .setting-block { margin-bottom: 16px; background: #f4f8ff; border-radius: 14px; padding: 14px 12px 12px; }
+  .setting-block h4 { margin: 0 0 8px; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 700; color: var(--text); display: flex; justify-content: space-between; align-items: center; }
+  .setting-block h4 .val { color: var(--lavender-d); font-weight: 800; font-size: clamp(0.85rem, 2vh, 0.9rem); }
+  .setting-block .hint { font-size: clamp(0.7rem, 1.5vh, 0.75rem); color: rgba(45,58,90,0.5); font-weight: 600; margin-bottom: 8px; line-height: 1.3; }
+  input[type=range] { width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 3px; background: #d4e0f0; outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--lavender-d); cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2); border: 2px solid #fff; }
+  .range-row { display: flex; align-items: center; gap: 8px; }
+  .range-row input[type=range] { flex: 1; }
+  .range-row .edge { font-size: clamp(0.8rem, 1.8vh, 0.85rem); color: var(--lavender-d); font-weight: 800; min-width: 24px; text-align: center; }
+  .tbl-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .tbl-btn-all { background: #fff; border: 2px solid var(--mint-d); color: var(--mint-d); padding: 5px 12px; border-radius: 8px; font-size: clamp(0.75rem, 1.8vh, 0.8rem); font-weight: 800; cursor: pointer; font-family: inherit; transition: 0.2s; }
+  .tbl-btn-all:active { transform: scale(0.95); }
+  .tbl-btn-all:disabled { background: #f0f4f8; border-color: #cbd5e1; color: #94a3b8; cursor: default; transform: none; }
+  .tbl-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; }
+  .tbl-btn { padding: clamp(8px, 1.8vh, 10px) 0; border-radius: 8px; border: 2px solid #d4e0f0; background: #fff; color: rgba(45,58,90,0.6); font-size: clamp(0.8rem, 1.8vh, 0.9rem); font-weight: 800; cursor: pointer; transition: 0.1s; font-family: inherit; }
+  .tbl-btn.active { background: var(--mint-d); border-color: var(--mint-d); color: #fff; box-shadow: 0 2px 8px rgba(46,196,160,0.4); }
+  .tbl-btn:active { transform: scale(0.95); }
+  .settings-actions { display: flex; gap: 8px; margin-top: 6px; }
+  .settings-actions button { flex: 1; padding: 12px 0; font-size: clamp(0.9rem, 2vh, 0.95rem); font-weight: 800; border-radius: 12px; border: none; cursor: pointer; font-family: inherit; }
+  #set-reset { background: #f0f4f8; color: var(--text-soft); box-shadow: 0 4px 0 #cbd5e1; }
+  #set-apply { background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 4px 0 #047857; }
+  #set-close { width: 100%; margin-top: 10px; padding: 10px 0; font-size: clamp(0.8rem, 1.8vh, 0.85rem); border-radius: 10px; border: none; background: #f0f4f8; color: var(--text-soft); cursor: pointer; font-weight: 700; font-family: inherit; }
+
+  /* ===== ДУЭЛЬ ===== */
+  #screen-duel { position: fixed; inset: 0; background: var(--sky2); z-index: 50; display: none; overflow: hidden; flex-direction: column; }
+  #screen-duel.active { display: flex; }
+  .duel-play-area { display: flex; flex: 1; flex-direction: row; overflow: hidden; }
+  .duel-side { flex: 1; display: flex; flex-direction: column; padding: 12px; position: relative; }
+  .duel-side:first-child { border-right: 2px dashed rgba(45,58,90,0.15); }
+  .duel-header { display: flex; justify-content: space-between; align-items: center; background: #fff; padding: 8px 12px; border-radius: 14px; box-shadow: 0 4px 0 rgba(0,0,0,0.05); margin-bottom: 12px; flex-shrink: 0; }
+  .duel-name { font-size: clamp(0.8rem, 2vh, 0.9rem); font-weight: 800; color: var(--lavender-d); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .duel-score { font-size: clamp(1.1rem, 2.8vh, 1.2rem); font-weight: 900; color: var(--text); }
+  .duel-tasks { display: flex; flex-direction: column; gap: 10px; flex: 1; justify-content: center; }
+  .duel-task { font-size: clamp(1rem, 4.5vw, 2rem); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: 900; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 16px; padding: 12px 5px; text-align: center; box-shadow: 0 6px 0 rgba(0,0,0,0.05); min-height: 60px; color: var(--text); }
+  .duel-answers { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 8px; }
+  .duel-ball { font-size: clamp(1rem, 4vw, 1.6rem); white-space: nowrap; overflow: hidden; padding: 12px 0; font-weight: 800; border: none; border-radius: 12px; cursor: pointer; color: #fff; background: linear-gradient(180deg, #8fb8ff 0%, #5e8cff 100%); border: 1px solid #5e8cff; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 4px 0 #3b66d9; transition: 0.1s; }
+  .duel-ball:active { transform: translateY(3px); box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 1px 0 #3b66d9; }
+  .duel-ball.correct { background: linear-gradient(180deg, #34d399 0%, #059669 100%) !important; border-color: #10b981 !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), 0 4px 0 #047857 !important; }
+  .duel-ball.wrong { background: linear-gradient(180deg, #f87171 0%, #b91c1c 100%) !important; border-color: #ef4444 !important; box-shadow: inset 0 2px 0 rgba(255,255,255,0.2), 0 4px 0 #991b1b !important; }
+  .duel-timer { text-align: center; font-size: clamp(1.2rem, 3vh, 1.4rem); font-weight: 900; color: var(--text); padding: 8px; z-index: 10; text-shadow: 0 0 20px rgba(255,255,255,1); flex-shrink: 0; }
+  .duel-footer { display: flex; justify-content: center; padding: 10px 10px calc(10px + env(safe-area-inset-bottom)); background: rgba(255,255,255,0.4); border-top: 1px solid rgba(45,58,90,0.1); flex-shrink: 0; }
+  .duel-exit-btn { background: #fff; border: none; padding: 10px 20px; border-radius: 16px; font-size: clamp(0.85rem, 2vh, 0.9rem); font-weight: 800; color: var(--text-soft); cursor: pointer; box-shadow: 0 4px 0 rgba(0,0,0,0.1); font-family: inherit; }
+  .duel-exit-btn:active { transform: translateY(3px); box-shadow: 0 1px 0 rgba(0,0,0,0.1); }
+
+  .result-popup { position: fixed; inset: 0; background: rgba(45,58,90,0.4); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
+  .result-popup.visible { display: flex; }
+  .result-box { background: #fff; border-radius: 24px; padding: 24px 20px; width: 100%; max-width: 340px; text-align: center; box-shadow: 0 12px 40px rgba(45,58,90,0.25); }
+  .result-box h2 { font-size: clamp(1.4rem, 4vh, 1.6rem); margin-bottom: 6px; color: var(--sunny-d); font-weight: 800; }
+  .result-box p { font-size: clamp(0.9rem, 2.2vh, 1rem); color: rgba(45,58,90,0.6); margin-bottom: 16px; font-weight: 600; }
+  .result-score { font-size: clamp(2rem, 6vh, 2.5rem); font-weight: 900; color: var(--text); margin-bottom: 20px; letter-spacing: 2px; }
+  .result-btn { width: 100%; padding: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 14px; background: linear-gradient(180deg, #34d399 0%, #059669 100%); color: #fff; box-shadow: 0 5px 0 #047857; cursor: pointer; transition: 0.1s; margin-bottom: 10px; font-family: inherit; }
+  .result-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #047857; }
+
+  .duel-setup-box { background: #fff; border-radius: 24px; padding: 22px; width: 100%; max-width: 320px; box-shadow: 0 12px 40px rgba(45,58,90,0.25); text-align: center; }
+  .duel-setup-box h3 { margin: 0 0 16px; font-size: clamp(1.1rem, 3vh, 1.2rem); color: var(--text); font-weight: 800; }
+  .duel-setup-box input { width: 100%; padding: 12px; font-size: clamp(0.9rem, 2vh, 1rem); font-weight: 700; border-radius: 10px; border: 2px solid #d4e0f0; background: #f4f8ff; color: var(--text); outline: none; margin-bottom: 10px; text-align: center; font-family: inherit; }
+  .duel-setup-box input:focus { border-color: var(--pink-d); }
+  .duel-setup-box .start-btn { width: 100%; padding: 14px; font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 12px; background: linear-gradient(180deg, #ff9bbd 0%, var(--pink-d) 100%); color: #fff; box-shadow: 0 5px 0 #d04a7f; cursor: pointer; font-family: inherit; }
+  .duel-setup-box .start-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #d04a7f; }
+  
+  .confetti { position: fixed; top: -20px; width: 8px; height: 8px; border-radius: 2px; z-index: 15; pointer-events: none; animation: fall linear forwards; }
+  @keyframes fall { to { transform: translateY(110vh) rotate(720deg); opacity: 0; } }
+</style>
+</head>
+<body>
+
+  <div class="sun"></div>
+  <div class="cloud cloud1"></div>
+  <div class="float-sym s1" style="position:absolute; font-size:3rem; opacity:0.15; left:5%; top:20%; color:#ff8a80;">+</div>
+  <div class="float-sym s2" style="position:absolute; font-size:3rem; opacity:0.15; right:10%; top:60%; color:#2ec4a0;">×</div>
+
+  <div id="app">
+    <!-- ===== МЕНЮ ===== -->
+    <div id="screen-menu" class="screen active">
+      <div class="menu-topbar">
+        <div class="profile-chip" id="editNameBtn">
+          <div class="avatar" id="avatarLetter">?</div>
+          <div class="profile-name" id="profileName">Гость</div>
+        </div>
+        <div class="icon-btn" id="openRatingBtn" title="Рейтинг">
+          <svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.2 6.6.5-5.1 4.4 1.6 6.5-5.5-3.6-5.5 3.6 1.6-6.5-5.1-4.4 6.6-.5z"/></svg>
+        </div>
+      </div>
+
+      <div class="header">
+        <h1>Математический тир</h1>
+        <div class="subtitle">Тренируем счёт играя</div>
+      </div>
+
+      <div class="mode-list">
+        <button class="mode-card" id="mode-addsub">
+          <div class="mode-icon"><svg><path d="M5 12h14M12 5v14"/></svg></div>
+          <div class="mode-text">
+            <span class="mode-title">Сложение и вычитание</span>
+            <span class="mode-desc">Плюс и минус — тренируем счёт</span>
+          </div>
+        </button>
+        <button class="mode-card" id="mode-muldiv">
+          <div class="mode-icon"><svg><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+          <div class="mode-text">
+            <span class="mode-title">Умножение и деление</span>
+            <span class="mode-desc">Таблицы умножения</span>
+          </div>
+        </button>
+        <button class="mode-card" id="mode-all">
+          <div class="mode-icon"><svg><circle cx="12" cy="12" r="3"/><path d="M19 12a7 7 0 01-7 7 7 7 0 01-7-7 7 7 0 017-7 7 7 0 017 7z"/></svg></div>
+          <div class="mode-text">
+            <span class="mode-title">Всё вместе</span>
+            <span class="mode-desc">Полный микс из всех заданий</span>
+          </div>
+        </button>
+      </div>
+
+      <div class="mini-modes-container">
+        <button class="mini-mode-btn" id="mode-timed">
+          <div class="mini-icon"><svg><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+          <div class="mini-text">Блиц-турнир</div>
+        </button>
+        <button class="mini-mode-btn" id="mode-duel">
+          <div class="mini-icon"><svg><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg></div>
+          <div class="mini-text">Гонка на двоих</div>
+        </button>
+      </div>
+
+      <p class="author">
+        Автор и создатель<br>
+        <b>Алина Дмитриевна Оленева</b>
+      </p>
+    </div>
+
+    <!-- ===== ИГРА ===== -->
+    <div id="screen-game" class="screen game-screen">
+      <div class="game-topbar">
+        <div class="stat">
+          <span class="stat-label">Счёт</span>
+          <span class="stat-value" id="score">0</span>
+        </div>
+        <div class="stat" id="hearts-container">
+          <span class="stat-label">Жизни</span>
+          <span class="hearts" id="hearts">❤️❤️❤️❤️❤️</span>
+        </div>
+        <div class="stat" id="rank-container">
+          <span class="stat-label">Ранг</span>
+          <span class="rank" id="rank">🌱 Новичок</span>
+        </div>
+      </div>
+
+      <div class="timer" id="timer"></div>
+      <div class="task-container"><div class="task" id="task">…</div></div>
+      <div class="answers" id="answers"></div>
+      <div class="msg" id="msg"></div>
+
+      <button class="btn-save-record" id="saveRecordBtn">Сохранить рекорд</button>
+
+      <div class="actions">
+        <button class="btn-main" id="continue">▶ Продолжить</button>
+        <button class="link" id="backToMenu">← В главное меню</button>
+      </div>
+    </div>
+
+    <!-- ===== РЕЙТИНГ ===== -->
+    <div id="screen-rating" class="screen">
+      <div class="rating-header">
+        <button class="back-btn" id="backFromRating">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="rating-title">🏆 Рейтинг</div>
+      </div>
+
+      <div class="rating-group">
+        <div class="rating-group-label">Режим игры</div>
+        <div class="rating-tabs">
+          <button class="rating-tab active" id="tabClassic">Общий</button>
+          <button class="rating-tab" id="tabTimed">Блиц</button>
+          <button class="rating-tab" id="tabDuel">Дуэли</button>
+        </div>
+      </div>
+
+      <div class="rating-group">
+        <div class="rating-group-label">Период</div>
+        <div class="rating-tabs">
+          <button class="rating-tab active" id="periodAll">Всё время</button>
+          <button class="rating-tab" id="periodMonth">Месяц</button>
+          <button class="rating-tab" id="periodWeek">Неделя</button>
+        </div>
+      </div>
+
+      <div class="rating-list" id="ratingList"></div>
+    </div>
+
+    <!-- ===== ПРОФИЛЬ ===== -->
+    <div class="modal-overlay" id="nameModal">
+      <div class="modal-box">
+        <h3>Твой профиль</h3>
+        <div class="personal-stats">
+          <div class="p-stat"><span>🏆 Лучший счёт</span><span id="pStatBestClassic">0</span></div>
+          <div class="p-stat"><span>⚡ Рекорд в Блице</span><span id="pStatBestTimed">0</span></div>
+          <div class="p-stat"><span>🧠 Решено примеров</span><span id="pStatTotal">0</span></div>
+        </div>
+        <div class="name-input-wrapper" id="nameWrapper">
+          <input type="text" id="nameInput" maxlength="15" placeholder="Твоё имя" readonly>
+        </div>
+        <button class="save" id="saveName">Поехали!</button>
+        <button class="settings-btn-in-profile" id="openSettingsBtn">⚙️ Мои настройки</button>
+      </div>
+    </div>
+
+    <!-- ===== НАСТРОЙКИ ===== -->
+    <div class="modal-overlay" id="settingsModal">
+      <div id="settings-panel">
+        <h3>⚙️ Мои настройки</h3>
+
+        <div class="setting-block">
+          <h4>Сложение / вычитание <span class="val" id="as-label">от 1 до 50</span></h4>
+          <div class="hint">Числа и результат будут в этом диапазоне.</div>
+          <div class="range-row">
+            <span class="edge" id="as-min-val">1</span>
+            <input type="range" id="as-min" min="1" max="100" value="1" step="1">
+          </div>
+          <div class="range-row" style="margin-top:8px">
+            <span class="edge" id="as-max-val">50</span>
+            <input type="range" id="as-max" min="2" max="100" value="50" step="1">
+          </div>
+        </div>
+
+        <div class="setting-block">
+          <div class="tbl-header">
+            <h4 style="margin: 0;">Таблицы умножения</h4>
+            <button class="tbl-btn-all" id="tbl-select-all">Выбрать все</button>
+          </div>
+          <div class="hint">Нажми, чтобы выбрать одну или несколько таблиц.</div>
+          <div class="tbl-grid" id="tbl-grid"></div>
+        </div>
+
+        <div class="setting-block">
+          <h4>Умножение / деление: второе число <span class="val" id="md-label">до 10</span></h4>
+          <div class="hint">Второй множитель (и делитель) будет от 1 до этого числа.</div>
+          <div class="range-row">
+            <span class="edge" id="md-max-val">10</span>
+            <input type="range" id="md-max" min="1" max="12" value="10" step="1">
+          </div>
+        </div>
+
+        <div class="settings-actions">
+          <button id="set-reset">Сбросить</button>
+          <button id="set-apply">Применить</button>
+        </div>
+        <button id="set-close">Закрыть</button>
+      </div>
+    </div>
+
+    <!-- ===== ДУЭЛЬ (ВВОД ИМЕН) ===== -->
+    <div class="modal-overlay" id="duelSetupModal">
+      <div class="duel-setup-box">
+        <h3>Гонка на двоих</h3>
+        <input type="text" id="duelInput1" maxlength="12" placeholder="Игрок 1">
+        <input type="text" id="duelInput2" maxlength="12" placeholder="Игрок 2">
+        <button class="start-btn" id="startDuelBtn">Поехали!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ЭКРАН ДУЭЛИ ===== -->
+  <div id="screen-duel">
+    <div class="duel-timer" id="duelTimer">60</div>
+    <div class="duel-play-area">
+      <div class="duel-side">
+        <div class="duel-header">
+          <div class="duel-name" id="duelName1">Игрок 1</div>
+          <div class="duel-score" id="duelScore1">0</div>
+        </div>
+        <div class="duel-tasks">
+          <div class="duel-task" id="duelTask1">…</div>
+          <div class="duel-answers" id="duelAnswers1"></div>
+        </div>
+      </div>
+      <div class="duel-side">
+        <div class="duel-header">
+          <div class="duel-name" id="duelName2">Игрок 2</div>
+          <div class="duel-score" id="duelScore2">0</div>
+        </div>
+        <div class="duel-tasks">
+          <div class="duel-task" id="duelTask2">…</div>
+          <div class="duel-answers" id="duelAnswers2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="duel-footer">
+      <button class="duel-exit-btn" id="exitDuelBtn">← Покинуть гонку</button>
+    </div>
+  </div>
+
+  <!-- ===== РЕЗУЛЬТАТ ДУЭЛИ ===== -->
+  <div class="result-popup" id="duelResultPopup">
+    <div class="result-box">
+      <h2 id="duelResultTitle">🏁 Время вышло!</h2>
+      <p id="duelResultSubtitle">Победила дружба!</p>
+      <div class="result-score" id="duelResultScore">0 : 0</div>
+      <button class="result-btn" id="saveDuelBtn">Сохранить в Рейтинг</button>
+      <button class="result-btn" id="closeDuelBtn" style="background: #f0f4f8; box-shadow: 0 5px 0 #cbd5e1; color: #64748b;">В главное меню</button>
+    </div>
+  </div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  import { getDatabase, ref, push, onValue, query, limitToLast } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCfUKWp5QxddmDba6Y8_Na0fvnPisRC8pY",
+    authDomain: "mathtir01.firebaseapp.com",
+    databaseURL: "https://mathtir01-default-rtdb.firebaseio.com",
+    projectId: "mathtir01",
+    storageBucket: "mathtir01.firebasestorage.app",
+    messagingSenderId: "539557078014",
+    appId: "1:539557078014:web:f98da5889bafc236d056af"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  const MAX_LIVES = 5;
+  let score = 0, lives = MAX_LIVES, answer = 0, locked = false;
+  let currentMode = 'all';
+  let currentDisplayKey = '';
+  let recentTasks = [];
+  const RECENT_LIMIT = 8;
+  let wrongQueue = [];
+  
+  let isTimedMode = false;
+  let timeLeft = 60;
+  let timerInterval = null;
+
+  let playerName = localStorage.getItem('mathTirName') || '';
+  let statBestClassic = parseInt(localStorage.getItem('mathTirBestClassic') || '0', 10);
+  let statBestTimed = parseInt(localStorage.getItem('mathTirBestTimed') || '0', 10);
+  let statTotal = parseInt(localStorage.getItem('mathTirTotal') || '0', 10);
+
+  let currentRatingMode = 'classic';
+  let currentRatingPeriod = 'all';
+
+  let duelActive = false;
+  let duelScore1 = 0, duelScore2 = 0;
+  let duelTimeLeft = 60;
+  let duelTimerInterval = null;
+  let duelTask1 = null, duelTask2 = null;
+  let duelPlayerName1 = 'Игрок 1';
+  let duelPlayerName2 = 'Игрок 2';
+
+  const DEFAULT_SETTINGS = { asMin: 1, asMax: 50, tables: [], mdMax: 10 };
+  let settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+
+  function loadSettings() {
+    try {
+      const raw = localStorage.getItem('mathTirSettings');
+      if (raw) {
+        const s = JSON.parse(raw);
+        if (typeof s.asMin === 'number') settings.asMin = s.asMin;
+        if (typeof s.asMax === 'number') settings.asMax = s.asMax;
+        if (Array.isArray(s.tables)) settings.tables = s.tables;
+        if (typeof s.mdMax === 'number') settings.mdMax = s.mdMax;
+      }
+    } catch (e) {}
+  }
+  function saveSettings() {
+    try { localStorage.setItem('mathTirSettings', JSON.stringify(settings)); } catch (e) {}
+  }
+
+  const $ = id => document.getElementById(id);
+  const rnd = (a, b) => Math.floor(Math.random() * (b - a + 1)) + a;
+  const pick1 = arr => arr[rnd(0, arr.length - 1)];
+
+  const RANKS = [
+    { at: 0,   name: 'Новичок',              emoji: '🌱' },
+    { at: 3,   name: 'Считатель',            emoji: '🔢' },
+    { at: 5,   name: 'Умник',                emoji: '💡' },
+    { at: 10,  name: 'Мастер счёта',         emoji: '🏆' },
+    { at: 15,  name: 'Гений чисел',          emoji: '🧠' },
+    { at: 20,  name: 'Профессор',            emoji: '🎓' },
+    { at: 30,  name: 'Король математики',    emoji: '👑' },
+    { at: 40,  name: 'Повелитель цифр',      emoji: '⚡' },
+    { at: 50,  name: 'Суперсчётчик',         emoji: '🚀' },
+    { at: 60,  name: 'Магистр формул',       emoji: '🔮' },
+    { at: 70,  name: 'Легенда чисел',        emoji: '⭐' },
+    { at: 80,  name: 'Алмазный ум',          emoji: '💎' },
+    { at: 90,  name: 'Чемпион',              emoji: '🥇' },
+    { at: 100, name: 'Абсолютный гений',     emoji: '🌟' },
+  ];
+
+  function rankFor(s) {
+    let r = RANKS[0];
+    for (const item of RANKS) if (s >= item.at) r = item;
+    return r;
+  }
+
+  function confetti(n) {
+    const colors = ['#fca5a5','#5eead4','#fcd34d','#a5b4fc','#7dd3fc','#c084fc'];
+    for (let i = 0; i < n; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = rnd(0, 100) + 'vw';
+      c.style.background = colors[rnd(0, colors.length - 1)];
+      c.style.animationDuration = (1 + Math.random() * 1.2) + 's';
+      c.style.animationDelay = (Math.random() * 0.3) + 's';
+      c.style.width = c.style.height = rnd(6, 12) + 'px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 2500);
+    }
+  }
+
+  function updateHearts() {
+    $('hearts').textContent = '❤️'.repeat(lives) + '🖤'.repeat(MAX_LIVES - lives);
+  }
+
+  function pickOp() {
+    if (currentMode === 'addsub') return pick1(['+', '−']);
+    if (currentMode === 'muldiv') return pick1(['×', '÷']);
+    return pick1(['+', '−', '×', '÷']);
+  }
+
+  function buildTask() {
+    const op = pickOp();
+    let a, b, ans, display;
+
+    const asMin = Math.min(settings.asMin, settings.asMax);
+    const asMax = Math.max(settings.asMin, settings.asMax);
+    const mdMax = Math.max(1, settings.mdMax);
+    
+    let tables = settings.tables.length === 0 ? [2,3,4,5,6,7,8,9,10] : settings.tables.filter(t => t >= 2 && t <= 10);
+    if (tables.length === 0) tables = [2,3,4,5,6,7,8,9,10];
+
+    if (op === '+') {
+      a = rnd(asMin, Math.max(asMin, asMax - asMin));
+      b = rnd(asMin, Math.max(asMin, asMax - a));
+      if (a + b > asMax) { b = Math.max(asMin, asMax - a); }
+      ans = a + b;
+      display = `${a} + ${b} = ?`;
+    } else if (op === '−') {
+      a = rnd(asMin + 1, asMax);
+      b = rnd(asMin, a);
+      ans = a - b;
+      display = `${a} − ${b} = ?`;
+    } else if (op === '×') {
+      a = pick1(tables);
+      b = rnd(1, mdMax);
+      ans = a * b;
+      display = `${a} × ${b} = ?`;
+    } else {
+      a = pick1(tables);
+      b = rnd(1, mdMax);
+      ans = b;
+      display = `${a * b} ÷ ${a} = ?`;
+    }
+    return { display, answer: ans, key: display, op, a, b };
+  }
+
+  function restoreTask(key) {
+    const m = key.match(/^(\d+)\s([+−×÷])\s(\d+)\s=/);
+    if (!m) return null;
+    const a = +m[1], op = m[2], b = +m[3];
+    let ans;
+    if (op === '+') ans = a + b;
+    else if (op === '−') ans = a - b;
+    else if (op === '×') ans = a * b;
+    else ans = Math.round(a / b);
+    return { display: key, answer: ans, key, op, a, b };
+  }
+
+  function makeDistractors(task) {
+    const { op, answer, a, b } = task;
+    const set = new Set();
+    const add = v => {
+      if (Number.isFinite(v) && Number.isInteger(v) && v !== answer && v > 0) set.add(v);
+    };
+
+    if (op === '+' || op === '−') {
+      add(answer + 10); add(answer - 10); add(answer + 1); add(answer - 1); add(a + b); add(a - b);
+    } else if (op === '×' || op === '÷') {
+      if (op === '×') { add(answer + a); add(answer - a); add(answer + b); add(answer - b); add(a + b); }
+      else { add(answer + 1); add(answer - 1); add(answer + 2); add(answer - 2); add(a - b); }
+    }
+
+    const scale = Math.max(2, Math.round(Math.abs(answer) * 0.2));
+    let guard = 0;
+    while (set.size < 8 && guard < 50) {
+      guard++;
+      add(answer + pick1([-scale, -Math.round(scale/2), Math.round(scale/2), scale, -1, 1, 2, -2]));
+    }
+    return [...set];
+  }
+
+  function makeTask() {
+    let task = null;
+    if (wrongQueue.length > 0 && Math.random() < 0.4) {
+      const key = wrongQueue[Math.floor(Math.random() * wrongQueue.length)];
+      const restored = restoreTask(key);
+      if (restored) { task = restored; wrongQueue = wrongQueue.filter(k => k !== key); }
+    }
+    if (!task) {
+      let attempts = 0;
+      task = buildTask();
+      while (recentTasks.includes(task.key) && attempts < 30) {
+        task = buildTask(); attempts++;
+      }
+    }
+    recentTasks.push(task.key);
+    if (recentTasks.length > RECENT_LIMIT) recentTasks.shift();
+
+    answer = task.answer;
+    currentDisplayKey = task.key;
+    $('task').textContent = task.display;
+    $('task').classList.remove('hit');
+
+    const distractors = makeDistractors(task);
+    for (let i = distractors.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [distractors[i], distractors[j]] = [distractors[j], distractors[i]];
+    }
+    const opts = new Set([answer]);
+    for (const d of distractors) {
+      if (opts.size >= 4) break;
+      opts.add(d);
+    }
+    let guard = 0;
+    while (opts.size < 4 && guard < 50) {
+      guard++;
+      const v = answer + rnd(-20, 20);
+      if (v > 0) opts.add(v);
+    }
+    const arr = [...opts].sort(() => Math.random() - 0.5);
+
+    const box = $('answers');
+    box.innerHTML = '';
+    arr.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'ball';
+      btn.textContent = v;
+      btn.dataset.value = v;
+      btn.onclick = () => pick(btn, v);
+      box.appendChild(btn);
+    });
+    locked = false;
+    $('msg').classList.remove('show');
+  }
+
+  function pick(btn, value) {
+    if (locked) return;
+    locked = true;
+    if (value === answer) {
+      const prevRank = rankFor(score);
+      score++;
+      statTotal++; 
+      localStorage.setItem('mathTirTotal', statTotal);
+      
+      $('score').textContent = score;
+      btn.classList.add('correct');
+      $('task').classList.add('hit');
+      $('msg').textContent = 'Верно!';
+      $('msg').className = 'msg show success';
+
+      const newRank = rankFor(score);
+      if (newRank.at > prevRank.at && !isTimedMode) {
+        $('rank').textContent = `${newRank.emoji} ${newRank.name}`;
+        confetti(40);
+      }
+      
+      if (!isTimedMode) {
+        const recordKey = 'mathTirBestClassic';
+        if (score > parseInt(localStorage.getItem(recordKey) || '0', 10)) {
+          $('saveRecordBtn').classList.add('show');
+          $('saveRecordBtn').classList.remove('saved');
+          $('saveRecordBtn').textContent = 'Сохранить рекорд';
+        }
+      }
+      
+      setTimeout(makeTask, 350);
+    } else {
+      if (!isTimedMode) {
+        lives--;
+        updateHearts();
+      }
+      btn.classList.add('wrong');
+      document.querySelectorAll('.ball').forEach(b => {
+        if (parseInt(b.dataset.value, 10) === answer) b.classList.add('reveal');
+      });
+      $('msg').textContent = `Правильно: ${answer}`;
+      $('msg').className = 'msg show error';
+
+      if (currentDisplayKey && !wrongQueue.includes(currentDisplayKey)) {
+        wrongQueue.push(currentDisplayKey);
+        if (wrongQueue.length > 10) wrongQueue.shift();
+      }
+      
+      if (!isTimedMode && lives <= 0) setTimeout(gameOver, 900);
+      else setTimeout(makeTask, isTimedMode ? 600 : 1200);
+    }
+  }
+
+  function saveScore(mode, finalScore, customName) {
+    const nameToSave = customName || playerName;
+    if (!nameToSave) return;
+    push(ref(db, `scores/${mode}`), {
+      name: nameToSave,
+      score: finalScore,
+      timestamp: Date.now()
+    }).catch(e => console.error(e));
+  }
+
+  function checkAndSaveRecord() {
+    if (score === 0 || !playerName) return;
+    const recordKey = isTimedMode ? 'mathTirBestTimed' : 'mathTirBestClassic';
+    const currentBest = parseInt(localStorage.getItem(recordKey) || '0', 10);
+    if (score > currentBest) {
+      localStorage.setItem(recordKey, score);
+      saveScore(isTimedMode ? 'timed' : 'classic', score);
+    }
+  }
+
+  function loadLeaderboard(mode, period, containerId) {
+    const container = $(containerId);
+    container.innerHTML = '<div class="rating-empty">Загрузка...</div>';
+    
+    const q = query(ref(db, `scores/${mode}`), limitToLast(100));
+    onValue(q, (snapshot) => {
+      const data = snapshot.val();
+      container.innerHTML = '';
+      if (!data) {
+        container.innerHTML = '<div class="rating-empty">Пока нет результатов</div>';
+        return;
+      }
+      
+      let filtered = Object.values(data);
+      if (period === 'month') {
+        const monthAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+        filtered = filtered.filter(item => item.timestamp >= monthAgo);
+      } else if (period === 'week') {
+        const weekAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
+        filtered = filtered.filter(item => item.timestamp >= weekAgo);
+      }
+
+      const bestScores = {};
+      filtered.forEach(item => {
+        if (!bestScores[item.name] || item.score > bestScores[item.name]) {
+          bestScores[item.name] = item.score;
+        }
+      });
+      
+      const sorted = Object.keys(bestScores)
+        .map(name => ({ name, score: bestScores[name] }))
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 100); 
+        
+      if (sorted.length === 0) {
+        container.innerHTML = '<div class="rating-empty">Пока нет результатов</div>';
+        return;
+      }
+      
+      sorted.forEach((item, index) => {
+        const row = document.createElement('div');
+        row.className = 'rating-row';
+        row.innerHTML = `
+          <span class="pos">${index + 1}</span>
+          <span class="nm">${item.name}</span>
+          <span class="sc">${item.score}</span>
+        `;
+        container.appendChild(row);
+      });
+    });
+  }
+
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    $(id).classList.add('active');
+  }
+
+  function gameOver() {
+    if (timerInterval) clearInterval(timerInterval);
+    $('timer').textContent = '';
+    $('task').textContent = isTimedMode ? 'Время вышло!' : 'Жизни кончились!';
+    $('answers').innerHTML = '';
+    
+    const r = rankFor(score);
+    $('msg').textContent = `Счёт: ${score} · ${r.emoji} ${r.name}`;
+    $('msg').className = 'msg show success';
+    $('continue').classList.add('visible');
+    
+    if (playerName) {
+      saveScore(isTimedMode ? 'timed' : 'classic', score);
+      const recordKey = isTimedMode ? 'mathTirBestTimed' : 'mathTirBestClassic';
+      const currentBest = parseInt(localStorage.getItem(recordKey) || '0', 10);
+      if (score > currentBest) localStorage.setItem(recordKey, score);
+    }
+  }
+
+  function updateNameUI() {
+    $('profileName').textContent = playerName || 'Гость';
+    $('avatarLetter').textContent = playerName ? playerName.charAt(0).toUpperCase() : '?';
+  }
+
+  function syncSettingsUI() {
+    $('as-min').value = settings.asMin;
+    $('as-max').value = settings.asMax;
+    $('as-min-val').textContent = settings.asMin;
+    $('as-max-val').textContent = settings.asMax;
+    $('as-label').textContent = `от ${settings.asMin} до ${settings.asMax}`;
+
+    document.querySelectorAll('.tbl-btn').forEach(b => {
+      const t = +b.dataset.tbl;
+      b.classList.toggle('active', settings.tables.length === 0 || settings.tables.includes(t));
+    });
+
+    const allBtn = $('tbl-select-all');
+    if (settings.tables.length === 0) {
+      allBtn.textContent = 'Все выбраны';
+      allBtn.disabled = true;
+    } else {
+      allBtn.textContent = 'Выбрать все';
+      allBtn.disabled = false;
+    }
+
+    $('md-max').value = settings.mdMax;
+    $('md-max-val').textContent = settings.mdMax;
+    $('md-label').textContent = `до ${settings.mdMax}`;
+  }
+
+  (function buildTableButtons() {
+    const grid = $('tbl-grid');
+    for (let t = 2; t <= 10; t++) {
+      const b = document.createElement('button');
+      b.className = 'tbl-btn';
+      b.dataset.tbl = t;
+      b.textContent = '×' + t;
+      b.onclick = () => {
+        if (settings.tables.length === 0) {
+          settings.tables = [t];
+        } else {
+          const idx = settings.tables.indexOf(t);
+          if (idx >= 0) settings.tables.splice(idx, 1);
+          else settings.tables.push(t);
+          if (settings.tables.length === 0) settings.tables = [];
+        }
+        syncSettingsUI();
+      };
+      grid.appendChild(b);
+    }
+  })();
+
+  $('tbl-select-all').onclick = () => {
+    settings.tables = [];
+    syncSettingsUI();
+  };
+
+  $('as-min').oninput = (e) => {
+    let v = +e.target.value;
+    if (v >= settings.asMax) { v = settings.asMax - 1; e.target.value = v; }
+    settings.asMin = v;
+    syncSettingsUI();
+  };
+  $('as-max').oninput = (e) => {
+    let v = +e.target.value;
+    if (v <= settings.asMin) { v = settings.asMin + 1; e.target.value = v; }
+    settings.asMax = v;
+    syncSettingsUI();
+  };
+  $('md-max').oninput = (e) => {
+    settings.mdMax = +e.target.value;
+    syncSettingsUI();
+  };
+
+  $('set-apply').onclick = () => {
+    saveSettings();
+    $('settingsModal').classList.remove('visible');
+  };
+  $('set-reset').onclick = () => {
+    settings = JSON.parse(JSON.stringify(DEFAULT_SETTINGS));
+    syncSettingsUI();
+  };
+  $('set-close').onclick = () => $('settingsModal').classList.remove('visible');
+  $('openSettingsBtn').onclick = () => {
+    syncSettingsUI();
+    $('nameModal').classList.remove('visible');
+    $('settingsModal').classList.add('visible');
+  };
+  $('settingsModal').onclick = (e) => {
+    if (e.target === $('settingsModal')) $('settingsModal').classList.remove('visible');
+  };
+
+  $('editNameBtn').onclick = () => {
+    $('nameInput').value = playerName;
+    $('nameInput').readOnly = true;
+    $('nameWrapper').classList.remove('active');
+    if (document.activeElement) document.activeElement.blur();
+
+    $('pStatBestClassic').textContent = localStorage.getItem('mathTirBestClassic') || '0';
+    $('pStatBestTimed').textContent = localStorage.getItem('mathTirBestTimed') || '0';
+    $('pStatTotal').textContent = localStorage.getItem('mathTirTotal') || '0';
+
+    $('nameModal').classList.add('visible');
+  };
+
+  $('nameWrapper').onclick = () => {
+    if ($('nameInput').readOnly) {
+      $('nameInput').readOnly = false;
+      $('nameWrapper').classList.add('active');
+      $('nameInput').focus();
+    }
+  };
+
+  $('saveName').onclick = () => {
+    const val = $('nameInput').value.trim();
+    if (val) {
+      playerName = val;
+      localStorage.setItem('mathTirName', val);
+      updateNameUI();
+      $('nameModal').classList.remove('visible');
+    } else {
+      const inp = $('nameInput');
+      inp.style.transform = 'translateX(5px)';
+      setTimeout(() => inp.style.transform = 'translateX(-5px)', 50);
+      setTimeout(() => inp.style.transform = 'translateX(5px)', 100);
+      setTimeout(() => inp.style.transform = 'translateX(0)', 150);
+    }
+  };
+
+  $('nameInput').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') $('saveName').click();
+  });
+
+  function startGame(mode) {
+    currentMode = mode;
+    isTimedMode = (mode === 'timed');
+    duelActive = false;
+    if (isTimedMode) currentMode = 'all';
+
+    score = 0; lives = MAX_LIVES;
+    recentTasks = []; wrongQueue = [];
+    $('score').textContent = 0;
+    updateHearts();
+    $('rank').textContent = `${RANKS[0].emoji} ${RANKS[0].name}`;
+    $('continue').classList.remove('visible');
+    $('saveRecordBtn').classList.remove('show', 'saved');
+    
+    showScreen('screen-game');
+    
+    if (isTimedMode) {
+      $('hearts-container').style.display = 'none';
+      $('rank-container').style.display = 'none';
+      timeLeft = 60;
+      $('timer').textContent = `⏱️ ${timeLeft} сек`;
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        $('timer').textContent = `⏱️ ${timeLeft} сек`;
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          gameOver();
+        }
+      }, 1000);
+    } else {
+      $('hearts-container').style.display = 'flex';
+      $('rank-container').style.display = 'flex';
+      $('timer').textContent = '';
+      if (timerInterval) clearInterval(timerInterval);
+    }
+    
+    makeTask();
+  }
+
+  $('saveRecordBtn').onclick = () => {
+    if (score === 0 || !playerName) return;
+    const recordKey = 'mathTirBestClassic';
+    localStorage.setItem(recordKey, score);
+    saveScore('classic', score);
+    $('saveRecordBtn').textContent = 'Сохранено!';
+    $('saveRecordBtn').classList.add('saved');
+    $('saveRecordBtn').classList.remove('show');
+  };
+
+  $('mode-addsub').onclick = () => startGame('addsub');
+  $('mode-muldiv').onclick = () => startGame('muldiv');
+  $('mode-all').onclick    = () => startGame('all');
+  $('mode-timed').onclick  = () => startGame('timed');
+
+  function createDuelOptions(container, correctAnswer, task, onPick) {
+    container.innerHTML = '';
+    const distractors = makeDistractors(task);
+    for (let i = distractors.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [distractors[i], distractors[j]] = [distractors[j], distractors[i]];
+    }
+    const opts = new Set([correctAnswer]);
+    for (const d of distractors) {
+      if (opts.size >= 4) break;
+      opts.add(d);
+    }
+    let guard = 0;
+    while (opts.size < 4 && guard < 50) {
+      guard++;
+      const v = correctAnswer + rnd(-20, 20);
+      if (v > 0) opts.add(v);
+    }
+    const arr = [...opts].sort(() => Math.random() - 0.5);
+
+    arr.forEach(v => {
+      const btn = document.createElement('button');
+      btn.className = 'duel-ball';
+      btn.textContent = v;
+      btn.onclick = () => onPick(btn, v);
+      container.appendChild(btn);
+    });
+  }
+
+  function nextDuelTask(player) {
+    const task = buildTask();
+    if (player === 1) {
+      duelTask1 = task;
+      $('duelTask1').textContent = task.display;
+      createDuelOptions($('duelAnswers1'), task.answer, task, (btn, val) => {
+        if (val === task.answer) {
+          btn.classList.add('correct');
+          duelScore1++;
+          $('duelScore1').textContent = duelScore1;
+          setTimeout(() => nextDuelTask(1), 150);
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(() => nextDuelTask(1), 800);
+        }
+      });
+    } else {
+      duelTask2 = task;
+      $('duelTask2').textContent = task.display;
+      createDuelOptions($('duelAnswers2'), task.answer, task, (btn, val) => {
+        if (val === task.answer) {
+          btn.classList.add('correct');
+          duelScore2++;
+          $('duelScore2').textContent = duelScore2;
+          setTimeout(() => nextDuelTask(2), 150);
+        } else {
+          btn.classList.add('wrong');
+          setTimeout(() => nextDuelTask(2), 800);
+        }
+      });
+    }
+  }
+
+  $('mode-duel').onclick = () => {
+    $('duelInput1').value = '';
+    $('duelInput2').value = '';
+    $('duelSetupModal').classList.add('visible');
+    setTimeout(() => $('duelInput1').focus(), 100);
+  };
+
+  function startDuelGame() {
+    duelPlayerName1 = $('duelInput1').value.trim() || 'Игрок 1';
+    duelPlayerName2 = $('duelInput2').value.trim() || 'Игрок 2';
+
+    $('duelSetupModal').classList.remove('visible');
+    
+    duelActive = true;
+    duelScore1 = 0; duelScore2 = 0; duelTimeLeft = 60;
+    $('duelScore1').textContent = '0';
+    $('duelScore2').textContent = '0';
+    $('duelTimer').textContent = '60';
+    $('duelName1').textContent = duelPlayerName1;
+    $('duelName2').textContent = duelPlayerName2;
+
+    $('screen-duel').classList.add('active');
+    $('duelResultPopup').classList.remove('visible');
+
+    nextDuelTask(1);
+    nextDuelTask(2);
+
+    if (duelTimerInterval) clearInterval(duelTimerInterval);
+    duelTimerInterval = setInterval(() => {
+      duelTimeLeft--;
+      $('duelTimer').textContent = duelTimeLeft;
+      if (duelTimeLeft <= 0) {
+        clearInterval(duelTimerInterval);
+        endDuel();
+      }
+    }, 1000);
+  }
+
+  $('startDuelBtn').onclick = startDuelGame;
+
+  $('duelInput2').addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') startDuelGame();
+  });
+
+  function endDuel() {
+    duelActive = false;
+    const totalScore = duelScore1 + duelScore2;
+    const pairName = `${duelPlayerName1} и ${duelPlayerName2}`;
+
+    $('duelResultScore').textContent = `${duelScore1} : ${duelScore2}`;
+    if (duelScore1 > duelScore2) {
+      $('duelResultTitle').textContent = '🏆 Победил Игрок 1!';
+      $('duelResultSubtitle').textContent = `${duelPlayerName1} — молодец!`;
+    } else if (duelScore2 > duelScore1) {
+      $('duelResultTitle').textContent = '🏆 Победил Игрок 2!';
+      $('duelResultSubtitle').textContent = `${duelPlayerName2} — молодец!`;
+    } else {
+      $('duelResultTitle').textContent = '🤝 Ничья!';
+      $('duelResultSubtitle').textContent = 'Победила дружба!';
+    }
+
+    $('saveDuelBtn').onclick = () => {
+      saveScore('duel', totalScore, pairName);
+      $('saveDuelBtn').textContent = 'Сохранено!';
+      $('saveDuelBtn').style.background = '#f0f4f8';
+      $('saveDuelBtn').style.boxShadow = 'none';
+      $('saveDuelBtn').style.color = '#64748b';
+    };
+
+    $('duelResultPopup').classList.add('visible');
+  }
+
+  $('closeDuelBtn').onclick = () => {
+    $('screen-duel').classList.remove('active');
+    $('duelResultPopup').classList.remove('visible');
+  };
+
+  $('exitDuelBtn').onclick = () => {
+    if (confirm('Покинуть гонку? Результат не сохранится.')) {
+      if (duelTimerInterval) clearInterval(duelTimerInterval);
+      $('screen-duel').classList.remove('active');
+      $('duelResultPopup').classList.remove('visible');
+      duelActive = false;
+    }
+  };
+
+  $('openRatingBtn').onclick = () => {
+    showScreen('screen-rating');
+    $('tabClassic').classList.add('active');
+    $('tabTimed').classList.remove('active');
+    $('tabDuel').classList.remove('active');
+    $('periodAll').classList.add('active');
+    $('periodMonth').classList.remove('active');
+    $('periodWeek').classList.remove('active');
+    currentRatingMode = 'classic';
+    currentRatingPeriod = 'all';
+    loadLeaderboard('classic', 'all', 'ratingList');
+  };
+
+  $('backFromRating').onclick = () => showScreen('screen-menu');
+
+  $('tabClassic').onclick = () => {
+    $('tabClassic').classList.add('active');
+    $('tabTimed').classList.remove('active');
+    $('tabDuel').classList.remove('active');
+    currentRatingMode = 'classic';
+    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
+  };
+
+  $('tabTimed').onclick = () => {
+    $('tabTimed').classList.add('active');
+    $('tabClassic').classList.remove('active');
+    $('tabDuel').classList.remove('active');
+    currentRatingMode = 'timed';
+    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
+  };
+
+  $('tabDuel').onclick = () => {
+    $('tabDuel').classList.add('active');
+    $('tabClassic').classList.remove('active');
+    $('tabTimed').classList.remove('active');
+    currentRatingMode = 'duel';
+    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
+  };
+
+  $('periodAll').onclick = () => {
+    $('periodAll').classList.add('active');
+    $('periodMonth').classList.remove('active');
+    $('periodWeek').classList.remove('active');
+    currentRatingPeriod = 'all';
+    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
+  };
+
+  $('periodMonth').onclick = () => {
+    $('periodMonth').classList.add('active');
+    $('periodAll').classList.remove('active');
+    $('periodWeek').classList.remove('active');
+    currentRatingPeriod = 'month';
+    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
+  };
+
+  $('periodWeek').onclick = () => {
+    $('periodWeek').classList.add('active');
+    $('periodAll').classList.remove('active');
+    $('periodMonth').classList.remove('active');
+    currentRatingPeriod = 'week';
+    loadLeaderboard(currentRatingMode, currentRatingPeriod, 'ratingList');
+  };
+
+  $('continue').onclick = () => startGame(currentMode);
+  
+  $('backToMenu').onclick = () => {
+    if (timerInterval) clearInterval(timerInterval);
+    checkAndSaveRecord();
+    showScreen('screen-menu');
+  };
+
+  window.addEventListener('beforeunload', () => {
+    checkAndSaveRecord();
+  });
+
+  loadSettings();
+  syncSettingsUI();
+  updateNameUI();
+  
+  if (!playerName) {
+    $('pStatBestClassic').textContent = localStorage.getItem('mathTirBestClassic') || '0';
+    $('pStatBestTimed').textContent = localStorage.getItem('mathTirBestTimed') || '0';
+    $('pStatTotal').textContent = localStorage.getItem('mathTirTotal') || '0';
+    $('nameModal').classList.add('visible');
+    $('nameInput').readOnly = true;
+  }
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Математический тир</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+
+  :root {
+    --sky1: #a8e6ff;
+    --sky2: #d4f1ff;
+    --sun: #ffe066;
+    --coral: #ff8a80;
+    --coral-d: #ff5252;
+    --mint: #7ee8c8;
+    --mint-d: #2ec4a0;
+    --lavender: #c4b5fd;
+    --lavender-d: #9b7bf0;
+    --sunny: #ffd93d;
+    --sunny-d: #f5b800;
+    --pink: #ffb3d1;
+    --pink-d: #ff6fa5;
+    --text: #2d3a5a;
+    --text-soft: #3b4a6b;
+  }
+
+  /* ===== ФОН НА ВЕСЬ ЭКРАН ===== */
+  html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    font-family: 'Nunito', 'Segoe UI', -apple-system, sans-serif;
+    background: linear-gradient(180deg, var(--sky1) 0%, var(--sky2) 60%, #f0f9ff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+    height: 100dvh;
+  }
+
+  /* ===== КОМПЬЮТЕР (ПК) ===== */
+  @media (min-width: 480px) {
+    body { padding: 20px; }
+    #app {
+      max-width: 440px;
       height: 100%; /* Убрали жесткий calc, чтобы контент сам подстраивался */
       max-height: 800px;
     }
