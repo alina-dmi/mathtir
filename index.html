@@ -49,7 +49,7 @@
   @media (min-width: 480px) {
     body { padding: 0; }
     #app { 
-      max-width: 520px; /* Увеличили для ПК */
+      max-width: 520px; 
       height: 100dvh; 
       max-height: none;
       background: transparent; 
@@ -85,7 +85,6 @@
   .float-sym.s1 { left: 5%; top: 20%; color: #ff8a80; }
   .float-sym.s2 { right: 10%; top: 60%; color: #2ec4a0; }
   
-  /* Скрываем символы на телефоне, чтобы не мешали тексту */
   @media (max-width: 768px) {
     .float-sym { display: none !important; }
   }
@@ -106,7 +105,7 @@
   .screen.active { display: flex !important; }
 
   /* =========================================
-     МЕНЮ (Центрирование кнопок + верхняя панель)
+     МЕНЮ
      ========================================= */
   #screen-menu {
     justify-content: center;
@@ -155,7 +154,7 @@
     margin-bottom: clamp(12px, 2vh, 16px); 
     flex-shrink: 0; 
     width: 100%; 
-    max-width: 480px; /* Чуть шире */
+    max-width: 480px; 
     padding: 0 10px;
   }
   .mode-card { display: flex; align-items: center; padding: clamp(12px, 2.5vh, 16px) 18px; border-radius: 22px; border: none; cursor: pointer; text-align: left; position: relative; overflow: hidden; box-shadow: 0 6px 0 rgba(0,0,0,0.12); transition: transform 0.1s; width: 100%; }
@@ -177,7 +176,7 @@
     margin-bottom: 10px; 
     flex-shrink: 0; 
     width: 100%; 
-    max-width: 480px; /* Чуть шире */
+    max-width: 480px; 
     padding: 0 10px;
   }
   .mini-mode-btn { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: clamp(10px, 2vh, 14px) 10px; border: none; border-radius: 20px; cursor: pointer; background: #fff; box-shadow: 0 5px 0 rgba(0,0,0,0.1); transition: transform 0.1s; }
@@ -238,8 +237,26 @@
   .btn-save-record.show { opacity: 1; pointer-events: auto; }
   .btn-save-record.saved { background: #e2e8f0; border-color: #cbd5e1; color: #94a3b8; pointer-events: none; }
 
-  /* Кнопки теперь прижаты к ответам, а не в самый низ экрана */
-  .actions { display: flex; flex-direction: column; gap: 8px; margin-top: 15px; padding-bottom: 10px; flex-shrink: 0; }
+  /* =========================================
+     НИЖНИЕ КНОПКИ (Адаптив)
+     ========================================= */
+  .actions { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 8px; 
+    flex-shrink: 0; 
+  }
+
+  /* Для ПК (кнопка меню сразу под ответами) */
+  @media (min-width: 480px) {
+    .actions { margin-top: 15px; padding-bottom: 10px; }
+  }
+
+  /* Для телефона (кнопка меню прижата к низу) */
+  @media (max-width: 479px) {
+    .actions { margin-top: auto; padding-bottom: 10px; }
+  }
+
   .btn-main { padding: clamp(12px, 2.5vh, 14px); font-size: clamp(0.95rem, 2.2vh, 1rem); font-weight: 800; border: none; border-radius: 14px; cursor: pointer; background: #fff; color: var(--text-soft); box-shadow: 0 5px 0 #cbd5e1; opacity: 0; transform: translateY(6px); pointer-events: none; transition: 0.25s; }
   .btn-main.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
   .btn-main:active { transform: translateY(3px); box-shadow: 0 2px 0 #cbd5e1; }
@@ -611,15 +628,15 @@
   const TIMED_DURATION = 60;
   const DUEL_DURATION = 60;
   const RECENT_LIMIT = 8;
-  const QUARANTINE_DELAY = 3; // Сколько правильных ответов нужно, чтобы вернуть сложный пример
+  const QUARANTINE_DELAY = 3; 
 
   const DELAYS = {
-    correct: 500,       // Правильный ответ (0.5 сек)
-    wrongTimed: 1200,   // Блиц (1.2 сек)
-    wrongClassic: 2500, // Классика (2.5 сек)
-    gameOver: 1500,     // Конец игры
-    duelCorrect: 300,   // Дуэль: верно
-    duelWrong: 1000     // Дуэль: ошибка
+    correct: 500,       
+    wrongTimed: 1200,   
+    wrongClassic: 2500, 
+    gameOver: 1500,     
+    duelCorrect: 300,   
+    duelWrong: 1000     
   };
 
   const ALL_TABLES = [2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -866,7 +883,6 @@
 
     let task = null;
 
-    // 1. Логика «карантина»
     if (gameState.correctStreak >= QUARANTINE_DELAY && gameState.quarantine.length > 0) {
       const key = gameState.quarantine.shift(); 
       const restored = restoreTask(key);
@@ -876,7 +892,6 @@
       }
     }
 
-    // 2. Если карантин не сработал, с шансом 20% берем из очереди обычных ошибок
     if (!task && gameState.wrongQueue.length > 0 && Math.random() < 0.2) {
       const idx = Math.floor(Math.random() * gameState.wrongQueue.length);
       const key = gameState.wrongQueue[idx];
@@ -887,7 +902,6 @@
       }
     }
 
-    // 3. Если ничего не взяли, генерируем новую задачу
     if (!task) {
       let attempts = 0;
       task = buildTask(gameState.mode);
